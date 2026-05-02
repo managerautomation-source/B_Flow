@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Driven Platform – One Platform, Every Business</title>
+<style>
+  body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a2e; color: #fff; overflow: hidden; }
+  #container { position: relative; width: 100vw; height: 100vh; }
+  .scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.6s ease; }
+  .scene.active { opacity: 1; z-index: 10; }
+  .narration { position: absolute; top: 20px; left: 20px; right: 20px; text-align: center; font-size: 1.4em; font-weight: 300; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 12px; max-width: 800px; margin: 0 auto; z-index: 20; }
+  .core { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #1e90ff, #0b2b4f); box-shadow: 0 0 30px rgba(30,144,255,0.7); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2em; color: #fff; transition: transform 0.5s; }
+  .business-box { position: absolute; padding: 10px 20px; border-radius: 10px; font-weight: 600; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.5s; opacity: 0; transform: scale(0.5); }
+  .business-box.visible { opacity: 1; transform: scale(1); }
+  .module-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .module-pill { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 15px; font-size: 0.7em; }
+  .controls { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 30; }
+  .btn { padding: 12px 30px; background: #1e90ff; color: white; border: none; border-radius: 25px; font-size: 1em; cursor: pointer; font-weight: 600; }
+  .btn:hover { background: #0f7ae5; }
+  #scene-counter { position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); font-size: 0.9em; color: #aaa; }
+  @keyframes pulse { 0% { box-shadow: 0 0 20px rgba(30,144,255,0.7); } 50% { box-shadow: 0 0 40px rgba(30,144,255,1); } 100% { box-shadow: 0 0 20px rgba(30,144,255,0.7); } }
+  .core.pulse { animation: pulse 2s infinite; }
+</style>
+</head>
+<body>
+<div id="container">
+  <!-- Core platform element (shared) -->
+  <div id="core" class="core" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:5;">Platform Core</div>
+
+  <!-- Business boxes (positioned absolutely) -->
+  <div id="biz-vehiclewash" class="business-box" style="background:#d5e8d4; color:#2b4c2b; left:15%; top:30%;">Vehicle Wash</div>
+  <div id="biz-detailing" class="business-box" style="background:#e1d5e7; color:#4b2c5e; left:70%; top:30%;">Detailing Studios</div>
+  <div id="biz-mobile" class="business-box" style="background:#ffe6cc; color:#7b4e00; left:10%; top:70%;">Wash on the Go</div>
+  <div id="biz-productsales" class="business-box" style="background:#cce5ff; color:#00407b; right:10%; top:70%;">Product Sales</div>
+  <div id="biz-saas" class="business-box" style="background:#dae8fc; color:#1e3b5a; left:75%; top:70%;">SaaS</div>
+  <div id="biz-project" class="business-box" style="background:#ffe6cc; color:#6b4c00; right:15%; top:60%;">Project Mgmt</div>
+
+  <!-- Narration text -->
+  <div id="narration" class="narration"></div>
+
+  <!-- Controls -->
+  <div id="scene-counter">Scene 1 / 15</div>
+  <div class="controls">
+    <button id="prevBtn" class="btn" onclick="prevScene()">Prev</button>
+    <button id="autoBtn" class="btn" onclick="toggleAuto()">Auto Play (On)</button>
+    <button id="nextBtn" class="btn" onclick="nextScene()">Next</button>
+  </div>
+</div>
+
+<script>
+const scenes = [
+  // Scene 1
+  {
+    narration: "It begins with a single, powerful operations platform – not software built for just one business, but a universal engine that can run any vehicle service operation.",
+    visual: () => {
+      document.getElementById('core').style.transform = 'translate(-50%,-50%) scale(1)';
+      document.getElementById('core').classList.add('pulse');
+      hideAllBoxes();
+    }
+  },
+  // Scene 2
+  {
+    narration: "Configure Vehicle Wash in minutes. The system already knows exactly what a wash station needs – POS, queue management, job cards, equipment control, and even AI‑powered quality inspection.",
+    visual: () => {
+      showBox('biz-vehiclewash');
+      addModulesToBox('biz-vehiclewash', ['POS','Queue','Job Cards','Equipment IoT','Vision AI']);
+    }
+  },
+  // Scene 3
+  {
+    narration: "Now add Detailing. The same Core – but the modules automatically adjust. A booking calendar instead of a drive‑thru queue, warranty management for coatings, and AI that compares before‑and‑after photos.",
+    visual: () => {
+      showBox('biz-detailing');
+      addModulesToBox('biz-detailing', ['Booking Calendar','Job Cards','Warranty','Inventory','Vision AI (Before/After)']);
+    }
+  },
+  // Scene 4
+  {
+    narration: "Switch on mobile wash. The platform transforms into a dispatch hub – app‑based POS, real‑time technician tracking, and van inventory management – all from the same Core.",
+    visual: () => {
+      showBox('biz-mobile');
+      addModulesToBox('biz-mobile', ['App POS','Dispatch Queue','Job Cards','Utility (Fuel)','Van Inventory']);
+    }
+  },
+  // Scene 5
+  {
+    narration: "Add a product sales business. The platform becomes a full retail engine – barcode POS, bulk invoicing, inventory tracking, and product warranty – without any new software.",
+    visual: () => {
+      showBox('biz-productsales');
+      addModulesToBox('biz-productsales', ['e‑commerce POS','Warehouse Inventory','Warranty & Returns','Revenue & Expense']);
+    }
+  },
+  // Scene 6
+  {
+    narration: "The platform itself is a SaaS product. Every business line can be deployed as an isolated tenant for franchisees or dealerships. And every new site – from survey to handover – is managed by the built‑in project management engine.",
+    visual: () => {
+      showBox('biz-saas');
+      showBox('biz-project');
+      addModulesToBox('biz-saas', ['Tenant Config','Role Access','Central Sync']);
+      addModulesToBox('biz-project', ['Site Rollout','Milestones','Budget Tracking']);
+    }
+  },
+  // Scene 7
+  {
+    narration: "At the heart of the platform are twenty‑seven operational modules. They are never duplicated – just configured differently for each business type.",
+    visual: () => {
+      document.getElementById('core').innerHTML = '27 Modules';
+      document.getElementById('core').style.fontSize = '0.9em';
+      document.getElementById('core').style.width = '160px';
+      document.getElementById('core').style.height = '160px';
+    }
+  },
+  // Scene 8
+  {
+    narration: "The same ‘Queue’ module behaves as a drive‑thru lane for a wash, a booking calendar for detailing, and a dispatch board for mobile services. Configuration, not custom code.",
+    visual: () => {
+      // visual tags flying? simplified: change text on existing boxes
+      document.getElementById('biz-vehiclewash').innerHTML = 'Vehicle Wash<br/><small>Queue = Physical Lane</small>';
+      document.getElementById('biz-detailing').innerHTML = 'Detailing<br/><small>Queue = Booking Calendar</small>';
+      document.getElementById('biz-mobile').innerHTML = 'Mobile<br/><small>Queue = Dispatch Board</small>';
+    }
+  },
+  // Scene 9
+  {
+    narration: "Managers configure their business through simple admin panels – service menus, pricing, job card templates, and SOPs – all within the same platform, no developer needed.",
+    visual: () => {
+      // show a settings panel overlay
+      let panel = document.createElement('div');
+      panel.id = 'settings-panel';
+      panel.style.cssText = 'position:absolute; left:25%; top:25%; width:50%; height:50%; background:rgba(255,255,255,0.2); border-radius:15px; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:25;';
+      panel.innerHTML = '<p>⚙️ Service Catalogue</p><p>💲 Pricing Rules</p><p>📋 Job Card Templates</p><p>📖 SOPs</p>';
+      document.getElementById('container').appendChild(panel);
+    }
+  },
+  // Scene 10
+  {
+    narration: "Need a completely new business type? Just run the wizard – name it, select the modules it needs, and it’s instantly available across the entire platform, with all standard features ready to go.",
+    visual: () => {
+      removeElement('settings-panel');
+      let wizard = document.createElement('div');
+      wizard.id = 'wizard-box';
+      wizard.style.cssText = 'position:absolute; right:10%; top:20%; background:#fff; color:#000; padding:20px; border-radius:12px; z-index:25;';
+      wizard.innerHTML = '<h3>Add Business Type</h3><p>Oil Change Service</p><button style="background:#1e90ff;color:#fff;border:none;padding:5px 15px;border-radius:10px;">Create</button>';
+      document.getElementById('container').appendChild(wizard);
+      // show new slot
+    }
+  },
+  // Scene 11
+  {
+    narration: "Scale from one site to a thousand, across fifty countries. Every location, every business type, all orchestrated from the same central platform.",
+    visual: () => {
+      removeElement('wizard-box');
+      document.getElementById('core').style.transform = 'translate(-50%,-50%) scale(0.8)';
+      // add world map dots
+      for(let i=0; i<5; i++) {
+        let dot = document.createElement('div');
+        dot.className = 'world-dot';
+        dot.style.cssText = `position:absolute; width:12px; height:12px; background:#1e90ff; border-radius:50%; left:${20+Math.random()*60}%; top:${20+Math.random()*60}%; box-shadow:0 0 12px #1e90ff;`;
+        document.getElementById('container').appendChild(dot);
+      }
+    }
+  },
+  // Scene 12
+  {
+    narration: "Leaders get a unified operations view – real‑time dashboards, cross‑business analytics, and automated reporting for every site and every business line.",
+    visual: () => {
+      // split screen dashboards
+      let dashLeft = document.createElement('div');
+      dashLeft.style.cssText = 'position:absolute; left:5%; top:25%; width:40%; height:45%; background:rgba(0,0,0,0.7); border-radius:12px; display:flex; align-items:center; justify-content:center;';
+      dashLeft.innerHTML = '📊 Operations Dashboard';
+      document.getElementById('container').appendChild(dashLeft);
+      let dashRight = document.createElement('div');
+      dashRight.style.cssText = 'position:absolute; right:5%; top:25%; width:40%; height:45%; background:rgba(0,0,0,0.7); border-radius:12px; display:flex; align-items:center; justify-content:center;';
+      dashRight.innerHTML = '📈 Reports & Analytics';
+      document.getElementById('container').appendChild(dashRight);
+    }
+  },
+  // Scene 13
+  {
+    narration: "And customers see none of the complexity – they just open one app, book anything, anywhere, and the platform orchestrates it all.",
+    visual: () => {
+      clearExtraContainers();
+      let phone = document.createElement('div');
+      phone.style.cssText = 'position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:200px; height:350px; background:#fff; border-radius:20px; border:5px solid #333; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#000;';
+      phone.innerHTML = '<p>📱 BlueVerse App</p><p>Wash</p><p>Detailing</p><p>Mobile Booking</p><p>Shop</p>';
+      document.getElementById('container').appendChild(phone);
+    }
+  },
+  // Scene 14
+  {
+    narration: "An AI‑driven operations platform that builds once and runs any mobility service business, at any scale, anywhere in the world.",
+    visual: () => {
+      clearExtraContainers();
+      document.getElementById('core').style.transform = 'translate(-50%,-50%) scale(1.5)';
+      document.getElementById('core').innerHTML = 'AI Platform';
+    }
+  },
+  // Scene 15
+  {
+    narration: "BlueVerse – www.blueverse.com",
+    visual: () => {
+      // final logo
+      let logo = document.createElement('div');
+      logo.style.cssText = 'position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:3em; font-weight:bold; color:#1e90ff;';
+      logo.innerHTML = 'BlueVerse';
+      document.getElementById('container').appendChild(logo);
+      document.getElementById('core').style.display = 'none';
+    }
+  }
+];
+
+let currentScene = 0;
+let autoPlayInterval = null;
+let autoPlay = true;
+
+function hideAllBoxes() {
+  document.querySelectorAll('.business-box').forEach(b => b.classList.remove('visible'));
+  document.getElementById('core').style.transform = 'translate(-50%,-50%) scale(1)';
+  document.getElementById('core').style.width = '120px';
+  document.getElementById('core').style.height = '120px';
+  document.getElementById('core').innerHTML = 'Platform Core';
+  document.getElementById('core').style.fontSize = '1.2em';
+  clearExtraContainers();
+}
+
+function showBox(id) {
+  document.getElementById(id).classList.add('visible');
+}
+
+function addModulesToBox(id, modules) {
+  let box = document.getElementById(id);
+  // remove old module pills if any
+  let existing = box.querySelector('.module-pills');
+  if (existing) existing.remove();
+  let pillsDiv = document.createElement('div');
+  pillsDiv.className = 'module-pills';
+  modules.forEach(m => {
+    let span = document.createElement('span');
+    span.className = 'module-pill';
+    span.textContent = m;
+    pillsDiv.appendChild(span);
+  });
+  box.appendChild(pillsDiv);
+}
+
+function removeElement(id) {
+  let el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function clearExtraContainers() {
+  // remove everything except core, business boxes, narration, controls
+  document.querySelectorAll('.world-dot, #settings-panel, #wizard-box, #dash-left, #dash-right, #phone, #logo-final').forEach(el => el.remove());
+  // also remove dash divs added dynamically
+  document.querySelectorAll('div').forEach(d => {
+    if (d.id === '' && d.style.position === 'absolute' && d.style.background && d.style.background.includes('rgba(0,0,0')) {
+      d.remove();
+    }
+  });
+}
+
+function updateScene() {
+  document.getElementById('narration').textContent = scenes[currentScene].narration;
+  document.getElementById('scene-counter').textContent = `Scene ${currentScene+1} / ${scenes.length}`;
+  scenes[currentScene].visual();
+}
+
+function nextScene() {
+  if (currentScene < scenes.length-1) {
+    currentScene++;
+    updateScene();
+  }
+}
+
+function prevScene() {
+  if (currentScene > 0) {
+    currentScene--;
+    updateScene();
+  }
+}
+
+function toggleAuto() {
+  autoPlay = !autoPlay;
+  let btn = document.getElementById('autoBtn');
+  if (autoPlay) {
+    btn.textContent = 'Auto Play (On)';
+    startAutoPlay();
+  } else {
+    btn.textContent = 'Auto Play (Off)';
+    stopAutoPlay();
+  }
+}
+
+function startAutoPlay() {
+  stopAutoPlay();
+  autoPlayInterval = setInterval(() => {
+    if (currentScene < scenes.length-1) {
+      currentScene++;
+      updateScene();
+    } else {
+      stopAutoPlay();
+    }
+  }, 7000);
+}
+
+function stopAutoPlay() {
+  if (autoPlayInterval) clearInterval(autoPlayInterval);
+}
+
+// Initialise
+updateScene();
+startAutoPlay();
+</script>
+</body>
+</html>
