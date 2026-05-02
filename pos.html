@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POS Module – Full Sub‑Module Mapping</title>
+<title>POS Module – Sub-Module Mapping</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>💳 POS Module – Sub‑Module Coverage per Business</h1>
+<h1>💳 POS Module – Sub-Module Coverage per Business</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -28,259 +28,261 @@ window.addEventListener('DOMContentLoaded', function () {
 
   const flows = {
     "Vehicle Wash": `flowchart TD
-      CUSTOMER["Customer"] --> POS
-      POS --> FINANCIAL["Financial Tool"]
-      POS --> INVENTORY["Inventory"]
-      subgraph POS_Engine["POS Engine"]
+      CUSTOMER[Customer] --> POS
+      POS --> FINANCIAL[Financial Tool]
+      POS --> INVENTORY[Inventory]
+      subgraph POS_Engine [POS Engine]
         direction TB
-        subgraph MBA["1&#41; Multi-Business Architecture"]
-          MBA1["Car Wash &#40;Sedan&#47;SUV&#41;"]
-          MBA2["Truck Wash"]
-          MBA3["Bus Wash"]
-          MBA4["2-Wheeler Bike Wash"]
-          MBA5["Train &#47; Metro Wash"]
-          MBA6["Any Future Type"]
+        subgraph MBA [Multi Business Architecture]
+          MBA1[Car Wash Sedan SUV]
+          MBA2[Truck Wash]
+          MBA3[Bus Wash]
+          MBA4[2-Wheeler Bike Wash]
+          MBA5[Train or Metro Wash]
+          MBA6[Any Future Type]
         end
-        subgraph CAT["2&#41; Service and Product Catalogue"]
-          CAT1["Service Definition and Duration"]
-          CAT2["Site Creation and Configuration"]
-          CAT3["Service Charge Setup &#40;per vehicle type&#41;"]
-          CAT4["Product SKU &#40;Chemicals, Spares&#41;"]
+        subgraph CAT [Service and Product Catalogue]
+          CAT1[Service Definition and Duration]
+          CAT2[Site Creation and Configuration]
+          CAT3[Service Charge Setup per vehicle type]
+          CAT4[Product SKU Chemicals Spares]
         end
-        subgraph TXN["3&#41; Transaction Processing"]
-          TXN1["EMV, Contactless, Wallets"]
-          TXN2["Fleet Account &#47; PO"]
-          TXN3["Refund and Void"]
-          TXN4["Tip Management"]
+        subgraph TXN [Transaction Processing]
+          TXN1[EMV Contactless Wallets]
+          TXN2[Fleet Account or PO]
+          TXN3[Refund and Void]
+          TXN4[Tip Management]
         end
-        subgraph DISC["4&#41; Discounts and Promotions"]
-          DISC1["Time&#47;Peak Pricing"]
-          DISC2["Volume&#47;Contract Discounts"]
-          DISC3["Coupon and Voucher Codes"]
+        subgraph DISC [Discounts and Promotions]
+          DISC1[Time Peak Pricing]
+          DISC2[Volume Contract Discounts]
+          DISC3[Coupon and Voucher Codes]
         end
-        subgraph MEM["5&#41; Membership and Subscription"]
-          MEM1["Unlimited Monthly Wash"]
-          MEM2["Punch Cards"]
-          MEM3["Family &#47; Multi-Vehicle"]
-          MEM4["Wash Carry-Forward"]
+        subgraph MEM [Membership and Subscription]
+          MEM1[Unlimited Monthly Wash]
+          MEM2[Punch Cards]
+          MEM3[Family Multi Vehicle]
+          MEM4[Wash Carry Forward]
         end
-        subgraph SB["6&#41; Service Books"]
-          SB1["Pre-Paid Fixed Washes"]
-          SB2["Flexible Validity"]
-          SB3["Multi-Vehicle Book"]
+        subgraph SB [Service Books]
+          SB1[Pre Paid Fixed Washes]
+          SB2[Flexible Validity]
+          SB3[Multi Vehicle Book]
         end
-        subgraph WTY["7&#41; Warranty Management"]
-          WTY1["Paint Protection Warranty"]
-          WTY2["Claim Initiation"]
+        subgraph WTY [Warranty Management]
+          WTY1[Paint Protection Warranty]
+          WTY2[Claim Initiation]
         end
-        subgraph LOY["8&#41; Loyalty"]
-          LOY1["Points Engine"]
-          LOY2["Tiered Loyalty"]
-          LOY3["Partner Rewards"]
+        subgraph LOY [Loyalty]
+          LOY1[Points Engine]
+          LOY2[Tiered Loyalty]
+          LOY3[Partner Rewards]
         end
-        subgraph CASH["9&#41; Cash Management"]
-          CASH1["Drawer Operations"]
-          CASH2["Reconciliation"]
+        subgraph CASH [Cash Management]
+          CASH1[Drawer Operations]
+          CASH2[Reconciliation]
         end
-        subgraph STAFF["10&#41; Staff Management"]
-          STAFF1["Role and Permissions"]
-          STAFF2["Commission"]
+        subgraph STAFF [Staff Management]
+          STAFF1[Role and Permissions]
+          STAFF2[Commission]
         end
-        subgraph ANALYTICS["11&#41; POS Analytics"]
-          ANALYTICS1["Real-Time Dashboards"]
-          ANALYTICS2["Wash Volume and Revenue"]
+        subgraph ANALYTICS [POS Analytics]
+          ANALYTICS1[Real Time Dashboards]
+          ANALYTICS2[Wash Volume and Revenue]
         end
-        subgraph LOCAL["12&#41; Multi-Country and Localisation"]
-          LOCAL1["Multi-Language&#47;Currency"]
-          LOCAL2["Regional Tax &#40;VAT&#47;GST&#41;"]
+        subgraph LOCAL [Multi Country and Localisation]
+          LOCAL1[Multi Language Currency]
+          LOCAL2[Regional Tax VAT or GST]
         end
-        subgraph SEC["13&#41; Privacy and Security"]
-          SEC1["PCI-DSS"]
-          SEC2["GDPR&#47;CCPA"]
+        subgraph SEC [Privacy and Security]
+          SEC1[PCI DSS]
+          SEC2[GDPR or CCPA]
         end
       end
     `,
 
     "Detailing Studios": `flowchart TD
-      CUSTOMER["Customer"] --> POS
-      POS --> FINANCIAL["Financial Tool"]
-      POS --> INVENTORY["Inventory"]
-      subgraph POS_Engine["POS Engine"]
+      CUSTOMER[Customer] --> POS
+      POS --> FINANCIAL[Financial Tool]
+      POS --> INVENTORY[Inventory]
+      subgraph POS_Engine [POS Engine]
         direction TB
-        subgraph MBA["1&#41; Multi-Business Architecture"]
-          MBA1["Detailing Studio"]
-          MBA2["PPF&#47;Ceramic Specialist"]
-          MBA3["Mobile Detailing"]
+        subgraph MBA [Multi Business Architecture]
+          MBA1[Detailing Studio]
+          MBA2[PPF Ceramic Specialist]
+          MBA3[Mobile Detailing]
         end
-        subgraph CAT["2&#41; Service and Product Catalogue"]
-          CAT1["Interior&#47;Exterior Services"]
-          CAT2["PPF and Ceramic Coating"]
-          CAT3["Service Charge Per Job"]
-          CAT4["Consumable Products"]
+        subgraph CAT [Service and Product Catalogue]
+          CAT1[Interior Exterior Services]
+          CAT2[PPF and Ceramic Coating]
+          CAT3[Service Charge Per Job]
+          CAT4[Consumable Products]
         end
-        subgraph TXN["3&#41; Transaction Processing"]
-          TXN1["Deposit and Full Payment"]
-          TXN2["Card&#47;Wallet"]
-          TXN3["Fleet&#47;Dealer Billing"]
+        subgraph TXN [Transaction Processing]
+          TXN1[Deposit and Full Payment]
+          TXN2[Card or Wallet]
+          TXN3[Fleet or Dealer Billing]
         end
-        subgraph DISC["4&#41; Discounts and Promotions"]
-          DISC1["Package Discounts"]
-          DISC2["Seasonal Offers"]
+        subgraph DISC [Discounts and Promotions]
+          DISC1[Package Discounts]
+          DISC2[Seasonal Offers]
         end
-        subgraph MEM["5&#41; Membership and Subscription"]
-          MEM1["Monthly Detailing Plan"]
-          MEM2["Annual Coating Maintenance"]
+        subgraph MEM [Membership and Subscription]
+          MEM1[Monthly Detailing Plan]
+          MEM2[Annual Coating Maintenance]
         end
-        subgraph SB["6&#41; Service Books"]
-          SB1["Pre-Paid Detailing Packs"]
-          SB2["Flexible Validity"]
+        subgraph SB [Service Books]
+          SB1[Pre Paid Detailing Packs]
+          SB2[Flexible Validity]
         end
-        subgraph WTY["7&#41; Warranty Management"]
-          WTY1["Ceramic Coating 5-Year"]
-          WTY2["PPF Warranty"]
-          WTY3["Claim and Rework"]
+        subgraph WTY [Warranty Management]
+          WTY1[Ceramic Coating 5 Year]
+          WTY2[PPF Warranty]
+          WTY3[Claim and Rework]
         end
-        subgraph LOY["8&#41; Loyalty"]
-          LOY1["Points on Detailing"]
-          LOY2["Tier Benefits"]
+        subgraph LOY [Loyalty]
+          LOY1[Points on Detailing]
+          LOY2[Tier Benefits]
         end
-        subgraph CASH["9&#41; Cash Management"]
-          CASH1["Drawer and Safe"]
-          CASH2["Reconciliation"]
+        subgraph CASH [Cash Management]
+          CASH1[Drawer and Safe]
+          CASH2[Reconciliation]
         end
-        subgraph STAFF["10&#41; Staff Management"]
-          STAFF1["Technician Roles"]
-          STAFF2["Commission on Upsell"]
+        subgraph STAFF [Staff Management]
+          STAFF1[Technician Roles]
+          STAFF2[Commission on Upsell]
         end
-        subgraph ANALYTICS["11&#41; POS Analytics"]
-          ANALYTICS1["Service Revenue Mix"]
-          ANALYTICS2["Technician Performance"]
+        subgraph ANALYTICS [POS Analytics]
+          ANALYTICS1[Service Revenue Mix]
+          ANALYTICS2[Technician Performance]
         end
-        subgraph LOCAL["12&#41; Multi-Country and Localisation"]
-          LOCAL1["Local Tax and Currency"]
+        subgraph LOCAL [Multi Country and Localisation]
+          LOCAL1[Local Tax and Currency]
         end
-        subgraph SEC["13&#41; Privacy and Security"]
-          SEC1["PCI-DSS"]
-          SEC2["Data Protection"]
+        subgraph SEC [Privacy and Security]
+          SEC1[PCI DSS]
+          SEC2[Data Protection]
         end
       end
     `,
 
     "Wash on the Go": `flowchart TD
-      CUSTOMER["Customer via App"] --> POS
-      POS --> FINANCIAL["Financial Tool"]
-      POS --> INVENTORY["Inventory"]
-      subgraph POS_Engine["POS Engine"]
+      CUSTOMER[Customer via App] --> POS
+      POS --> FINANCIAL[Financial Tool]
+      POS --> INVENTORY[Inventory]
+      subgraph POS_Engine [POS Engine]
         direction TB
-        subgraph MBA["1&#41; Multi-Business Architecture"]
-          MBA1["Mobile Wash Car"]
-          MBA2["Mobile Detailing"]
-          MBA3["Fleet Mobile"]
+        subgraph MBA [Multi Business Architecture]
+          MBA1[Mobile Wash Car]
+          MBA2[Mobile Detailing]
+          MBA3[Fleet Mobile]
         end
-        subgraph CAT["2&#41; Service and Product Catalogue"]
-          CAT1["Mobile Service Types"]
-          CAT2["Service Charge by Location"]
-          CAT3["Travel Surcharge"]
+        subgraph CAT [Service and Product Catalogue]
+          CAT1[Mobile Service Types]
+          CAT2[Service Charge by Location]
+          CAT3[Travel Surcharge]
         end
-        subgraph TXN["3&#41; Transaction Processing"]
-          TXN1["App Payment"]
-          TXN2["Mobile Wallets"]
-          TXN3["Fleet&#47;Corporate Billing"]
+        subgraph TXN [Transaction Processing]
+          TXN1[App Payment]
+          TXN2[Mobile Wallets]
+          TXN3[Fleet Corporate Billing]
         end
-        subgraph DISC["4&#41; Discounts and Promotions"]
-          DISC1["First App Booking Offer"]
-          DISC2["Corporate Contracts"]
+        subgraph DISC [Discounts and Promotions]
+          DISC1[First App Booking Offer]
+          DISC2[Corporate Contracts]
         end
-        subgraph MEM["5&#41; Membership and Subscription"]
-          MEM1["Monthly Mobile Wash"]
-          MEM2["Pre-Paid Books"]
+        subgraph MEM [Membership and Subscription]
+          MEM1[Monthly Mobile Wash]
+          MEM2[Pre Paid Books]
         end
-        subgraph SB["6&#41; Service Books"]
-          SB1["Mobile Wash Packs"]
-          SB2["Flexible Time"]
+        subgraph SB [Service Books]
+          SB1[Mobile Wash Packs]
+          SB2[Flexible Time]
         end
-        subgraph WTY["7&#41; Warranty"]
-          WTY1["Limited Warranty"]
+        subgraph WTY [Warranty]
+          WTY1[Limited Warranty]
         end
-        subgraph LOY["8&#41; Loyalty"]
-          LOY1["Points on App"]
+        subgraph LOY [Loyalty]
+          LOY1[Points on App]
         end
-        subgraph CASH["9&#41; Cash Management"]
-          CASH1["Digital Receipts"]
-          CASH2["Driver Reconciliation"]
+        subgraph CASH [Cash Management]
+          CASH1[Digital Receipts]
+          CASH2[Driver Reconciliation]
         end
-        subgraph STAFF["10&#41; Staff Management"]
-          STAFF1["Mobile Technician Roles"]
-          STAFF2["Incentives"]
+        subgraph STAFF [Staff Management]
+          STAFF1[Mobile Technician Roles]
+          STAFF2[Incentives]
         end
-        subgraph ANALYTICS["11&#41; POS Analytics"]
-          ANALYTICS1["Jobs Completed"]
-          ANALYTICS2["Revenue per Mobile Unit"]
+        subgraph ANALYTICS [POS Analytics]
+          ANALYTICS1[Jobs Completed]
+          ANALYTICS2[Revenue per Mobile Unit]
         end
-        subgraph LOCAL["12&#41; Localisation"]
-          LOCAL1["Multi-Currency"]
+        subgraph LOCAL [Localisation]
+          LOCAL1[Multi Currency]
         end
-        subgraph SEC["13&#41; Privacy and Security"]
-          SEC1["GDPR"]
+        subgraph SEC [Privacy and Security]
+          SEC1[GDPR]
         end
       end
     `,
 
     "Product Sales": `flowchart TD
-      CUSTOMER["Customer Walk-in &#47; Online"] --> POS
-      POS --> FINANCIAL["Financial Tool"]
-      POS --> INVENTORY["Inventory"]
-      subgraph POS_Engine["POS Engine"]
+      CUSTOMER[Customer Walk in or Online] --> POS
+      POS --> FINANCIAL[Financial Tool]
+      POS --> INVENTORY[Inventory]
+      subgraph POS_Engine [POS Engine]
         direction TB
-        subgraph MBA["1&#41; Multi-Business Architecture"]
-          MBA1["Retail Store"]
-          MBA2["Distributor&#47;Wholesale"]
-          MBA3["E-commerce"]
+        subgraph MBA [Multi Business Architecture]
+          MBA1[Retail Store]
+          MBA2[Distributor or Wholesale]
+          MBA3[E commerce]
         end
-        subgraph CAT["2&#41; Service and Product Catalogue"]
-          CAT1["Chemical Products"]
-          CAT2["Equipment and Machinery"]
-          CAT3["Spare Parts SKUs"]
-          CAT4["Batch&#47;Lot Tracking"]
+        subgraph CAT [Service and Product Catalogue]
+          CAT1[Chemical Products]
+          CAT2[Equipment and Machinery]
+          CAT3[Spare Parts SKUs]
+          CAT4[Batch Lot Tracking]
         end
-        subgraph TXN["3&#41; Transaction Processing"]
-          TXN1["Barcode POS"]
-          TXN2["Invoice and Bulk Order"]
-          TXN3["Returns and Exchanges"]
+        subgraph TXN [Transaction Processing]
+          TXN1[Barcode POS]
+          TXN2[Invoice and Bulk Order]
+          TXN3[Returns and Exchanges]
         end
-        subgraph DISC["4&#41; Discounts and Promotions"]
-          DISC1["Volume Discounts"]
-          DISC2["Trade Promotions"]
-          DISC3["Coupon Codes"]
+        subgraph DISC [Discounts and Promotions]
+          DISC1[Volume Discounts]
+          DISC2[Trade Promotions]
+          DISC3[Coupon Codes]
         end
-        subgraph MEM["5&#41; Membership - Rare"]
+        subgraph MEM [Membership - Not typical]
+          MEM1[Not Applicable]
         end
-        subgraph SB["6&#41; Service Books - Not applicable"]
+        subgraph SB [Service Books - Not typical]
+          SB1[Not Applicable]
         end
-        subgraph WTY["7&#41; Warranty and Returns"]
-          WTY1["Product Warranty"]
-          WTY2["RMA Process"]
+        subgraph WTY [Warranty and Returns]
+          WTY1[Product Warranty]
+          WTY2[RMA Process]
         end
-        subgraph LOY["8&#41; Loyalty"]
-          LOY1["Points per Purchase"]
+        subgraph LOY [Loyalty]
+          LOY1[Points per Purchase]
         end
-        subgraph CASH["9&#41; Cash Management"]
-          CASH1["Drawer and Safe"]
-          CASH2["Daily Reconciliation"]
+        subgraph CASH [Cash Management]
+          CASH1[Drawer and Safe]
+          CASH2[Daily Reconciliation]
         end
-        subgraph STAFF["10&#41; Staff Management"]
-          STAFF1["Sales Roles"]
-          STAFF2["Commission"]
+        subgraph STAFF [Staff Management]
+          STAFF1[Sales Roles]
+          STAFF2[Commission]
         end
-        subgraph ANALYTICS["11&#41; POS Analytics"]
-          ANALYTICS1["Sales per Product"]
-          ANALYTICS2["Inventory Turnover"]
+        subgraph ANALYTICS [POS Analytics]
+          ANALYTICS1[Sales per Product]
+          ANALYTICS2[Inventory Turnover]
         end
-        subgraph LOCAL["12&#41; Localisation"]
-          LOCAL1["Multi-Tax &#40;VAT&#47;GST&#41;"]
+        subgraph LOCAL [Localisation]
+          LOCAL1[Multi Tax VAT or GST]
         end
-        subgraph SEC["13&#41; Privacy and Security"]
-          SEC1["PCI-DSS"]
+        subgraph SEC [Privacy and Security]
+          SEC1[PCI DSS]
         end
       end
     `
