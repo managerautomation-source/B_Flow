@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POS Module – Sub-Module Mapping</title>
+<title>POS Module – Sub-Module Mapping with B2B/B2G Contracts</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', function () {
         end
         subgraph MEM [Membership and Subscription]
           MEM1[Unlimited Monthly Wash]
-          MEM2[Punch Cards]
+          MEM2[QR Code or ANPR Recognition]
           MEM3[Family Multi Vehicle]
           MEM4[Wash Carry Forward]
         end
@@ -98,6 +98,12 @@ window.addEventListener('DOMContentLoaded', function () {
           SEC1[PCI DSS]
           SEC2[GDPR or CCPA]
         end
+        subgraph CONTRACT [Contract Management B2B B2G]
+          CON1[Fleet Contract MWG Tiered]
+          CON2[Dealership Contract PDI Loaner]
+          CON3[OEM Contract Volume Pricing]
+          CON4[Government B2G PO Tax Exempt]
+        end
       end
     `,
 
@@ -130,6 +136,7 @@ window.addEventListener('DOMContentLoaded', function () {
         subgraph MEM [Membership and Subscription]
           MEM1[Monthly Detailing Plan]
           MEM2[Annual Coating Maintenance]
+          MEM3[QR Code or ANPR Member Check]
         end
         subgraph SB [Service Books]
           SB1[Pre Paid Detailing Packs]
@@ -163,6 +170,11 @@ window.addEventListener('DOMContentLoaded', function () {
           SEC1[PCI DSS]
           SEC2[Data Protection]
         end
+        subgraph CONTRACT [Contract Management B2B B2G]
+          CON1[Dealer OEM Coating Contracts]
+          CON2[Fleet Detailing Agreements]
+          CON3[Government Vehicle Contracts]
+        end
       end
     `,
 
@@ -194,6 +206,7 @@ window.addEventListener('DOMContentLoaded', function () {
         subgraph MEM [Membership and Subscription]
           MEM1[Monthly Mobile Wash]
           MEM2[Pre Paid Books]
+          MEM3[QR Code Member Login]
         end
         subgraph SB [Service Books]
           SB1[Mobile Wash Packs]
@@ -222,6 +235,10 @@ window.addEventListener('DOMContentLoaded', function () {
         end
         subgraph SEC [Privacy and Security]
           SEC1[GDPR]
+        end
+        subgraph CONTRACT [Contract Management B2B]
+          CON1[Fleet Mobile Contracts]
+          CON2[Corporate Agreement Tiered]
         end
       end
     `,
@@ -283,6 +300,10 @@ window.addEventListener('DOMContentLoaded', function () {
         end
         subgraph SEC [Privacy and Security]
           SEC1[PCI DSS]
+        end
+        subgraph CONTRACT [Contract Management B2B]
+          CON1[Wholesale Distributor Agreement]
+          CON2[Bulk Supply Tender]
         end
       end
     `
