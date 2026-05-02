@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POS Module Mapping – By Business</title>
+<title>POS Module – Full Sub‑Module Mapping</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>💳 AI-Driven POS – Module Coverage per Business</h1>
+<h1>💳 POS Module – Sub‑Module Coverage per Business</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -28,139 +28,269 @@ window.addEventListener('DOMContentLoaded', function () {
 
   const flows = {
     "Vehicle Wash": `graph TD
-      CUSTOMER([Customer])
-      CUSTOMER --> POS
-      POS --> REPORTING([Reporting & Analytics])
-      subgraph POS_Engine [POS Core]
+      CUSTOMER([Customer]) --> POS
+      POS --> FINANCIAL[Financial Tool]
+      POS --> INVENTORY[Inventory]
+      subgraph POS [POS Engine]
         direction TB
-        POS[POS Engine]
-        subgraph Modules [Active Modules]
-          M1[Multi-Business Architecture]
-          M2[Service & Product Catalogue]
-          M3[Transaction Processing]
-          M4[Discounts & Promotions]
-          M5[Membership & Subscription]
-          M6[Service Books]
-          M7[Warranty - optional]
-          M8[Loyalty]
-          M9[Gift Cards & Vouchers]
-          M10[Cash Management]
-          M11[Staff Management]
-          M12[Analytics & Reporting]
-          M13[Multi-Country & Localisation]
-          M14[Privacy & Security]
+        subgraph MBA [1) Multi-Business Architecture]
+          MBA1["Car Wash (Sedan/SUV)"]
+          MBA2["Truck Wash"]
+          MBA3["Bus Wash"]
+          MBA4["2-Wheeler Bike Wash"]
+          MBA5["Train / Metro Wash"]
+          MBA6["Any Future Type"]
         end
-        POS --- Modules
+        subgraph CAT [2) Service & Product Catalogue]
+          CAT1["Service Definition & Duration"]
+          CAT2["Site Creation & Configuration"]
+          CAT3["Service Charge Setup (per vehicle type)"]
+          CAT4["Product SKU (Chemicals, Spares)"]
+        end
+        subgraph TXN [3) Transaction Processing]
+          TXN1["EMV, Contactless, Wallets"]
+          TXN2["Fleet Account / PO"]
+          TXN3["Refund & Void"]
+          TXN4["Tip Management"]
+        end
+        subgraph DISC [4) Discounts & Promotions]
+          DISC1["Time/Peak Pricing"]
+          DISC2["Volume/Contract Discounts"]
+          DISC3["Coupon & Voucher Codes"]
+        end
+        subgraph MEM [5) Membership & Subscription]
+          MEM1["Unlimited Monthly Wash"]
+          MEM2["Punch Cards"]
+          MEM3["Family / Multi-Vehicle"]
+          MEM4["Wash Carry-Forward"]
+        end
+        subgraph SB [6) Service Books]
+          SB1["Pre-Paid Fixed Washes"]
+          SB2["Flexible Validity"]
+          SB3["Multi-Vehicle Book"]
+        end
+        subgraph WTY [7) Warranty Management]
+          WTY1["Paint Protection Warranty"]
+          WTY2["Claim Initiation"]
+        end
+        subgraph LOY [8) Loyalty]
+          LOY1["Points Engine"]
+          LOY2["Tiered Loyalty"]
+          LOY3["Partner Rewards"]
+        end
+        subgraph CASH [9) Cash Management]
+          CASH1["Drawer Operations"]
+          CASH2["Reconciliation"]
+        end
+        subgraph STAFF [10) Staff Management]
+          STAFF1["Role & Permissions"]
+          STAFF2["Commission"]
+        end
+        subgraph ANALYTICS [11) POS Analytics]
+          ANALYTICS1["Real-Time Dashboards"]
+          ANALYTICS2["Wash Volume & Revenue"]
+        end
+        subgraph LOCAL [12) Multi-Country & Localisation]
+          LOCAL1["Multi-Language/Currency"]
+          LOCAL2["Regional Tax (VAT/GST)"]
+        end
+        subgraph SEC [13) Privacy & Security]
+          SEC1["PCI-DSS"]
+          SEC2["GDPR/CCPA"]
+        end
       end
-      style POS fill:#ffe6cc,stroke:#d79b00
+      style FINANCIAL fill:#d5e8d4,stroke:#82b366
+      style INVENTORY fill:#d5e8d4,stroke:#82b366
     `,
 
     "Detailing Studios": `graph TD
-      CUSTOMER([Customer])
-      CUSTOMER --> POS
-      POS --> REPORTING([Reporting])
-      subgraph POS_Engine [POS Core]
+      CUSTOMER([Customer]) --> POS
+      POS --> FINANCIAL[Financial Tool]
+      POS --> INVENTORY[Inventory]
+      subgraph POS [POS Engine]
         direction TB
-        POS[POS Engine]
-        subgraph Modules [Active Modules]
-          M1[Multi-Business Architecture]
-          M2[Service/Product Catalogue]
-          M3[Transaction Processing]
-          M4[Discounts & Promotions]
-          M5[Membership & Subscription (mini plans)]
-          M6[Service Books]
-          M7[Warranty (Ceramic/PPF)]
-          M8[Loyalty]
-          M9[Gift Cards]
-          M10[Cash Management]
-          M11[Staff Management]
-          M12[Analytics]
-          M13[Multi-Country & Localisation]
-          M14[Privacy & Security]
+        subgraph MBA [1) Multi-Business Architecture]
+          MBA1["Detailing Studio"]
+          MBA2["PPF/Ceramic Specialist"]
+          MBA3["Mobile Detailing"]
         end
-        POS --- Modules
+        subgraph CAT [2) Service & Product Catalogue]
+          CAT1["Interior/Exterior Services"]
+          CAT2["PPF & Ceramic Coating"]
+          CAT3["Service Charge Per Job"]
+          CAT4["Consumable Products"]
+        end
+        subgraph TXN [3) Transaction Processing]
+          TXN1["Deposit & Full Payment"]
+          TXN2["Card/Wallet"]
+          TXN3["Fleet/Dealer Billing"]
+        end
+        subgraph DISC [4) Discounts & Promotions]
+          DISC1["Package Discounts"]
+          DISC2["Seasonal Offers"]
+        end
+        subgraph MEM [5) Membership & Subscription]
+          MEM1["Monthly Detailing Plan"]
+          MEM2["Annual Coating Maintenance"]
+        end
+        subgraph SB [6) Service Books]
+          SB1["Pre-Paid Detailing Packs"]
+          SB2["Flexible Validity"]
+        end
+        subgraph WTY [7) Warranty Management]
+          WTY1["Ceramic Coating 5-Year"]
+          WTY2["PPF Warranty"]
+          WTY3["Claim & Rework"]
+        end
+        subgraph LOY [8) Loyalty]
+          LOY1["Points on Detailing"]
+          LOY2["Tier Benefits"]
+        end
+        subgraph CASH [9) Cash Management]
+          CASH1["Drawer & Safe"]
+          CASH2["Reconciliation"]
+        end
+        subgraph STAFF [10) Staff Management]
+          STAFF1["Technician Roles"]
+          STAFF2["Commission on Upsell"]
+        end
+        subgraph ANALYTICS [11) POS Analytics]
+          ANALYTICS1["Service Revenue Mix"]
+          ANALYTICS2["Technician Performance"]
+        end
+        subgraph LOCAL [12) Multi-Country & Localisation]
+          LOCAL1["Local Tax & Currency"]
+        end
+        subgraph SEC [13) Privacy & Security]
+          SEC1["PCI-DSS"]
+          SEC2["Data Protection"]
+        end
       end
-      style POS fill:#ffe6cc,stroke:#d79b00
+      style FINANCIAL fill:#d5e8d4,stroke:#82b366
+      style INVENTORY fill:#d5e8d4,stroke:#82b366
     `,
 
     "Wash on the Go": `graph TD
-      CUSTOMER([Customer via App])
-      CUSTOMER --> POS
-      POS --> REPORTING([Reporting])
-      subgraph POS_Engine [POS Core]
+      CUSTOMER([Customer via App]) --> POS
+      POS --> FINANCIAL[Financial Tool]
+      POS --> INVENTORY[Inventory]
+      subgraph POS [POS Engine]
         direction TB
-        POS[POS Engine]
-        subgraph Modules [Active Modules]
-          M1[Multi-Business Architecture]
-          M2[Service/Product Catalogue]
-          M3[Transaction Processing]
-          M4[Discounts & Promotions]
-          M5[Membership & Subscription]
-          M6[Service Books]
-          M7[Warranty - limited]
-          M8[Loyalty]
-          M9[Gift Cards]
-          M10[Cash Management - optional]
-          M11[Staff Management]
-          M12[Analytics]
-          M13[Multi-Country & Localisation]
-          M14[Privacy & Security]
+        subgraph MBA [1) Multi-Business Architecture]
+          MBA1["Mobile Wash Car"]
+          MBA2["Mobile Detailing"]
+          MBA3["Fleet Mobile"]
         end
-        POS --- Modules
+        subgraph CAT [2) Service & Product Catalogue]
+          CAT1["Mobile Service Types"]
+          CAT2["Service Charge by Location"]
+          CAT3["Travel Surcharge"]
+        end
+        subgraph TXN [3) Transaction Processing]
+          TXN1["App Payment"]
+          TXN2["Mobile Wallets"]
+          TXN3["Fleet/Corporate Billing"]
+        end
+        subgraph DISC [4) Discounts & Promotions]
+          DISC1["First App Booking Offer"]
+          DISC2["Corporate Contracts"]
+        end
+        subgraph MEM [5) Membership & Subscription]
+          MEM1["Monthly Mobile Wash"]
+          MEM2["Pre-Paid Books"]
+        end
+        subgraph SB [6) Service Books]
+          SB1["Mobile Wash Packs"]
+          SB2["Flexible Time"]
+        end
+        subgraph WTY [7) Warranty]
+          WTY1["Limited Warranty"]
+        end
+        subgraph LOY [8) Loyalty]
+          LOY1["Points on App"]
+        end
+        subgraph CASH [9) Cash Management]
+          CASH1["Digital Receipts"]
+          CASH2["Driver Reconciliation"]
+        end
+        subgraph STAFF [10) Staff Management]
+          STAFF1["Mobile Technician Roles"]
+          STAFF2["Incentives"]
+        end
+        subgraph ANALYTICS [11) POS Analytics]
+          ANALYTICS1["Jobs Completed"]
+          ANALYTICS2["Revenue per Mobile Unit"]
+        end
+        subgraph LOCAL [12) Localisation]
+          LOCAL1["Multi-Currency"]
+        end
+        subgraph SEC [13) Privacy & Security]
+          SEC1["GDPR"]
+        end
       end
-      style POS fill:#ffe6cc,stroke:#d79b00
+      style FINANCIAL fill:#d5e8d4,stroke:#82b366
+      style INVENTORY fill:#d5e8d4,stroke:#82b366
     `,
 
     "Product Sales": `graph TD
-      CUSTOMER([Customer Walk-in / e-commerce])
-      CUSTOMER --> POS
-      POS --> REPORTING([Reporting])
-      subgraph POS_Engine [POS Core]
+      CUSTOMER([Customer Walk-in / Online]) --> POS
+      POS --> FINANCIAL[Financial Tool]
+      POS --> INVENTORY[Inventory]
+      subgraph POS [POS Engine]
         direction TB
-        POS[POS Engine]
-        subgraph Modules [Active Modules]
-          M1[Multi-Business Architecture]
-          M2[Product Catalogue & SKU Mgmt]
-          M3[Transaction Processing]
-          M4[Discounts & Promotions]
-          M5[Membership - rare]
-          M6[Service Books - not typical]
-          M7[Warranty (Product RMA)]
-          M8[Loyalty]
-          M9[Gift Cards]
-          M10[Cash Management]
-          M11[Staff Management]
-          M12[Analytics (Sales/Inventory)]
-          M13[Multi-Country & Localisation]
-          M14[Privacy & Security]
+        subgraph MBA [1) Multi-Business Architecture]
+          MBA1["Retail Store"]
+          MBA2["Distributor/Wholesale"]
+          MBA3["E-commerce"]
         end
-        POS --- Modules
+        subgraph CAT [2) Service & Product Catalogue]
+          CAT1["Chemical Products"]
+          CAT2["Equipment & Machinery"]
+          CAT3["Spare Parts SKUs"]
+          CAT4["Batch/Lot Tracking"]
+        end
+        subgraph TXN [3) Transaction Processing]
+          TXN1["Barcode POS"]
+          TXN2["Invoice & Bulk Order"]
+          TXN3["Returns & Exchanges"]
+        end
+        subgraph DISC [4) Discounts & Promotions]
+          DISC1["Volume Discounts"]
+          DISC2["Trade Promotions"]
+          DISC3["Coupon Codes"]
+        end
+        subgraph MEM [5) Membership - Rare]
+        end
+        subgraph SB [6) Service Books - Not applicable]
+        end
+        subgraph WTY [7) Warranty & Returns]
+          WTY1["Product Warranty"]
+          WTY2["RMA Process"]
+        end
+        subgraph LOY [8) Loyalty]
+          LOY1["Points per Purchase"]
+        end
+        subgraph CASH [9) Cash Management]
+          CASH1["Drawer & Safe"]
+          CASH2["Daily Reconciliation"]
+        end
+        subgraph STAFF [10) Staff Management]
+          STAFF1["Sales Roles"]
+          STAFF2["Commission"]
+        end
+        subgraph ANALYTICS [11) POS Analytics]
+          ANALYTICS1["Sales per Product"]
+          ANALYTICS2["Inventory Turnover"]
+        end
+        subgraph LOCAL [12) Localisation]
+          LOCAL1["Multi-Tax (VAT/GST)"]
+        end
+        subgraph SEC [13) Privacy & Security]
+          SEC1["PCI-DSS"]
+        end
       end
-      style POS fill:#ffe6cc,stroke:#d79b00
-    `,
-
-    "Unified POS (All Modules)": `graph TD
-      POS_MASTER[POS Platform]
-      subgraph All_Modules [Full Module Set]
-        A[1. Multi-Business Architecture]
-        B[2. Service & Product Catalogue]
-        C[3. Transaction Processing]
-        D[4. Discounts & Promotions]
-        E[5. Membership & Subscription]
-        F[6. Service Books]
-        G[7. Warranty Management]
-        H[8. B2B Contract Management]
-        I[9. B2G Commercial Handling]
-        J[10. Loyalty Programme]
-        K[11. Gift Cards & Vouchers]
-        L[12. Cash Management]
-        M[13. Staff Management]
-        N[14. Analytics & Reporting]
-        O[15. Multi-Country & Localisation]
-        P[16. Privacy & Security]
-      end
-      POS_MASTER --- All_Modules
-      style POS_MASTER fill:#dae8fc,stroke:#6c8ebf
+      style FINANCIAL fill:#d5e8d4,stroke:#82b366
+      style INVENTORY fill:#d5e8d4,stroke:#82b366
     `
   };
 
