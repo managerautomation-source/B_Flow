@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS Module Mapping – By Business</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
+  h1 { text-align: center; color: #222; }
+  .tabs { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .tab { background: #e0e0e0; padding: 10px 20px; margin: 5px; border-radius: 20px; cursor: pointer; font-weight: 600; color: #333; }
+  .tab.active { background: #1a73e8; color: white; }
+  .diagram-container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow-x: auto; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<h1>💳 AI-Driven POS – Module Coverage per Business</h1>
+<div class="tabs" id="tabs"></div>
+<div class="diagram-container">
+  <div class="mermaid" id="diagram"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+  mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+  const flows = {
+    "Vehicle Wash": `graph TD
+      CUSTOMER([Customer])
+      CUSTOMER --> POS
+      POS --> REPORTING([Reporting & Analytics])
+      subgraph POS_Engine [POS Core]
+        direction TB
+        POS[POS Engine]
+        subgraph Modules [Active Modules]
+          M1[Multi-Business Architecture]
+          M2[Service & Product Catalogue]
+          M3[Transaction Processing]
+          M4[Discounts & Promotions]
+          M5[Membership & Subscription]
+          M6[Service Books]
+          M7[Warranty - optional]
+          M8[Loyalty]
+          M9[Gift Cards & Vouchers]
+          M10[Cash Management]
+          M11[Staff Management]
+          M12[Analytics & Reporting]
+          M13[Multi-Country & Localisation]
+          M14[Privacy & Security]
+        end
+        POS --- Modules
+      end
+      style POS fill:#ffe6cc,stroke:#d79b00
+    `,
+
+    "Detailing Studios": `graph TD
+      CUSTOMER([Customer])
+      CUSTOMER --> POS
+      POS --> REPORTING([Reporting])
+      subgraph POS_Engine [POS Core]
+        direction TB
+        POS[POS Engine]
+        subgraph Modules [Active Modules]
+          M1[Multi-Business Architecture]
+          M2[Service/Product Catalogue]
+          M3[Transaction Processing]
+          M4[Discounts & Promotions]
+          M5[Membership & Subscription (mini plans)]
+          M6[Service Books]
+          M7[Warranty (Ceramic/PPF)]
+          M8[Loyalty]
+          M9[Gift Cards]
+          M10[Cash Management]
+          M11[Staff Management]
+          M12[Analytics]
+          M13[Multi-Country & Localisation]
+          M14[Privacy & Security]
+        end
+        POS --- Modules
+      end
+      style POS fill:#ffe6cc,stroke:#d79b00
+    `,
+
+    "Wash on the Go": `graph TD
+      CUSTOMER([Customer via App])
+      CUSTOMER --> POS
+      POS --> REPORTING([Reporting])
+      subgraph POS_Engine [POS Core]
+        direction TB
+        POS[POS Engine]
+        subgraph Modules [Active Modules]
+          M1[Multi-Business Architecture]
+          M2[Service/Product Catalogue]
+          M3[Transaction Processing]
+          M4[Discounts & Promotions]
+          M5[Membership & Subscription]
+          M6[Service Books]
+          M7[Warranty - limited]
+          M8[Loyalty]
+          M9[Gift Cards]
+          M10[Cash Management - optional]
+          M11[Staff Management]
+          M12[Analytics]
+          M13[Multi-Country & Localisation]
+          M14[Privacy & Security]
+        end
+        POS --- Modules
+      end
+      style POS fill:#ffe6cc,stroke:#d79b00
+    `,
+
+    "Product Sales": `graph TD
+      CUSTOMER([Customer Walk-in / e-commerce])
+      CUSTOMER --> POS
+      POS --> REPORTING([Reporting])
+      subgraph POS_Engine [POS Core]
+        direction TB
+        POS[POS Engine]
+        subgraph Modules [Active Modules]
+          M1[Multi-Business Architecture]
+          M2[Product Catalogue & SKU Mgmt]
+          M3[Transaction Processing]
+          M4[Discounts & Promotions]
+          M5[Membership - rare]
+          M6[Service Books - not typical]
+          M7[Warranty (Product RMA)]
+          M8[Loyalty]
+          M9[Gift Cards]
+          M10[Cash Management]
+          M11[Staff Management]
+          M12[Analytics (Sales/Inventory)]
+          M13[Multi-Country & Localisation]
+          M14[Privacy & Security]
+        end
+        POS --- Modules
+      end
+      style POS fill:#ffe6cc,stroke:#d79b00
+    `,
+
+    "Unified POS (All Modules)": `graph TD
+      POS_MASTER[POS Platform]
+      subgraph All_Modules [Full Module Set]
+        A[1. Multi-Business Architecture]
+        B[2. Service & Product Catalogue]
+        C[3. Transaction Processing]
+        D[4. Discounts & Promotions]
+        E[5. Membership & Subscription]
+        F[6. Service Books]
+        G[7. Warranty Management]
+        H[8. B2B Contract Management]
+        I[9. B2G Commercial Handling]
+        J[10. Loyalty Programme]
+        K[11. Gift Cards & Vouchers]
+        L[12. Cash Management]
+        M[13. Staff Management]
+        N[14. Analytics & Reporting]
+        O[15. Multi-Country & Localisation]
+        P[16. Privacy & Security]
+      end
+      POS_MASTER --- All_Modules
+      style POS_MASTER fill:#dae8fc,stroke:#6c8ebf
+    `
+  };
+
+  const tabContainer = document.getElementById('tabs');
+  const diagramDiv = document.getElementById('diagram');
+  let currentKey = "Vehicle Wash";
+
+  Object.keys(flows).forEach(key => {
+    const tab = document.createElement('div');
+    tab.className = 'tab';
+    tab.textContent = key;
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentKey = key;
+      diagramDiv.innerHTML = flows[key];
+      diagramDiv.removeAttribute('data-processed');
+      mermaid.run({ nodes: [diagramDiv] });
+    });
+    tabContainer.appendChild(tab);
+  });
+
+  document.querySelector('.tab').classList.add('active');
+  diagramDiv.innerHTML = flows[currentKey];
+  mermaid.run({ nodes: [diagramDiv] });
+});
+</script>
+</body>
+</html>
