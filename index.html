@@ -308,12 +308,15 @@ window.addEventListener('DOMContentLoaded', function () {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       currentKey = key;
+      // Clear and re-render
       diagramDiv.innerHTML = flows[key];
+      diagramDiv.removeAttribute('data-processed');
       mermaid.run({ nodes: [diagramDiv] });
     });
     tabContainer.appendChild(tab);
   });
 
+  // Initial render
   document.querySelector('.tab').classList.add('active');
   diagramDiv.innerHTML = flows[currentKey];
   mermaid.run({ nodes: [diagramDiv] });
