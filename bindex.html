@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Driven Operations Platform – Business Flows</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
+  h1 { text-align: center; color: #222; }
+  .tabs { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .tab { background: #e0e0e0; padding: 10px 20px; margin: 5px; border-radius: 20px; cursor: pointer; font-weight: 600; color: #333; }
+  .tab.active { background: #1a73e8; color: white; }
+  .diagram-container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow-x: auto; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<h1>🚀 AI-Driven Operations Platform<br>Step‑wise Module Flow</h1>
+<div class="tabs" id="tabs"></div>
+<div class="diagram-container">
+  <div class="mermaid" id="diagram"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+  mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+  const flows = {
+    "Vehicle Wash": `graph TD
+      subgraph Stage1["1. Vision / Scope"]
+        A1["Business Type Definition<br/>(Tunnel, Rollover, Manual, Robotics)"]
+        A2["Scale & Operating Models<br/>(COCO, Franchise, B2B)"]
+      end
+      subgraph Stage2["2. Business Development"]
+        B1["Market Scope & Intelligence"]
+        B2["Lead Management & Pipeline"]
+        B3["CRM (Unified Customer View)"]
+        B4["Marketing Automation"]
+        B5["Contract Closure (e‑sign)"]
+      end
+      subgraph Stage3["3. Site Survey & Feasibility"]
+        C1["Digital Site Assessment"]
+        C2["Infrastructure Audit (Water, Power, Drainage)"]
+        C3["ROI & Optimisation Plan"]
+      end
+      subgraph Stage4["4. Implementation"]
+        D1["Civil & Architecture Plan"]
+        D2["Manpower Plan & Recruitment"]
+        D3["Budget & CAPEX Control"]
+        D4["Equipment Installation & IoT Setup"]
+        D5["Trial Runs & Commissioning"]
+      end
+      subgraph Stage5["5. Site Operation"]
+        E1["POS & Billing"]
+        E2["Queue Management"]
+        E3["Execution (Job Cards)"]
+        E4["Post-Wash Quality"]
+        E5["Service Books & Warranty"]
+        E6["Equipment Integration & IoT"]
+        E7["Staff Productivity"]
+        E8["Idle Time & Downtime"]
+        E9["Utility Monitoring"]
+        E10["Inventory Management"]
+        E11["Vision AI & Video Intelligence"]
+        E12["SOP Management"]
+        E13["ESG Platform"]
+        E14["Revenue & Expense Management"]
+        E15["HR, IR & Admin Control"]
+        E16["Field Service (Maintenance)"]
+        E17["Accident Management"]
+        E18["Compliance Renewal"]
+        E19["SaaS Multi-Tenancy"]
+        E20["Project Management"]
+      end
+      subgraph Stage6["6. Reports & Analytics"]
+        F1["Real-Time Operational Dashboards"]
+        F2["Financial & ESG Reports"]
+        F3["Custom Report Builder & BI"]
+      end
+      Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    `,
+
+    "Detailing Studios": `graph TD
+      subgraph Stage1["1. Vision / Scope"]
+        A1["Business Type Definition<br/>(Interior, Exterior, PPF, Ceramic)"]
+        A2["Scale & Operating Models"]
+      end
+      subgraph Stage2["2. Business Development"]
+        B1["Market Scope"]
+        B2["Lead Pipeline"]
+        B3["CRM"]
+        B4["Marketing Automation"]
+        B5["Contract Closure"]
+      end
+      subgraph Stage3["3. Site Survey & Feasibility"]
+        C1["Bay Size & Lighting Assessment"]
+        C2["Environment Control Audit"]
+        C3["ROI Plan"]
+      end
+      subgraph Stage4["4. Implementation"]
+        D1["Fit-out & Lighting"]
+        D2["Manpower (Technicians)"]
+        D3["Budget"]
+        D4["Equipment Rigging (Polishers, IR Lamps)"]
+        D5["Commissioning"]
+      end
+      subgraph Stage5["5. Site Operation"]
+        E1["POS & Billing (Deposits)"]
+        E2["Booking Calendar Queue"]
+        E3["Execution (Job Cards)"]
+        E4["Quality Inspections"]
+        E5["Warranty (Ceramic/PPF)"]
+        E6["Equipment IoT"]
+        E7["Staff Productivity"]
+        E8["Idle Time & Downtime"]
+        E9["Utility Monitoring"]
+        E10["Inventory (Chemicals)"]
+        E11["Vision AI (Before/After)"]
+        E12["SOP Management"]
+        E13["ESG (VOC, Waste)"]
+        E14["Revenue & Expense"]
+        E15["HR, IR & Admin"]
+        E16["Field Service (Maint.)"]
+        E17["Accident Management"]
+        E18["Compliance Renewal"]
+        E19["SaaS / Project Mgmt"]
+      end
+      subgraph Stage6["6. Reports & Analytics"]
+        F1["Operational Dashboards"]
+        F2["Financial & ESG"]
+        F3["Custom BI"]
+      end
+      Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    `,
+
+    "Wash on the Go": `graph TD
+      subgraph Stage1["1. Vision / Scope"]
+        A1["Mobile Wash Business"]
+        A2["Operating Models"]
+      end
+      subgraph Stage2["2. Business Development"]
+        B1["Market & Leads"]
+        B2["Corporate Contracts"]
+        B3["CRM"]
+        B4["Marketing"]
+        B5["Closure"]
+      end
+      subgraph Stage3["3. Site Survey (Hub/Depot)"]
+        C1["Depot Assessment"]
+        C2["Parking & Water Supply"]
+        C3["ROI"]
+      end
+      subgraph Stage4["4. Implementation"]
+        D1["Van Kitting"]
+        D2["Hub Setup"]
+        D3["IoT Integration"]
+        D4["Commissioning"]
+      end
+      subgraph Stage5["5. Site Operation"]
+        E1["POS & Billing (App)"]
+        E2["Dispatch Queue"]
+        E3["Execution (Job Cards)"]
+        E4["On‑site Quality"]
+        E5["Service Books"]
+        E6["Mobile Equipment IoT"]
+        E7["Staff Productivity"]
+        E8["Idle Time & Downtime"]
+        E9["Utility (Fuel, Water)"]
+        E10["Inventory (Van Stock)"]
+        E11["Field Service (Maint.)"]
+        E12["SOP Management"]
+        E13["ESG Platform"]
+        E14["Revenue & Expense"]
+        E15["Accident Management"]
+        E16["Compliance Renewal"]
+        E17["SaaS / Project Mgmt"]
+      end
+      subgraph Stage6["6. Reports & Analytics"]
+        F1["Operational Dashboards"]
+        F2["Financial & ESG"]
+        F3["Custom BI"]
+      end
+      Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    `,
+
+    "Product Sales": `graph TD
+      subgraph Stage1["1. Vision / Scope"]
+        A1["Product Sales Business<br/>(Chemicals, Equipment, Spares)"]
+        A2["Operating Models"]
+      end
+      subgraph Stage2["2. Business Development"]
+        B1["Channel Leads (Distributors)"]
+        B2["CRM"]
+        B3["Marketing"]
+        B4["Contracts"]
+      end
+      subgraph Stage3["3. Site Survey (Store/Warehouse)"]
+        C1["Retail Space Audit"]
+        C2["Storage & Safety"]
+        C3["ROI"]
+      end
+      subgraph Stage4["4. Implementation"]
+        D1["Store Fit-out"]
+        D2["Shelving & POS"]
+        D3["Inventory Setup"]
+        D4["Commissioning"]
+      end
+      subgraph Stage5["5. Site Operation"]
+        E1["POS & Billing (e‑commerce)"]
+        E2["Inventory (Warehouse)"]
+        E3["Warranty & Returns"]
+        E4["Staff Productivity"]
+        E5["Revenue & Expense"]
+        E6["Field Service (Installations)"]
+        E7["Accident Management"]
+        E8["Compliance Renewal"]
+        E9["SaaS / Project Mgmt"]
+        E10["ESG (Product Lifecycle)"]
+      end
+      subgraph Stage6["6. Reports & Analytics"]
+        F1["Sales Dashboards"]
+        F2["Inventory & Financial"]
+        F3["Custom BI"]
+      end
+      Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    `,
+
+    "SaaS": `graph TD
+      subgraph Stage1["1. Platform Vision"]
+        A1["Multi‑tenant Platform"]
+        A2["Tenant & License Models"]
+      end
+      subgraph Stage2["2. Tenant Onboarding"]
+        B1["Franchisee Pipeline"]
+        B2["Tenant Configuration"]
+        B3["Access & Role Setup"]
+      end
+      subgraph Stage3["3. Template Setup"]
+        C1["Select Business Templates"]
+        C2["Feature Togging"]
+        C3["Branding & Localisation"]
+      end
+      subgraph Stage4["4. Rollout & Migration"]
+        D1["Data Migration"]
+        D2["Integration Setup"]
+        D3["User Training"]
+      end
+      subgraph Stage5["5. Platform Operations"]
+        E1["Multi‑tenant POS/Billing"]
+        E2["Central Catalogue Sync"]
+        E3["Role-based Access Control"]
+        E4["Tenant Isolation & Security"]
+        E5["Cross‑tenant Benchmarking"]
+        E6["Compliance Dashboard"]
+      end
+      subgraph Stage6["6. Analytics & Health"]
+        F1["Tenant Performance"]
+        F2["Platform Usage"]
+        F3["Revenue & Billing"]
+      end
+      Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    `,
+
+    "Complete Project Management": `graph TD
+      subgraph Stage1["1. Project Vision"]
+        A1["New Site Rollout"]
+        A2["Business Model (COCO/CODO/Franchise)"]
+      end
+      subgraph Stage2["2. Feasibility & Planning"]
+        B1["Site Survey"]
+        B2["Civil & Layout Plan"]
+        B3["Budget & Capex"]
+      end
+      subgraph Stage3["3. Design & Engineering"]
+        C1["Architecture/Engineering"]
+        C2["Equipment Specs"]
+        C3["Statutory Approvals"]
+      end
+      subgraph Stage4["4. Construction & Installation"]
+        D1["Civil Works"]
+        D2["Equipment Delivery"]
+        D3["IoT & Network Setup"]
+      end
+      subgraph Stage5["5. Commissioning"]
+        E1["Trial Runs"]
+        E2["Staff Training"]
+        E3["Handover to Operations"]
+      end
+      subgraph Stage6["6. Project Analytics"]
+        F1["Milestone Tracking"]
+        F2["Budget vs Actual"]
+        F3["Post‑launch Review"]
+      end
+      Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    `
+  };
+
+  const tabContainer = document.getElementById('tabs');
+  const diagramDiv = document.getElementById('diagram');
+  let currentKey = "Vehicle Wash";
+
+  Object.keys(flows).forEach(key => {
+    const tab = document.createElement('div');
+    tab.className = 'tab';
+    tab.textContent = key;
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentKey = key;
+      diagramDiv.innerHTML = flows[key];
+      mermaid.run({ nodes: [diagramDiv] });
+    });
+    tabContainer.appendChild(tab);
+  });
+
+  document.querySelector('.tab').classList.add('active');
+  diagramDiv.innerHTML = flows[currentKey];
+  mermaid.run({ nodes: [diagramDiv] });
+});
+</script>
+</body>
+</html>
