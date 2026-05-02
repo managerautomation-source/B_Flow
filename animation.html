@@ -3,314 +3,453 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-Driven Platform – One Platform, Every Business</title>
+<title>BlueVerse – One Platform, Every Business</title>
 <style>
-  body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a2e; color: #fff; overflow: hidden; }
-  #container { position: relative; width: 100vw; height: 100vh; }
-  .scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.6s ease; }
-  .scene.active { opacity: 1; z-index: 10; }
-  .narration { position: absolute; top: 20px; left: 20px; right: 20px; text-align: center; font-size: 1.4em; font-weight: 300; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 12px; max-width: 800px; margin: 0 auto; z-index: 20; }
-  .core { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #1e90ff, #0b2b4f); box-shadow: 0 0 30px rgba(30,144,255,0.7); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2em; color: #fff; transition: transform 0.5s; }
-  .business-box { position: absolute; padding: 10px 20px; border-radius: 10px; font-weight: 600; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.5s; opacity: 0; transform: scale(0.5); }
-  .business-box.visible { opacity: 1; transform: scale(1); }
-  .module-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .module-pill { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 15px; font-size: 0.7em; }
-  .controls { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 30; }
-  .btn { padding: 12px 30px; background: #1e90ff; color: white; border: none; border-radius: 25px; font-size: 1em; cursor: pointer; font-weight: 600; }
-  .btn:hover { background: #0f7ae5; }
-  #scene-counter { position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); font-size: 0.9em; color: #aaa; }
-  @keyframes pulse { 0% { box-shadow: 0 0 20px rgba(30,144,255,0.7); } 50% { box-shadow: 0 0 40px rgba(30,144,255,1); } 100% { box-shadow: 0 0 20px rgba(30,144,255,0.7); } }
-  .core.pulse { animation: pulse 2s infinite; }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0b1a2f;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+  #app {
+    position: relative;
+    width: 100%; height: 100%;
+  }
+  .narration-bar {
+    position: absolute;
+    top: 20px; left: 20px; right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    padding: 15px 25px;
+    border-radius: 16px;
+    font-size: 1.2em;
+    font-weight: 300;
+    text-align: center;
+    z-index: 100;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  .scene-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #1a2f44 0%, #0b1a2f 90%);
+  }
+  .core {
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #3b8cff, #0f2b5c);
+    box-shadow: 0 0 40px rgba(59,140,255,0.6);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 1.1em;
+    text-align: center;
+    color: white;
+    transition: all 0.5s ease;
+    z-index: 10;
+    position: relative;
+  }
+  .business-card {
+    position: absolute;
+    padding: 15px 25px;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 1em;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    transition: opacity 0.5s ease;
+    display: flex; flex-direction: column; align-items: center;
+    min-width: 150px;
+  }
+  .module-tag {
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    margin: 2px;
+    display: inline-block;
+  }
+  .module-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 700px;
+  }
+  .module-grid-item {
+    background: rgba(255,255,255,0.1);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 500;
+    text-align: center;
+  }
+  .controls {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 200;
+  }
+  .btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #2c5282;
+    color: white;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #1e3a5f; }
+  #scene-counter {
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85em;
+    color: #aaa;
+    z-index: 150;
+  }
+  .phone-mockup {
+    background: #fff;
+    border-radius: 20px;
+    border: 4px solid #444;
+    width: 180px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 0.8em;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
-<div id="container">
-  <!-- Core platform element (shared) -->
-  <div id="core" class="core" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:5;">Platform Core</div>
-
-  <!-- Business boxes (positioned absolutely) -->
-  <div id="biz-vehiclewash" class="business-box" style="background:#d5e8d4; color:#2b4c2b; left:15%; top:30%;">Vehicle Wash</div>
-  <div id="biz-detailing" class="business-box" style="background:#e1d5e7; color:#4b2c5e; left:70%; top:30%;">Detailing Studios</div>
-  <div id="biz-mobile" class="business-box" style="background:#ffe6cc; color:#7b4e00; left:10%; top:70%;">Wash on the Go</div>
-  <div id="biz-productsales" class="business-box" style="background:#cce5ff; color:#00407b; right:10%; top:70%;">Product Sales</div>
-  <div id="biz-saas" class="business-box" style="background:#dae8fc; color:#1e3b5a; left:75%; top:70%;">SaaS</div>
-  <div id="biz-project" class="business-box" style="background:#ffe6cc; color:#6b4c00; right:15%; top:60%;">Project Mgmt</div>
-
-  <!-- Narration text -->
-  <div id="narration" class="narration"></div>
-
-  <!-- Controls -->
+<div id="app">
+  <div class="narration-bar" id="narration"></div>
+  <div class="scene-container" id="scene"></div>
   <div id="scene-counter">Scene 1 / 15</div>
   <div class="controls">
-    <button id="prevBtn" class="btn" onclick="prevScene()">Prev</button>
-    <button id="autoBtn" class="btn" onclick="toggleAuto()">Auto Play (On)</button>
-    <button id="nextBtn" class="btn" onclick="nextScene()">Next</button>
+    <button class="btn" id="prevBtn">Prev</button>
+    <button class="btn" id="autoBtn">Auto Play (On)</button>
+    <button class="btn" id="nextBtn">Next</button>
   </div>
 </div>
 
 <script>
+const moduleList = [
+  "Multi-Business Architecture", "Service & Product Catalogue", "Transaction Processing",
+  "Discounts & Promotions", "Membership & Subscription", "Service Books",
+  "Warranty Management", "B2B Contract Management", "B2G Commercial",
+  "Loyalty", "Gift Cards & Vouchers", "Cash Management", "Staff Management",
+  "Analytics & Reporting", "Multi-Country & Localisation", "Privacy & Security",
+  "Queue Management", "Execution (Job Cards)", "Post-Wash Quality",
+  "Equipment Integration & IoT", "Staff Productivity", "Idle Time & Downtime",
+  "Utility Monitoring", "Field Service", "Inventory Management",
+  "Revenue & Expense", "Vision AI", "SOP Management", "ESG Platform",
+  "HR Management", "Industrial Relations", "Compliance Renewal",
+  "Admin Control", "Accident Management", "Project Management", "SaaS Multi-Tenancy"
+];
+
 const scenes = [
-  // Scene 1
   {
     narration: "It begins with a single, powerful operations platform – not software built for just one business, but a universal engine that can run any vehicle service operation.",
-    visual: () => {
-      document.getElementById('core').style.transform = 'translate(-50%,-50%) scale(1)';
-      document.getElementById('core').classList.add('pulse');
-      hideAllBoxes();
+    build: (container) => {
+      container.innerHTML = '';
+      let core = createCore('Platform Core', true);
+      container.appendChild(core);
     }
   },
-  // Scene 2
   {
     narration: "Configure Vehicle Wash in minutes. The system already knows exactly what a wash station needs – POS, queue management, job cards, equipment control, and even AI‑powered quality inspection.",
-    visual: () => {
-      showBox('biz-vehiclewash');
-      addModulesToBox('biz-vehiclewash', ['POS','Queue','Job Cards','Equipment IoT','Vision AI']);
+    build: (container) => {
+      container.innerHTML = '';
+      let core = createCore('Platform Core', false);
+      container.appendChild(core);
+      let card = createBusinessCard('Vehicle Wash', '#d5e8d4', '#1e3b2f');
+      placeCard(card, '20%', '30%');
+      addModules(card, ['POS','Queue','Job Cards','Equipment IoT','Vision AI']);
+      container.appendChild(card);
     }
   },
-  // Scene 3
   {
     narration: "Now add Detailing. The same Core – but the modules automatically adjust. A booking calendar instead of a drive‑thru queue, warranty management for coatings, and AI that compares before‑and‑after photos.",
-    visual: () => {
-      showBox('biz-detailing');
-      addModulesToBox('biz-detailing', ['Booking Calendar','Job Cards','Warranty','Inventory','Vision AI (Before/After)']);
+    build: (container) => {
+      container.innerHTML = '';
+      let core = createCore('Platform Core', false);
+      container.appendChild(core);
+      let card = createBusinessCard('Detailing Studios', '#e1d5e7', '#3b2e4a');
+      placeCard(card, '65%', '30%');
+      addModules(card, ['Booking Calendar','Job Cards','Warranty','Inventory','Vision AI']);
+      container.appendChild(card);
     }
   },
-  // Scene 4
   {
     narration: "Switch on mobile wash. The platform transforms into a dispatch hub – app‑based POS, real‑time technician tracking, and van inventory management – all from the same Core.",
-    visual: () => {
-      showBox('biz-mobile');
-      addModulesToBox('biz-mobile', ['App POS','Dispatch Queue','Job Cards','Utility (Fuel)','Van Inventory']);
+    build: (container) => {
+      container.innerHTML = '';
+      let core = createCore('Platform Core', false);
+      container.appendChild(core);
+      let card = createBusinessCard('Wash on the Go', '#ffe6cc', '#5c3a00');
+      placeCard(card, '15%', '65%');
+      addModules(card, ['App POS','Dispatch Queue','Job Cards','Utility','Van Inventory']);
+      container.appendChild(card);
     }
   },
-  // Scene 5
   {
     narration: "Add a product sales business. The platform becomes a full retail engine – barcode POS, bulk invoicing, inventory tracking, and product warranty – without any new software.",
-    visual: () => {
-      showBox('biz-productsales');
-      addModulesToBox('biz-productsales', ['e‑commerce POS','Warehouse Inventory','Warranty & Returns','Revenue & Expense']);
+    build: (container) => {
+      container.innerHTML = '';
+      let core = createCore('Platform Core', false);
+      container.appendChild(core);
+      let card = createBusinessCard('Product Sales', '#cce5ff', '#003b66');
+      placeCard(card, '70%', '60%');
+      addModules(card, ['e-commerce POS','Warehouse Inventory','Warranty','Revenue']);
+      container.appendChild(card);
     }
   },
-  // Scene 6
   {
     narration: "The platform itself is a SaaS product. Every business line can be deployed as an isolated tenant for franchisees or dealerships. And every new site – from survey to handover – is managed by the built‑in project management engine.",
-    visual: () => {
-      showBox('biz-saas');
-      showBox('biz-project');
-      addModulesToBox('biz-saas', ['Tenant Config','Role Access','Central Sync']);
-      addModulesToBox('biz-project', ['Site Rollout','Milestones','Budget Tracking']);
+    build: (container) => {
+      container.innerHTML = '';
+      let core = createCore('Platform Core', false);
+      container.appendChild(core);
+      let saasCard = createBusinessCard('SaaS', '#dae8fc', '#1f3b5c');
+      placeCard(saasCard, '25%', '70%');
+      addModules(saasCard, ['Tenant Config','Role Access','Central Sync']);
+      container.appendChild(saasCard);
+      let projCard = createBusinessCard('Project Mgmt', '#ffe6cc', '#5c4000');
+      placeCard(projCard, '60%', '70%');
+      addModules(projCard, ['Site Rollout','Milestones','Budget']);
+      container.appendChild(projCard);
     }
   },
-  // Scene 7
   {
     narration: "At the heart of the platform are twenty‑seven operational modules. They are never duplicated – just configured differently for each business type.",
-    visual: () => {
-      document.getElementById('core').innerHTML = '27 Modules';
-      document.getElementById('core').style.fontSize = '0.9em';
-      document.getElementById('core').style.width = '160px';
-      document.getElementById('core').style.height = '160px';
+    build: (container) => {
+      container.innerHTML = '';
+      // Only show core with "27 Modules" and a grid of module names
+      let core = createCore('27 Modules', true);
+      core.style.width = '160px'; core.style.height = '160px'; core.style.fontSize = '1em';
+      container.appendChild(core);
+      // Add grid of modules below core (slightly offset)
+      let grid = document.createElement('div');
+      grid.className = 'module-grid';
+      grid.style.marginTop = '30px';
+      moduleList.slice(0,27).forEach(name => {
+        let item = document.createElement('div');
+        item.className = 'module-grid-item';
+        item.textContent = name;
+        grid.appendChild(item);
+      });
+      container.style.flexDirection = 'column';
+      container.appendChild(grid);
     }
   },
-  // Scene 8
   {
     narration: "The same ‘Queue’ module behaves as a drive‑thru lane for a wash, a booking calendar for detailing, and a dispatch board for mobile services. Configuration, not custom code.",
-    visual: () => {
-      // visual tags flying? simplified: change text on existing boxes
-      document.getElementById('biz-vehiclewash').innerHTML = 'Vehicle Wash<br/><small>Queue = Physical Lane</small>';
-      document.getElementById('biz-detailing').innerHTML = 'Detailing<br/><small>Queue = Booking Calendar</small>';
-      document.getElementById('biz-mobile').innerHTML = 'Mobile<br/><small>Queue = Dispatch Board</small>';
+    build: (container) => {
+      container.innerHTML = '';
+      // show the core and three businesses with queue transformations
+      let core = createCore('Platform Core', false);
+      container.appendChild(core);
+      let wash = createBusinessCard('Vehicle Wash', '#d5e8d4', '#1e3b2f');
+      placeCard(wash, '15%', '25%');
+      wash.innerHTML += '<br><span style="font-size:0.7em;">Queue = Physical Lane</span>';
+      container.appendChild(wash);
+      let detail = createBusinessCard('Detailing', '#e1d5e7', '#3b2e4a');
+      placeCard(detail, '55%', '25%');
+      detail.innerHTML += '<br><span style="font-size:0.7em;">Queue = Booking Calendar</span>';
+      container.appendChild(detail);
+      let mobile = createBusinessCard('Mobile', '#ffe6cc', '#5c3a00');
+      placeCard(mobile, '35%', '65%');
+      mobile.innerHTML += '<br><span style="font-size:0.7em;">Queue = Dispatch Board</span>';
+      container.appendChild(mobile);
     }
   },
-  // Scene 9
   {
     narration: "Managers configure their business through simple admin panels – service menus, pricing, job card templates, and SOPs – all within the same platform, no developer needed.",
-    visual: () => {
-      // show a settings panel overlay
-      let panel = document.createElement('div');
-      panel.id = 'settings-panel';
-      panel.style.cssText = 'position:absolute; left:25%; top:25%; width:50%; height:50%; background:rgba(255,255,255,0.2); border-radius:15px; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:25;';
-      panel.innerHTML = '<p>⚙️ Service Catalogue</p><p>💲 Pricing Rules</p><p>📋 Job Card Templates</p><p>📖 SOPs</p>';
-      document.getElementById('container').appendChild(panel);
+    build: (container) => {
+      container.innerHTML = '';
+      let settings = document.createElement('div');
+      settings.style.cssText = 'background:rgba(255,255,255,0.15); backdrop-filter:blur(12px); padding:40px; border-radius:24px; text-align:center;';
+      settings.innerHTML = '<h2>⚙️ Admin Panel</h2><p>Service Catalogue</p><p>Pricing Rules</p><p>Job Card Templates</p><p>SOPs</p>';
+      container.appendChild(settings);
     }
   },
-  // Scene 10
   {
     narration: "Need a completely new business type? Just run the wizard – name it, select the modules it needs, and it’s instantly available across the entire platform, with all standard features ready to go.",
-    visual: () => {
-      removeElement('settings-panel');
+    build: (container) => {
+      container.innerHTML = '';
       let wizard = document.createElement('div');
-      wizard.id = 'wizard-box';
-      wizard.style.cssText = 'position:absolute; right:10%; top:20%; background:#fff; color:#000; padding:20px; border-radius:12px; z-index:25;';
-      wizard.innerHTML = '<h3>Add Business Type</h3><p>Oil Change Service</p><button style="background:#1e90ff;color:#fff;border:none;padding:5px 15px;border-radius:10px;">Create</button>';
-      document.getElementById('container').appendChild(wizard);
-      // show new slot
+      wizard.style.cssText = 'background:white; color:#000; padding:30px; border-radius:20px; text-align:center;';
+      wizard.innerHTML = '<h2>Add Business Type</h2><p>Oil Change Service</p><p style="font-size:0.8em;">Select modules...</p><button style="background:#1e90ff;color:white;border:none;padding:8px 20px;border-radius:20px;">Create</button>';
+      container.appendChild(wizard);
     }
   },
-  // Scene 11
   {
     narration: "Scale from one site to a thousand, across fifty countries. Every location, every business type, all orchestrated from the same central platform.",
-    visual: () => {
-      removeElement('wizard-box');
-      document.getElementById('core').style.transform = 'translate(-50%,-50%) scale(0.8)';
-      // add world map dots
-      for(let i=0; i<5; i++) {
+    build: (container) => {
+      container.innerHTML = '';
+      // world map effect with glowing dots
+      let core = createCore('Platform Core', false);
+      container.appendChild(core);
+      for(let i=0; i<8; i++) {
         let dot = document.createElement('div');
-        dot.className = 'world-dot';
-        dot.style.cssText = `position:absolute; width:12px; height:12px; background:#1e90ff; border-radius:50%; left:${20+Math.random()*60}%; top:${20+Math.random()*60}%; box-shadow:0 0 12px #1e90ff;`;
-        document.getElementById('container').appendChild(dot);
+        dot.style.cssText = `position:absolute; width:12px; height:12px; border-radius:50%; background:#1e90ff; box-shadow:0 0 12px #1e90ff; left:${10+Math.random()*80}%; top:${10+Math.random()*80}%;`;
+        container.appendChild(dot);
       }
     }
   },
-  // Scene 12
   {
     narration: "Leaders get a unified operations view – real‑time dashboards, cross‑business analytics, and automated reporting for every site and every business line.",
-    visual: () => {
-      // split screen dashboards
-      let dashLeft = document.createElement('div');
-      dashLeft.style.cssText = 'position:absolute; left:5%; top:25%; width:40%; height:45%; background:rgba(0,0,0,0.7); border-radius:12px; display:flex; align-items:center; justify-content:center;';
-      dashLeft.innerHTML = '📊 Operations Dashboard';
-      document.getElementById('container').appendChild(dashLeft);
-      let dashRight = document.createElement('div');
-      dashRight.style.cssText = 'position:absolute; right:5%; top:25%; width:40%; height:45%; background:rgba(0,0,0,0.7); border-radius:12px; display:flex; align-items:center; justify-content:center;';
-      dashRight.innerHTML = '📈 Reports & Analytics';
-      document.getElementById('container').appendChild(dashRight);
+    build: (container) => {
+      container.innerHTML = '';
+      let left = document.createElement('div');
+      left.style.cssText = 'background:rgba(0,0,0,0.6); border-radius:16px; padding:20px; margin:0 20px; text-align:center; width:250px;';
+      left.innerHTML = '📊 Operations Dashboard';
+      container.appendChild(left);
+      let right = document.createElement('div');
+      right.style.cssText = 'background:rgba(0,0,0,0.6); border-radius:16px; padding:20px; margin:0 20px; text-align:center; width:250px;';
+      right.innerHTML = '📈 Reports & Analytics';
+      container.appendChild(right);
     }
   },
-  // Scene 13
   {
     narration: "And customers see none of the complexity – they just open one app, book anything, anywhere, and the platform orchestrates it all.",
-    visual: () => {
-      clearExtraContainers();
+    build: (container) => {
+      container.innerHTML = '';
       let phone = document.createElement('div');
-      phone.style.cssText = 'position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:200px; height:350px; background:#fff; border-radius:20px; border:5px solid #333; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#000;';
-      phone.innerHTML = '<p>📱 BlueVerse App</p><p>Wash</p><p>Detailing</p><p>Mobile Booking</p><p>Shop</p>';
-      document.getElementById('container').appendChild(phone);
+      phone.className = 'phone-mockup';
+      phone.innerHTML = '<strong>BlueVerse</strong><br>Wash<br>Detailing<br>Mobile Booking<br>Shop';
+      container.appendChild(phone);
     }
   },
-  // Scene 14
   {
     narration: "An AI‑driven operations platform that builds once and runs any mobility service business, at any scale, anywhere in the world.",
-    visual: () => {
-      clearExtraContainers();
-      document.getElementById('core').style.transform = 'translate(-50%,-50%) scale(1.5)';
-      document.getElementById('core').innerHTML = 'AI Platform';
+    build: (container) => {
+      container.innerHTML = '';
+      let core = createCore('AI Platform', true);
+      core.style.width = '160px'; core.style.height = '160px';
+      container.appendChild(core);
     }
   },
-  // Scene 15
   {
     narration: "BlueVerse – www.blueverse.com",
-    visual: () => {
-      // final logo
+    build: (container) => {
+      container.innerHTML = '';
       let logo = document.createElement('div');
-      logo.style.cssText = 'position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:3em; font-weight:bold; color:#1e90ff;';
-      logo.innerHTML = 'BlueVerse';
-      document.getElementById('container').appendChild(logo);
-      document.getElementById('core').style.display = 'none';
+      logo.style.cssText = 'font-size:3.5em; font-weight:bold; color:#1e90ff; text-shadow:0 0 20px rgba(30,144,255,0.7);';
+      logo.textContent = 'BlueVerse';
+      container.appendChild(logo);
     }
   }
 ];
 
-let currentScene = 0;
-let autoPlayInterval = null;
-let autoPlay = true;
-
-function hideAllBoxes() {
-  document.querySelectorAll('.business-box').forEach(b => b.classList.remove('visible'));
-  document.getElementById('core').style.transform = 'translate(-50%,-50%) scale(1)';
-  document.getElementById('core').style.width = '120px';
-  document.getElementById('core').style.height = '120px';
-  document.getElementById('core').innerHTML = 'Platform Core';
-  document.getElementById('core').style.fontSize = '1.2em';
-  clearExtraContainers();
+function createCore(text, pulse = false) {
+  let core = document.createElement('div');
+  core.className = 'core';
+  if(pulse) core.classList.add('pulse');
+  core.textContent = text;
+  return core;
 }
 
-function showBox(id) {
-  document.getElementById(id).classList.add('visible');
+function createBusinessCard(title, bgColor, textColor) {
+  let card = document.createElement('div');
+  card.className = 'business-card';
+  card.style.background = bgColor + 'cc';
+  card.style.color = textColor;
+  card.innerHTML = `<strong>${title}</strong>`;
+  return card;
 }
 
-function addModulesToBox(id, modules) {
-  let box = document.getElementById(id);
-  // remove old module pills if any
-  let existing = box.querySelector('.module-pills');
-  if (existing) existing.remove();
-  let pillsDiv = document.createElement('div');
-  pillsDiv.className = 'module-pills';
+function placeCard(card, left, top) {
+  card.style.left = left;
+  card.style.top = top;
+}
+
+function addModules(card, modules) {
+  let div = document.createElement('div');
+  div.style.display = 'flex'; div.style.flexWrap = 'wrap'; div.style.justifyContent = 'center'; div.style.marginTop = '8px';
   modules.forEach(m => {
     let span = document.createElement('span');
-    span.className = 'module-pill';
+    span.className = 'module-tag';
     span.textContent = m;
-    pillsDiv.appendChild(span);
+    div.appendChild(span);
   });
-  box.appendChild(pillsDiv);
+  card.appendChild(div);
 }
 
-function removeElement(id) {
-  let el = document.getElementById(id);
-  if (el) el.remove();
+let current = 0;
+let autoplay = true;
+let interval;
+
+const narrationEl = document.getElementById('narration');
+const sceneEl = document.getElementById('scene');
+const counterEl = document.getElementById('scene-counter');
+const autoBtn = document.getElementById('autoBtn');
+
+function renderScene(idx) {
+  narrationEl.textContent = scenes[idx].narration;
+  counterEl.textContent = `Scene ${idx+1} / ${scenes.length}`;
+  // Reset scene container flex direction to row
+  sceneEl.style.flexDirection = 'row';
+  scenes[idx].build(sceneEl);
 }
 
-function clearExtraContainers() {
-  // remove everything except core, business boxes, narration, controls
-  document.querySelectorAll('.world-dot, #settings-panel, #wizard-box, #dash-left, #dash-right, #phone, #logo-final').forEach(el => el.remove());
-  // also remove dash divs added dynamically
-  document.querySelectorAll('div').forEach(d => {
-    if (d.id === '' && d.style.position === 'absolute' && d.style.background && d.style.background.includes('rgba(0,0,0')) {
-      d.remove();
-    }
-  });
-}
-
-function updateScene() {
-  document.getElementById('narration').textContent = scenes[currentScene].narration;
-  document.getElementById('scene-counter').textContent = `Scene ${currentScene+1} / ${scenes.length}`;
-  scenes[currentScene].visual();
-}
-
-function nextScene() {
-  if (currentScene < scenes.length-1) {
-    currentScene++;
-    updateScene();
+function next() {
+  if (current < scenes.length-1) {
+    current++;
+    renderScene(current);
   }
 }
 
-function prevScene() {
-  if (currentScene > 0) {
-    currentScene--;
-    updateScene();
+function prev() {
+  if (current > 0) {
+    current--;
+    renderScene(current);
   }
 }
 
 function toggleAuto() {
-  autoPlay = !autoPlay;
-  let btn = document.getElementById('autoBtn');
-  if (autoPlay) {
-    btn.textContent = 'Auto Play (On)';
-    startAutoPlay();
-  } else {
-    btn.textContent = 'Auto Play (Off)';
-    stopAutoPlay();
-  }
+  autoplay = !autoplay;
+  autoBtn.textContent = autoplay ? 'Auto Play (On)' : 'Auto Play (Off)';
+  if (autoplay) startAuto();
+  else clearInterval(interval);
 }
 
-function startAutoPlay() {
-  stopAutoPlay();
-  autoPlayInterval = setInterval(() => {
-    if (currentScene < scenes.length-1) {
-      currentScene++;
-      updateScene();
+function startAuto() {
+  clearInterval(interval);
+  interval = setInterval(() => {
+    if (current < scenes.length-1) {
+      current++;
+      renderScene(current);
     } else {
-      stopAutoPlay();
+      clearInterval(interval);
     }
-  }, 7000);
+  }, 8000);
 }
 
-function stopAutoPlay() {
-  if (autoPlayInterval) clearInterval(autoPlayInterval);
-}
+document.getElementById('nextBtn').addEventListener('click', next);
+document.getElementById('prevBtn').addEventListener('click', prev);
+autoBtn.addEventListener('click', toggleAuto);
 
 // Initialise
-updateScene();
-startAutoPlay();
+renderScene(0);
+startAuto();
 </script>
 </body>
 </html>
