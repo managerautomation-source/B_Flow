@@ -26,7 +26,7 @@
 window.addEventListener('DOMContentLoaded', function () {
   mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-  // ─────────── 1) VEHICLE WASH ───────────
+  // ─────────── VEHICLE WASH ───────────
   const vehicleWash = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -60,21 +60,21 @@ window.addEventListener('DOMContentLoaded', function () {
       M18["Consent & Sign-off"]
     end
     subgraph Analytics ["6) Analytics & Reports"]
-      direction TB
-      A1["Sales Dashboard (Revenue, Volume, AOV)"]
-      A2["Payment Mix & Cash Reconciliation"]
-      A3["Membership / Subscription Reports (Signups, Churn, Usage)"]
-      A4["Service Book Redemption & Expiry"]
-      A5["Contract & Fleet Usage, Tier Achievement"]
-      A6["Discount & Promotion Performance"]
-      A7["Loyalty Points Accrual/Redemption"]
-      A8["Gift Card Sales & Liability"]
-      A9["Staff Commission & Performance"]
-      A10["Warranty Claims & Rework Rate"]
-      A11["Job Lifecycle Analytics (Avg Duration, Stage Times)"]
-      A12["Machine Command Logs & Bank Reconciliation"]
-      A13["Referral & Affiliate Dashboard (Clicks, Conversions, CPA)"]
-      A14["Consent & Digital Sign-off Audit Trail"]
+      direction LR
+      A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
+      A2["Payment Mix &<br/>Cash Reconciliation"]
+      A3["Membership/Subscription<br/>Signups, Churn, Usage"]
+      A4["Service Book<br/>Redemption & Expiry"]
+      A5["Contract & Fleet<br/>Usage, Tier Achievement"]
+      A6["Discount & Promotion<br/>Performance"]
+      A7["Loyalty Points<br/>Accrual/Redemption"]
+      A8["Gift Card Sales<br/>& Liability"]
+      A9["Staff Commission<br/>& Performance"]
+      A10["Warranty Claims<br/>& Rework Rate"]
+      A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
+      A12["Machine Logs &<br/>Bank Reconciliation"]
+      A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
+      A14["Consent & Sign-off<br/>Audit Trail"]
     end
     Core --> Catalogue --> Sales
     Sales --> Integration
@@ -90,7 +90,7 @@ window.addEventListener('DOMContentLoaded', function () {
     style Analytics fill:#e1d5e7,stroke:#9673a6
   `;
 
-  // ─────────── 2) DETAILING STUDIOS ───────────
+  // ─────────── DETAILING STUDIOS ───────────
   const detailing = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -124,21 +124,21 @@ window.addEventListener('DOMContentLoaded', function () {
       M18["Consent & Sign-off"]
     end
     subgraph Analytics ["6) Analytics & Reports"]
-      direction TB
-      A1["Sales Dashboard (Revenue, Volume, AOV)"]
-      A2["Payment Mix & Cash Reconciliation"]
-      A3["Membership / Subscription Reports (Signups, Churn, Usage)"]
-      A4["Service Book Redemption & Expiry"]
-      A5["Contract & Fleet Usage, Tier Achievement"]
-      A6["Discount & Promotion Performance"]
-      A7["Loyalty Points Accrual/Redemption"]
-      A8["Gift Card Sales & Liability"]
-      A9["Staff Commission & Performance"]
-      A10["Warranty Claims & Rework Rate"]
-      A11["Job Lifecycle Analytics (Avg Duration, Stage Times)"]
-      A12["Machine Command Logs & Bank Reconciliation"]
-      A13["Referral & Affiliate Dashboard (Clicks, Conversions, CPA)"]
-      A14["Consent & Digital Sign-off Audit Trail"]
+      direction LR
+      A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
+      A2["Payment Mix &<br/>Cash Reconciliation"]
+      A3["Membership/Subscription<br/>Signups, Churn, Usage"]
+      A4["Service Book<br/>Redemption & Expiry"]
+      A5["Contract & Fleet<br/>Usage, Tier Achievement"]
+      A6["Discount & Promotion<br/>Performance"]
+      A7["Loyalty Points<br/>Accrual/Redemption"]
+      A8["Gift Card Sales<br/>& Liability"]
+      A9["Staff Commission<br/>& Performance"]
+      A10["Warranty Claims<br/>& Rework Rate"]
+      A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
+      A12["Machine Logs &<br/>Bank Reconciliation"]
+      A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
+      A14["Consent & Sign-off<br/>Audit Trail"]
     end
     Core --> Catalogue --> Sales
     Sales --> Integration
@@ -154,7 +154,7 @@ window.addEventListener('DOMContentLoaded', function () {
     style Analytics fill:#e1d5e7,stroke:#9673a6
   `;
 
-  // ─────────── 3) WASH ON THE GO ───────────
+  // ─────────── WASH ON THE GO ───────────
   const mobile = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -188,21 +188,21 @@ window.addEventListener('DOMContentLoaded', function () {
       M18["Consent & Sign-off"]
     end
     subgraph Analytics ["6) Analytics & Reports"]
-      direction TB
-      A1["Sales Dashboard (Revenue, Volume, AOV)"]
-      A2["Payment Mix & Cash Reconciliation"]
-      A3["Membership / Subscription Reports (Signups, Churn, Usage)"]
-      A4["Service Book Redemption & Expiry"]
-      A5["Contract & Fleet Usage, Tier Achievement"]
-      A6["Discount & Promotion Performance"]
-      A7["Loyalty Points Accrual/Redemption"]
-      A8["Gift Card Sales & Liability"]
-      A9["Staff Commission & Performance"]
-      A10["Warranty Claims & Rework Rate"]
-      A11["Job Lifecycle Analytics (Avg Duration, Stage Times)"]
-      A12["Machine Command Logs & Bank Reconciliation"]
-      A13["Referral & Affiliate Dashboard (Clicks, Conversions, CPA)"]
-      A14["Consent & Digital Sign-off Audit Trail"]
+      direction LR
+      A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
+      A2["Payment Mix &<br/>Cash Reconciliation"]
+      A3["Membership/Subscription<br/>Signups, Churn, Usage"]
+      A4["Service Book<br/>Redemption & Expiry"]
+      A5["Contract & Fleet<br/>Usage, Tier Achievement"]
+      A6["Discount & Promotion<br/>Performance"]
+      A7["Loyalty Points<br/>Accrual/Redemption"]
+      A8["Gift Card Sales<br/>& Liability"]
+      A9["Staff Commission<br/>& Performance"]
+      A10["Warranty Claims<br/>& Rework Rate"]
+      A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
+      A12["Machine Logs &<br/>Bank Reconciliation"]
+      A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
+      A14["Consent & Sign-off<br/>Audit Trail"]
     end
     Core --> Catalogue --> Sales
     Sales --> Integration
@@ -218,7 +218,7 @@ window.addEventListener('DOMContentLoaded', function () {
     style Analytics fill:#e1d5e7,stroke:#9673a6
   `;
 
-  // ─────────── 4) PRODUCT SALES (different modules) ───────────
+  // ─────────── PRODUCT SALES (different modules) ───────────
   const productSales = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -251,21 +251,21 @@ window.addEventListener('DOMContentLoaded', function () {
       M18["Consent & Sign-off"]
     end
     subgraph Analytics ["6) Analytics & Reports"]
-      direction TB
-      A1["Sales Dashboard (Revenue, Volume, AOV)"]
-      A2["Payment Mix & Cash Reconciliation"]
-      A3["Discount & Promotion Performance"]
-      A4["Loyalty Points Accrual/Redemption"]
-      A5["Gift Card Sales & Liability"]
-      A6["Staff Commission & Performance"]
-      A7["Warranty Claims & Returns"]
-      A8["Job Lifecycle Analytics (Avg Duration, Stage Times)"]
-      A9["Machine Command Logs & Bank Reconciliation"]
-      A10["Referral & Affiliate Dashboard (Clicks, Conversions, CPA)"]
-      A11["Consent & Digital Sign-off Audit Trail"]
-      A12["E‑commerce Analytics (Conversion Rate, Cart Abandonment)"]
-      A13["Inventory Turnover & Stock Health"]
-      A14["B2B Contract Fulfillment & Usage"]
+      direction LR
+      A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
+      A2["Payment Mix &<br/>Cash Reconciliation"]
+      A3["Discount & Promotion<br/>Performance"]
+      A4["Loyalty Points<br/>Accrual/Redemption"]
+      A5["Gift Card Sales<br/>& Liability"]
+      A6["Staff Commission<br/>& Performance"]
+      A7["Warranty Claims<br/>& Returns"]
+      A8["Job Lifecycle<br/>Avg Duration, Stage Times"]
+      A9["Machine Logs &<br/>Bank Reconciliation"]
+      A10["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
+      A11["Consent & Sign-off<br/>Audit Trail"]
+      A12["E‑commerce Analytics<br/>Conversion Rate, Cart Abandonment"]
+      A13["Inventory Turnover<br/>& Stock Health"]
+      A14["B2B Contract<br/>Fulfillment & Usage"]
     end
     Core --> Catalogue --> Sales
     Sales --> Integration
