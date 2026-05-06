@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master POS FRD – Business‑Specific Module Coverage (Re‑organised)</title>
+<title>Master POS FRD – Business‑Specific (Tailored) Module Coverage</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>💳 Business‑Specific POS Module Coverage (5 Flows)</h1>
+<h1>💳 Business‑Specific POS Module Coverage (5 Flows, Tailored)</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -26,8 +26,8 @@
 window.addEventListener('DOMContentLoaded', function () {
   mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-  // Base diagram structure – each business type uses the same categorisation
-  const baseDiagram = `flowchart TD
+  // ── 1) VEHICLE WASH ──
+  const vehicleWash = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
       M15["Multi-Country & Localisation"]
@@ -46,6 +46,8 @@ window.addEventListener('DOMContentLoaded', function () {
       M11["Gift Cards & Vouchers"]
       M12["Cash Management"]
       M_comm["Commission Mgmt"]
+      M_aff["Affiliate Management"]
+      M_ref["Refer & Earn"]
       M14["POS Analytics"]
     end
     subgraph Integration ["4) Integration & Job Lifecycle"]
@@ -67,12 +69,139 @@ window.addEventListener('DOMContentLoaded', function () {
     style AfterSales fill:#fff2cc,stroke:#d6b656
   `;
 
-  // Each business uses the same base diagram
+  // ── 2) DETAILING STUDIOS ──
+  const detailing = `flowchart TD
+    subgraph Core ["1) Core Setup"]
+      M1["Multi-Business Architecture"]
+      M15["Multi-Country & Localisation"]
+      M16["Privacy & Security"]
+    end
+    subgraph Catalogue ["2) Catalogue & Pricing"]
+      M2["Service & Product Catalogue"]
+      M4["Discounts & Promotions"]
+    end
+    subgraph Sales ["3) Sales & Payments"]
+      M3["Transaction Processing"]
+      M5["Membership & Subscription"]
+      M6["Service Books"]
+      M8["B2B Contract Management"]
+      M10["Loyalty Programme"]
+      M11["Gift Cards & Vouchers"]
+      M12["Cash Management"]
+      M_comm["Commission Mgmt"]
+      M_aff["Affiliate Management"]
+      M_ref["Refer & Earn"]
+      M14["POS Analytics"]
+    end
+    subgraph Integration ["4) Integration & Job Lifecycle"]
+      M19["Integrations Hub"]
+      M20["Job Card Lifecycle"]
+      M13["Staff Management"]
+    end
+    subgraph AfterSales ["5) After-Sales & Warranty"]
+      M7["Warranty Management"]
+      M18["Consent & Sign-off"]
+    end
+    Core --> Catalogue --> Sales
+    Sales --> Integration
+    Sales --> AfterSales
+    style Core fill:#dae8fc,stroke:#6c8ebf
+    style Catalogue fill:#d5e8d4,stroke:#82b366
+    style Sales fill:#ffe6cc,stroke:#d79b00
+    style Integration fill:#d4e6f1,stroke:#2980b9
+    style AfterSales fill:#fff2cc,stroke:#d6b656
+  `;
+
+  // ── 3) WASH ON THE GO ──
+  const mobile = `flowchart TD
+    subgraph Core ["1) Core Setup"]
+      M1["Multi-Business Architecture"]
+      M15["Multi-Country & Localisation"]
+      M16["Privacy & Security"]
+    end
+    subgraph Catalogue ["2) Catalogue & Pricing"]
+      M2["Service & Product Catalogue"]
+      M4["Discounts & Promotions"]
+    end
+    subgraph Sales ["3) Sales & Payments"]
+      M3["Transaction Processing"]
+      M5["Membership & Subscription"]
+      M6["Service Books"]
+      M8["B2B Contract Management"]
+      M10["Loyalty Programme"]
+      M11["Gift Cards & Vouchers"]
+      M12["Cash Management"]
+      M_comm["Commission Mgmt"]
+      M_aff["Affiliate Management"]
+      M_ref["Refer & Earn"]
+      M14["POS Analytics"]
+    end
+    subgraph Integration ["4) Integration & Job Lifecycle"]
+      M19["Integrations Hub"]
+      M20["Job Card Lifecycle"]
+      M13["Staff Management"]
+    end
+    subgraph AfterSales ["5) After-Sales & Warranty"]
+      M7["Warranty Management"]
+      M18["Consent & Sign-off"]
+    end
+    Core --> Catalogue --> Sales
+    Sales --> Integration
+    Sales --> AfterSales
+    style Core fill:#dae8fc,stroke:#6c8ebf
+    style Catalogue fill:#d5e8d4,stroke:#82b366
+    style Sales fill:#ffe6cc,stroke:#d79b00
+    style Integration fill:#d4e6f1,stroke:#2980b9
+    style AfterSales fill:#fff2cc,stroke:#d6b656
+  `;
+
+  // ── 4) PRODUCT SALES ── (different set)
+  const productSales = `flowchart TD
+    subgraph Core ["1) Core Setup"]
+      M1["Multi-Business Architecture"]
+      M15["Multi-Country & Localisation"]
+      M16["Privacy & Security"]
+    end
+    subgraph Catalogue ["2) Catalogue & Pricing"]
+      M2["Service & Product Catalogue"]
+      M4["Discounts & Promotions"]
+    end
+    subgraph Sales ["3) Sales & Payments"]
+      M3["Transaction Processing"]
+      M17["E-commerce / Digital Sales"]
+      M8["B2B Contract Management"]
+      M10["Loyalty Programme"]
+      M11["Gift Cards & Vouchers"]
+      M12["Cash Management"]
+      M_comm["Commission Mgmt"]
+      M_aff["Affiliate Management"]
+      M_ref["Refer & Earn"]
+      M14["POS Analytics"]
+    end
+    subgraph Integration ["4) Integration & Job Lifecycle"]
+      M19["Integrations Hub"]
+      M20["Job Card Lifecycle"]
+      M13["Staff Management"]
+    end
+    subgraph AfterSales ["5) After-Sales & Warranty"]
+      M7["Warranty Management"]
+      M18["Consent & Sign-off"]
+    end
+    Core --> Catalogue --> Sales
+    Sales --> Integration
+    Sales --> AfterSales
+    style Core fill:#dae8fc,stroke:#6c8ebf
+    style Catalogue fill:#d5e8d4,stroke:#82b366
+    style Sales fill:#ffe6cc,stroke:#d79b00
+    style Integration fill:#d4e6f1,stroke:#2980b9
+    style AfterSales fill:#fff2cc,stroke:#d6b656
+  `;
+
   const flows = {
-    "Vehicle Wash": baseDiagram,
-    "Detailing Studios": baseDiagram,
-    "Wash on the Go": baseDiagram,
-    "Product Sales": baseDiagram
+    "Vehicle Wash": vehicleWash,
+    "Detailing Studios": detailing,
+    "Wash on the Go": mobile,
+    "Product Sales": productSales
   };
 
   const tabContainer = document.getElementById('tabs');
