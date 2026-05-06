@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master POS FRD – Business‑Specific (Tailored) Module Coverage</title>
+<title>Master POS FRD – 6‑Flow Business‑Specific Module Coverage</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>💳 Business‑Specific POS Module Coverage (5 Flows, Tailored)</h1>
+<h1>💳 Business‑Specific POS Module Coverage (6 Flows)</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -26,7 +26,7 @@
 window.addEventListener('DOMContentLoaded', function () {
   mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-  // ── 1) VEHICLE WASH ──
+  // ─────────── 1) VEHICLE WASH ───────────
   const vehicleWash = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -59,17 +59,38 @@ window.addEventListener('DOMContentLoaded', function () {
       M7["Warranty Management"]
       M18["Consent & Sign-off"]
     end
+    subgraph Analytics ["6) Analytics & Reports"]
+      direction TB
+      A1["Sales Dashboard (Revenue, Volume, AOV)"]
+      A2["Payment Mix & Cash Reconciliation"]
+      A3["Membership / Subscription Reports (Signups, Churn, Usage)"]
+      A4["Service Book Redemption & Expiry"]
+      A5["Contract & Fleet Usage, Tier Achievement"]
+      A6["Discount & Promotion Performance"]
+      A7["Loyalty Points Accrual/Redemption"]
+      A8["Gift Card Sales & Liability"]
+      A9["Staff Commission & Performance"]
+      A10["Warranty Claims & Rework Rate"]
+      A11["Job Lifecycle Analytics (Avg Duration, Stage Times)"]
+      A12["Machine Command Logs & Bank Reconciliation"]
+      A13["Referral & Affiliate Dashboard (Clicks, Conversions, CPA)"]
+      A14["Consent & Digital Sign-off Audit Trail"]
+    end
     Core --> Catalogue --> Sales
     Sales --> Integration
     Sales --> AfterSales
+    Sales --> Analytics
+    Integration --> Analytics
+    AfterSales --> Analytics
     style Core fill:#dae8fc,stroke:#6c8ebf
     style Catalogue fill:#d5e8d4,stroke:#82b366
     style Sales fill:#ffe6cc,stroke:#d79b00
     style Integration fill:#d4e6f1,stroke:#2980b9
     style AfterSales fill:#fff2cc,stroke:#d6b656
+    style Analytics fill:#e1d5e7,stroke:#9673a6
   `;
 
-  // ── 2) DETAILING STUDIOS ──
+  // ─────────── 2) DETAILING STUDIOS ───────────
   const detailing = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -102,17 +123,38 @@ window.addEventListener('DOMContentLoaded', function () {
       M7["Warranty Management"]
       M18["Consent & Sign-off"]
     end
+    subgraph Analytics ["6) Analytics & Reports"]
+      direction TB
+      A1["Sales Dashboard (Revenue, Volume, AOV)"]
+      A2["Payment Mix & Cash Reconciliation"]
+      A3["Membership / Subscription Reports (Signups, Churn, Usage)"]
+      A4["Service Book Redemption & Expiry"]
+      A5["Contract & Fleet Usage, Tier Achievement"]
+      A6["Discount & Promotion Performance"]
+      A7["Loyalty Points Accrual/Redemption"]
+      A8["Gift Card Sales & Liability"]
+      A9["Staff Commission & Performance"]
+      A10["Warranty Claims & Rework Rate"]
+      A11["Job Lifecycle Analytics (Avg Duration, Stage Times)"]
+      A12["Machine Command Logs & Bank Reconciliation"]
+      A13["Referral & Affiliate Dashboard (Clicks, Conversions, CPA)"]
+      A14["Consent & Digital Sign-off Audit Trail"]
+    end
     Core --> Catalogue --> Sales
     Sales --> Integration
     Sales --> AfterSales
+    Sales --> Analytics
+    Integration --> Analytics
+    AfterSales --> Analytics
     style Core fill:#dae8fc,stroke:#6c8ebf
     style Catalogue fill:#d5e8d4,stroke:#82b366
     style Sales fill:#ffe6cc,stroke:#d79b00
     style Integration fill:#d4e6f1,stroke:#2980b9
     style AfterSales fill:#fff2cc,stroke:#d6b656
+    style Analytics fill:#e1d5e7,stroke:#9673a6
   `;
 
-  // ── 3) WASH ON THE GO ──
+  // ─────────── 3) WASH ON THE GO ───────────
   const mobile = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -145,17 +187,38 @@ window.addEventListener('DOMContentLoaded', function () {
       M7["Warranty Management"]
       M18["Consent & Sign-off"]
     end
+    subgraph Analytics ["6) Analytics & Reports"]
+      direction TB
+      A1["Sales Dashboard (Revenue, Volume, AOV)"]
+      A2["Payment Mix & Cash Reconciliation"]
+      A3["Membership / Subscription Reports (Signups, Churn, Usage)"]
+      A4["Service Book Redemption & Expiry"]
+      A5["Contract & Fleet Usage, Tier Achievement"]
+      A6["Discount & Promotion Performance"]
+      A7["Loyalty Points Accrual/Redemption"]
+      A8["Gift Card Sales & Liability"]
+      A9["Staff Commission & Performance"]
+      A10["Warranty Claims & Rework Rate"]
+      A11["Job Lifecycle Analytics (Avg Duration, Stage Times)"]
+      A12["Machine Command Logs & Bank Reconciliation"]
+      A13["Referral & Affiliate Dashboard (Clicks, Conversions, CPA)"]
+      A14["Consent & Digital Sign-off Audit Trail"]
+    end
     Core --> Catalogue --> Sales
     Sales --> Integration
     Sales --> AfterSales
+    Sales --> Analytics
+    Integration --> Analytics
+    AfterSales --> Analytics
     style Core fill:#dae8fc,stroke:#6c8ebf
     style Catalogue fill:#d5e8d4,stroke:#82b366
     style Sales fill:#ffe6cc,stroke:#d79b00
     style Integration fill:#d4e6f1,stroke:#2980b9
     style AfterSales fill:#fff2cc,stroke:#d6b656
+    style Analytics fill:#e1d5e7,stroke:#9673a6
   `;
 
-  // ── 4) PRODUCT SALES ── (different set)
+  // ─────────── 4) PRODUCT SALES (different modules) ───────────
   const productSales = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -187,14 +250,35 @@ window.addEventListener('DOMContentLoaded', function () {
       M7["Warranty Management"]
       M18["Consent & Sign-off"]
     end
+    subgraph Analytics ["6) Analytics & Reports"]
+      direction TB
+      A1["Sales Dashboard (Revenue, Volume, AOV)"]
+      A2["Payment Mix & Cash Reconciliation"]
+      A3["Discount & Promotion Performance"]
+      A4["Loyalty Points Accrual/Redemption"]
+      A5["Gift Card Sales & Liability"]
+      A6["Staff Commission & Performance"]
+      A7["Warranty Claims & Returns"]
+      A8["Job Lifecycle Analytics (Avg Duration, Stage Times)"]
+      A9["Machine Command Logs & Bank Reconciliation"]
+      A10["Referral & Affiliate Dashboard (Clicks, Conversions, CPA)"]
+      A11["Consent & Digital Sign-off Audit Trail"]
+      A12["E‑commerce Analytics (Conversion Rate, Cart Abandonment)"]
+      A13["Inventory Turnover & Stock Health"]
+      A14["B2B Contract Fulfillment & Usage"]
+    end
     Core --> Catalogue --> Sales
     Sales --> Integration
     Sales --> AfterSales
+    Sales --> Analytics
+    Integration --> Analytics
+    AfterSales --> Analytics
     style Core fill:#dae8fc,stroke:#6c8ebf
     style Catalogue fill:#d5e8d4,stroke:#82b366
     style Sales fill:#ffe6cc,stroke:#d79b00
     style Integration fill:#d4e6f1,stroke:#2980b9
     style AfterSales fill:#fff2cc,stroke:#d6b656
+    style Analytics fill:#e1d5e7,stroke:#9673a6
   `;
 
   const flows = {
