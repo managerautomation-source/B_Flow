@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POS Module – Sub-Module Mapping with B2B/B2G Contracts</title>
+<title>Master POS FRD – All 20 Modules per Business</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>💳 POS Module – Sub-Module Coverage per Business</h1>
+<h1>💳 Master POS FRD – All 20 Modules</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -26,294 +26,74 @@
 window.addEventListener('DOMContentLoaded', function () {
   mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-  const flows = {
-    "Vehicle Wash": `flowchart TD
-      CUSTOMER[Customer] --> POS
-      POS --> FINANCIAL[Financial Tool]
-      POS --> INVENTORY[Inventory]
-      subgraph POS_Engine [POS Engine]
-        direction TB
-        subgraph MBA [Multi Business Architecture]
-          MBA1[Car Wash Sedan SUV]
-          MBA2[Truck Wash]
-          MBA3[Bus Wash]
-          MBA4[2-Wheeler Bike Wash]
-          MBA5[Train or Metro Wash]
-          MBA6[Any Future Type]
-        end
-        subgraph CAT [Service and Product Catalogue]
-          CAT1[Service Definition and Duration]
-          CAT2[Site Creation and Configuration]
-          CAT3[Service Charge Setup per vehicle type]
-          CAT4[Product SKU Chemicals Spares]
-        end
-        subgraph TXN [Transaction Processing]
-          TXN1[EMV Contactless Wallets]
-          TXN2[Fleet Account or PO]
-          TXN3[Refund and Void]
-          TXN4[Tip Management]
-        end
-        subgraph DISC [Discounts and Promotions]
-          DISC1[Time Peak Pricing]
-          DISC2[Volume Contract Discounts]
-          DISC3[Coupon and Voucher Codes]
-        end
-        subgraph MEM [Membership and Subscription]
-          MEM1[Unlimited Monthly Wash]
-          MEM2[QR Code or ANPR Recognition]
-          MEM3[Family Multi Vehicle]
-          MEM4[Wash Carry Forward]
-        end
-        subgraph SB [Service Books]
-          SB1[Pre Paid Fixed Washes]
-          SB2[Flexible Validity]
-          SB3[Multi Vehicle Book]
-        end
-        subgraph WTY [Warranty Management]
-          WTY1[Paint Protection Warranty]
-          WTY2[Claim Initiation]
-        end
-        subgraph LOY [Loyalty]
-          LOY1[Points Engine]
-          LOY2[Tiered Loyalty]
-          LOY3[Partner Rewards]
-        end
-        subgraph CASH [Cash Management]
-          CASH1[Drawer Operations]
-          CASH2[Reconciliation]
-        end
-        subgraph STAFF [Staff Management]
-          STAFF1[Role and Permissions]
-          STAFF2[Commission]
-        end
-        subgraph ANALYTICS [POS Analytics]
-          ANALYTICS1[Real Time Dashboards]
-          ANALYTICS2[Wash Volume and Revenue]
-        end
-        subgraph LOCAL [Multi Country and Localisation]
-          LOCAL1[Multi Language Currency]
-          LOCAL2[Regional Tax VAT or GST]
-        end
-        subgraph SEC [Privacy and Security]
-          SEC1[PCI DSS]
-          SEC2[GDPR or CCPA]
-        end
-        subgraph CONTRACT [Contract Management B2B B2G]
-          CON1[Fleet Contract MWG Tiered]
-          CON2[Dealership Contract PDI Loaner]
-          CON3[OEM Contract Volume Pricing]
-          CON4[Government B2G PO Tax Exempt]
-        end
-      end
-    `,
+  // The common Master POS diagram – same for all businesses
+  const posDiagram = `flowchart TD
+    subgraph Core ["Core Setup"]
+      M1["1) Multi-Business Architecture"]
+      M15["15) Multi-Country & Localisation"]
+      M16["16) Privacy & Security"]
+    end
+    subgraph Catalogue ["Catalogue & Pricing"]
+      M2["2) Service & Product Catalogue"]
+      M4["4) Discounts & Promotions"]
+    end
+    subgraph Sales ["Sales & Payments"]
+      M3["3) Transaction Processing"]
+      M10["10) Loyalty Programme"]
+      M11["11) Gift Cards & Vouchers"]
+      M12["12) Cash Management"]
+      M13["13) Staff Management"]
+      M14["14) POS Analytics"]
+    end
+    subgraph Subscriptions ["Subscriptions & Books"]
+      M5["5) Membership & Subscription"]
+      M6["6) Service Books"]
+    end
+    subgraph Contracts ["Contracts & B2B/B2G"]
+      M8["8) B2B Contract Management"]
+      M9["9) B2G Commercial Handling"]
+    end
+    subgraph AfterSales ["After-Sales & Warranty"]
+      M7["7) Warranty Management"]
+      M18["18) Consent Management"]
+    end
+    subgraph Digital ["Digital Sales"]
+      M17["17) E-commerce / Digital Sales"]
+    end
+    subgraph Integration ["Integrations & Job Lifecycle"]
+      M19["19) Integrations Hub"]
+      M20["20) Job Card Lifecycle"]
+    end
+    Core --> Catalogue --> Sales
+    Sales --> Subscriptions
+    Sales --> Contracts
+    Sales --> AfterSales
+    Sales --> Digital
+    Sales --> Integration
+    style Core fill:#dae8fc,stroke:#6c8ebf
+    style Catalogue fill:#d5e8d4,stroke:#82b366
+    style Sales fill:#ffe6cc,stroke:#d79b00
+    style Subscriptions fill:#e1d5e7,stroke:#9673a6
+    style Contracts fill:#f8cecc,stroke:#b85450
+    style AfterSales fill:#fff2cc,stroke:#d6b656
+    style Digital fill:#cce5ff,stroke:#007acc
+    style Integration fill:#d4e6f1,stroke:#2980b9
+  `;
 
-    "Detailing Studios": `flowchart TD
-      CUSTOMER[Customer] --> POS
-      POS --> FINANCIAL[Financial Tool]
-      POS --> INVENTORY[Inventory]
-      subgraph POS_Engine [POS Engine]
-        direction TB
-        subgraph MBA [Multi Business Architecture]
-          MBA1[Detailing Studio]
-          MBA2[PPF Ceramic Specialist]
-          MBA3[Mobile Detailing]
-        end
-        subgraph CAT [Service and Product Catalogue]
-          CAT1[Interior Exterior Services]
-          CAT2[PPF and Ceramic Coating]
-          CAT3[Service Charge Per Job]
-          CAT4[Consumable Products]
-        end
-        subgraph TXN [Transaction Processing]
-          TXN1[Deposit and Full Payment]
-          TXN2[Card or Wallet]
-          TXN3[Fleet or Dealer Billing]
-        end
-        subgraph DISC [Discounts and Promotions]
-          DISC1[Package Discounts]
-          DISC2[Seasonal Offers]
-        end
-        subgraph MEM [Membership and Subscription]
-          MEM1[Monthly Detailing Plan]
-          MEM2[Annual Coating Maintenance]
-          MEM3[QR Code or ANPR Member Check]
-        end
-        subgraph SB [Service Books]
-          SB1[Pre Paid Detailing Packs]
-          SB2[Flexible Validity]
-        end
-        subgraph WTY [Warranty Management]
-          WTY1[Ceramic Coating 5 Year]
-          WTY2[PPF Warranty]
-          WTY3[Claim and Rework]
-        end
-        subgraph LOY [Loyalty]
-          LOY1[Points on Detailing]
-          LOY2[Tier Benefits]
-        end
-        subgraph CASH [Cash Management]
-          CASH1[Drawer and Safe]
-          CASH2[Reconciliation]
-        end
-        subgraph STAFF [Staff Management]
-          STAFF1[Technician Roles]
-          STAFF2[Commission on Upsell]
-        end
-        subgraph ANALYTICS [POS Analytics]
-          ANALYTICS1[Service Revenue Mix]
-          ANALYTICS2[Technician Performance]
-        end
-        subgraph LOCAL [Multi Country and Localisation]
-          LOCAL1[Local Tax and Currency]
-        end
-        subgraph SEC [Privacy and Security]
-          SEC1[PCI DSS]
-          SEC2[Data Protection]
-        end
-        subgraph CONTRACT [Contract Management B2B B2G]
-          CON1[Dealer OEM Coating Contracts]
-          CON2[Fleet Detailing Agreements]
-          CON3[Government Vehicle Contracts]
-        end
-      end
-    `,
-
-    "Wash on the Go": `flowchart TD
-      CUSTOMER[Customer via App] --> POS
-      POS --> FINANCIAL[Financial Tool]
-      POS --> INVENTORY[Inventory]
-      subgraph POS_Engine [POS Engine]
-        direction TB
-        subgraph MBA [Multi Business Architecture]
-          MBA1[Mobile Wash Car]
-          MBA2[Mobile Detailing]
-          MBA3[Fleet Mobile]
-        end
-        subgraph CAT [Service and Product Catalogue]
-          CAT1[Mobile Service Types]
-          CAT2[Service Charge by Location]
-          CAT3[Travel Surcharge]
-        end
-        subgraph TXN [Transaction Processing]
-          TXN1[App Payment]
-          TXN2[Mobile Wallets]
-          TXN3[Fleet Corporate Billing]
-        end
-        subgraph DISC [Discounts and Promotions]
-          DISC1[First App Booking Offer]
-          DISC2[Corporate Contracts]
-        end
-        subgraph MEM [Membership and Subscription]
-          MEM1[Monthly Mobile Wash]
-          MEM2[Pre Paid Books]
-          MEM3[QR Code Member Login]
-        end
-        subgraph SB [Service Books]
-          SB1[Mobile Wash Packs]
-          SB2[Flexible Time]
-        end
-        subgraph WTY [Warranty]
-          WTY1[Limited Warranty]
-        end
-        subgraph LOY [Loyalty]
-          LOY1[Points on App]
-        end
-        subgraph CASH [Cash Management]
-          CASH1[Digital Receipts]
-          CASH2[Driver Reconciliation]
-        end
-        subgraph STAFF [Staff Management]
-          STAFF1[Mobile Technician Roles]
-          STAFF2[Incentives]
-        end
-        subgraph ANALYTICS [POS Analytics]
-          ANALYTICS1[Jobs Completed]
-          ANALYTICS2[Revenue per Mobile Unit]
-        end
-        subgraph LOCAL [Localisation]
-          LOCAL1[Multi Currency]
-        end
-        subgraph SEC [Privacy and Security]
-          SEC1[GDPR]
-        end
-        subgraph CONTRACT [Contract Management B2B]
-          CON1[Fleet Mobile Contracts]
-          CON2[Corporate Agreement Tiered]
-        end
-      end
-    `,
-
-    "Product Sales": `flowchart TD
-      CUSTOMER[Customer Walk in or Online] --> POS
-      POS --> FINANCIAL[Financial Tool]
-      POS --> INVENTORY[Inventory]
-      subgraph POS_Engine [POS Engine]
-        direction TB
-        subgraph MBA [Multi Business Architecture]
-          MBA1[Retail Store]
-          MBA2[Distributor or Wholesale]
-          MBA3[E commerce]
-        end
-        subgraph CAT [Service and Product Catalogue]
-          CAT1[Chemical Products]
-          CAT2[Equipment and Machinery]
-          CAT3[Spare Parts SKUs]
-          CAT4[Batch Lot Tracking]
-        end
-        subgraph TXN [Transaction Processing]
-          TXN1[Barcode POS]
-          TXN2[Invoice and Bulk Order]
-          TXN3[Returns and Exchanges]
-        end
-        subgraph DISC [Discounts and Promotions]
-          DISC1[Volume Discounts]
-          DISC2[Trade Promotions]
-          DISC3[Coupon Codes]
-        end
-        subgraph MEM [Membership - Not typical]
-          MEM1[Not Applicable]
-        end
-        subgraph SB [Service Books - Not typical]
-          SB1[Not Applicable]
-        end
-        subgraph WTY [Warranty and Returns]
-          WTY1[Product Warranty]
-          WTY2[RMA Process]
-        end
-        subgraph LOY [Loyalty]
-          LOY1[Points per Purchase]
-        end
-        subgraph CASH [Cash Management]
-          CASH1[Drawer and Safe]
-          CASH2[Daily Reconciliation]
-        end
-        subgraph STAFF [Staff Management]
-          STAFF1[Sales Roles]
-          STAFF2[Commission]
-        end
-        subgraph ANALYTICS [POS Analytics]
-          ANALYTICS1[Sales per Product]
-          ANALYTICS2[Inventory Turnover]
-        end
-        subgraph LOCAL [Localisation]
-          LOCAL1[Multi Tax VAT or GST]
-        end
-        subgraph SEC [Privacy and Security]
-          SEC1[PCI DSS]
-        end
-        subgraph CONTRACT [Contract Management B2B]
-          CON1[Wholesale Distributor Agreement]
-          CON2[Bulk Supply Tender]
-        end
-      end
-    `
+  const businesses = {
+    "Vehicle Wash": posDiagram,
+    "Detailing Studios": posDiagram,
+    "Wash on the Go": posDiagram,
+    "Product Sales": posDiagram,
+    "B2B (Dealer/OEM)": posDiagram,
+    "B2G (Government)": posDiagram
   };
 
   const tabContainer = document.getElementById('tabs');
   const diagramDiv = document.getElementById('diagram');
   let currentKey = "Vehicle Wash";
 
-  Object.keys(flows).forEach(key => {
+  Object.keys(businesses).forEach(key => {
     const tab = document.createElement('div');
     tab.className = 'tab';
     tab.textContent = key;
@@ -321,7 +101,7 @@ window.addEventListener('DOMContentLoaded', function () {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       currentKey = key;
-      diagramDiv.innerHTML = flows[key];
+      diagramDiv.innerHTML = businesses[key];
       diagramDiv.removeAttribute('data-processed');
       mermaid.run({ nodes: [diagramDiv] });
     });
@@ -329,7 +109,7 @@ window.addEventListener('DOMContentLoaded', function () {
   });
 
   document.querySelector('.tab').classList.add('active');
-  diagramDiv.innerHTML = flows[currentKey];
+  diagramDiv.innerHTML = businesses[currentKey];
   mermaid.run({ nodes: [diagramDiv] });
 });
 </script>
