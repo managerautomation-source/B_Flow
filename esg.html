@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESG & Sustainability – 6‑Flow Business‑Specific Coverage</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
+  h1 { text-align: center; color: #222; }
+  .tabs { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .tab { background: #e0e0e0; padding: 10px 20px; margin: 5px; border-radius: 20px; cursor: pointer; font-weight: 600; color: #333; }
+  .tab.active { background: #2e7d32; color: white; }
+  .diagram-container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow-x: auto; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<h1>🌱 ESG & Sustainability – 6‑Stage Module Coverage</h1>
+<div class="tabs" id="tabs"></div>
+<div class="diagram-container">
+  <div class="mermaid" id="diagram"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+  mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+  // ─────────── 1) VEHICLE WASH ───────────
+  const vehicleWash = `flowchart TD
+    subgraph Stage1 ["1) Foundation & Governance"]
+      direction LR
+      subgraph S1Col1 [ ]
+        G1["ESG Policy & Strategy"]
+        G2["Framework Alignment (GRI, SASB, BRSR)"]
+        G3["SDG Goal Mapping (6, 12, 13)"]
+      end
+      subgraph S1Col2 [ ]
+        G4["Goal Setting (Water, Energy, Carbon Targets)"]
+        G5["Org Hierarchy & RBAC"]
+        G6["Compliance Calendar & Permit Registry"]
+      end
+    end
+    subgraph Stage2 ["2) Data Collection & IoT Pipeline"]
+      direction LR
+      subgraph S2Col1 [ ]
+        D1["Sensor Registry & Configuration"]
+        D2["PLC Data Aggregation (BV-PLC)"]
+        D3["Edge Gateway Management"]
+      end
+      subgraph S2Col2 [ ]
+        D4["Offline Buffer & Auto-Sync"]
+        D5["Telemetry Ingestion (Water, Energy, Chemical, Air)"]
+        D6["Waste & Sludge Sensors"]
+      end
+    end
+    subgraph Stage3 ["3) Monitoring & Real-Time Insights"]
+      direction LR
+      subgraph S3Col1 [ ]
+        M1["Per-Wash Water & Energy Metrics"]
+        M2["Chemical Usage Per Wash"]
+        M3["Equipment-Level Consumption"]
+        M4["Site-Level Dashboards"]
+      end
+      subgraph S3Col2 [ ]
+        M5["Leakage & Anomaly Detection"]
+        M6["Sustainability Score (per service)"]
+        M7["Air Quality Monitoring"]
+        M8["Waste & ETP Performance"]
+      end
+    end
+    subgraph Stage4 ["4) Compliance & Regulatory Mgmt"]
+      direction LR
+      subgraph S4Col1 [ ]
+        C1["Permit Condition Monitoring"]
+        C2["Threshold Alerts & Breach Notifications"]
+        C3["Corrective Action Tracking"]
+      end
+      subgraph S4Col2 [ ]
+        C4["Automated Regulatory Reports"]
+        C5["Audit Trail & Evidence Repository"]
+        C6["ESG Framework Gap Analysis"]
+      end
+    end
+    subgraph Stage5 ["5) B2B / B2G & Public Reporting"]
+      direction LR
+      subgraph S5Col1 [ ]
+        P1["Fleet ESG Dashboard (Per Vehicle)"]
+        P2["B2G Government Portal"]
+        P3["Third-Party Auditor API"]
+      end
+      subgraph S5Col2 [ ]
+        P4["Public Sustainability Page"]
+        P5["SDG Contribution Dashboard"]
+        P6["ESG Data Export & Assurance"]
+      end
+    end
+    subgraph Stage6 ["6) Optimisation, Carbon & Insights"]
+      direction LR
+      subgraph S6Col1 [ ]
+        O1["AI Water/Chemical/Energy Optimisation"]
+        O2["Carbon Footprint (Scope 1, 2, 3)"]
+        O3["Carbon Offset Mgmt"]
+      end
+      subgraph S6Col2 [ ]
+        O4["Goal Progress Tracking"]
+        O5["ESG-Linked Staff/Customer Incentives"]
+        O6["Benchmarking & Best Practices"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  // ─────────── 2) DETAILING STUDIOS ───────────
+  const detailing = `flowchart TD
+    subgraph Stage1 ["1) Foundation & Governance"]
+      direction LR
+      subgraph S1Col1 [ ]
+        G1["ESG Policy & Strategy"]
+        G2["Framework Alignment (GRI, SASB)"]
+        G3["SDG Goal Mapping"]
+      end
+      subgraph S1Col2 [ ]
+        G4["Goal Setting (Energy, VOC, Waste)"]
+        G5["Org Hierarchy & RBAC"]
+        G6["Compliance Calendar & Permit Registry"]
+      end
+    end
+    subgraph Stage2 ["2) Data Collection & IoT Pipeline"]
+      direction LR
+      subgraph S2Col1 [ ]
+        D1["Sensor Registry (VOC, Electricity, Extraction)"]
+        D2["PLC Data Aggregation"]
+        D3["Edge Gateway Management"]
+      end
+      subgraph S2Col2 [ ]
+        D4["Offline Buffer & Auto-Sync"]
+        D5["Telemetry Ingestion (Energy, Chemicals, Air Quality)"]
+        D6["Waste Stream Tracking"]
+      end
+    end
+    subgraph Stage3 ["3) Monitoring & Real-Time Insights"]
+      direction LR
+      subgraph S3Col1 [ ]
+        M1["Per-Job Energy & Material Metrics"]
+        M2["VOC & Indoor Air Quality Monitoring"]
+        M3["Chemical Consumption per Service"]
+        M4["Site-Level Dashboards"]
+      end
+      subgraph S3Col2 [ ]
+        M5["Leakage & Anomaly Detection"]
+        M6["Sustainability Score (per service)"]
+        M7["Waste Classification & Tracking"]
+        M8["Before/After AI Quality (linked)"]
+      end
+    end
+    subgraph Stage4 ["4) Compliance & Regulatory Mgmt"]
+      direction LR
+      subgraph S4Col1 [ ]
+        C1["Permit Condition Monitoring (Air, Chemical Storage)"]
+        C2["Threshold Alerts"]
+        C3["Corrective Action Tracking"]
+      end
+      subgraph S4Col2 [ ]
+        C4["Automated Regulatory Reports"]
+        C5["Audit Trail & Evidence"]
+        C6["Framework Gap Analysis"]
+      end
+    end
+    subgraph Stage5 ["5) B2B / B2G & Public Reporting"]
+      direction LR
+      subgraph S5Col1 [ ]
+        P1["Dealer/Fleet ESG Dashboards"]
+        P2["B2G Government Portal"]
+        P3["Third-Party Auditor API"]
+      end
+      subgraph S5Col2 [ ]
+        P4["Public Sustainability Page"]
+        P5["SDG Contribution Dashboard"]
+        P6["ESG Data Export & Assurance"]
+      end
+    end
+    subgraph Stage6 ["6) Optimisation, Carbon & Insights"]
+      direction LR
+      subgraph S6Col1 [ ]
+        O1["AI Chemical/VOC/Energy Optimisation"]
+        O2["Carbon Footprint (Scope 1, 2, 3)"]
+        O3["Carbon Offset Mgmt"]
+      end
+      subgraph S6Col2 [ ]
+        O4["Goal Progress Tracking"]
+        O5["ESG-Linked Incentives"]
+        O6["Benchmarking & Best Practices"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  // ─────────── 3) WASH ON THE GO ───────────
+  const mobile = `flowchart TD
+    subgraph Stage1 ["1) Foundation & Governance"]
+      direction LR
+      subgraph S1Col1 [ ]
+        G1["ESG Policy & Strategy"]
+        G2["Framework Alignment"]
+        G3["SDG Goal Mapping"]
+      end
+      subgraph S1Col2 [ ]
+        G4["Goal Setting (Fuel, Water, Carbon)"]
+        G5["Org Hierarchy & RBAC"]
+        G6["Compliance Calendar"]
+      end
+    end
+    subgraph Stage2 ["2) Data Collection & IoT Pipeline"]
+      direction LR
+      subgraph S2Col1 [ ]
+        D1["Van Fuel/Energy Sensors"]
+        D2["Water Tank Level Sensors"]
+        D3["Edge Gateway (Mobile)"]
+      end
+      subgraph S2Col2 [ ]
+        D4["Offline Buffer & Auto-Sync"]
+        D5["Telemetry Ingestion (Fuel, Water, GPS)"]
+        D6["Chemical Usage Tracking"]
+      end
+    end
+    subgraph Stage3 ["3) Monitoring & Real-Time Insights"]
+      direction LR
+      subgraph S3Col1 [ ]
+        M1["Per-Job Fuel & Water Metrics"]
+        M2["Chemical Consumption per Job"]
+        M3["Van-Level Dashboards"]
+        M4["Hub-Level Dashboards"]
+      end
+      subgraph S3Col2 [ ]
+        M5["Leakage & Idle Alerts"]
+        M6["Sustainability Score (per service)"]
+        M7["Route Efficiency & Emissions"]
+        M8["Waste Tracking"]
+      end
+    end
+    subgraph Stage4 ["4) Compliance & Regulatory Mgmt"]
+      direction LR
+      subgraph S4Col1 [ ]
+        C1["Mobile Vendor Permits"]
+        C2["Threshold Alerts"]
+        C3["Corrective Action Tracking"]
+      end
+      subgraph S4Col2 [ ]
+        C4["Automated Regulatory Reports"]
+        C5["Audit Trail"]
+        C6["Framework Gap Analysis"]
+      end
+    end
+    subgraph Stage5 ["5) B2B / B2G & Public Reporting"]
+      direction LR
+      subgraph S5Col1 [ ]
+        P1["Fleet ESG Dashboard"]
+        P2["B2G Government Portal"]
+        P3["Third-Party Auditor API"]
+      end
+      subgraph S5Col2 [ ]
+        P4["Public Sustainability Page"]
+        P5["SDG Contribution Dashboard"]
+        P6["ESG Data Export"]
+      end
+    end
+    subgraph Stage6 ["6) Optimisation, Carbon & Insights"]
+      direction LR
+      subgraph S6Col1 [ ]
+        O1["AI Route/Fuel/Water Optimisation"]
+        O2["Carbon Footprint (Scope 1, 2, 3)"]
+        O3["Carbon Offset Mgmt"]
+      end
+      subgraph S6Col2 [ ]
+        O4["Goal Progress Tracking"]
+        O5["ESG-Linked Incentives"]
+        O6["Benchmarking & Best Practices"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  // ─────────── 4) PRODUCT SALES ───────────
+  const productSales = `flowchart TD
+    subgraph Stage1 ["1) Foundation & Governance"]
+      direction LR
+      subgraph S1Col1 [ ]
+        G1["ESG Policy & Strategy"]
+        G2["Framework Alignment"]
+        G3["SDG Goal Mapping (12)"]
+      end
+      subgraph S1Col2 [ ]
+        G4["Goal Setting (Packaging, Carbon, Waste)"]
+        G5["Org Hierarchy & RBAC"]
+        G6["Compliance Calendar"]
+      end
+    end
+    subgraph Stage2 ["2) Data Collection & IoT Pipeline"]
+      direction LR
+      subgraph S2Col1 [ ]
+        D1["Warehouse Energy/Water Sensors"]
+        D2["Product Lifecycle Data"]
+        D3["Edge Gateway"]
+      end
+      subgraph S2Col2 [ ]
+        D4["Offline Buffer & Auto-Sync"]
+        D5["Telemetry Ingestion (Energy, Water)"]
+        D6["Waste & Packaging Tracking"]
+      end
+    end
+    subgraph Stage3 ["3) Monitoring & Real-Time Insights"]
+      direction LR
+      subgraph S3Col1 [ ]
+        M1["Product Lifecycle Carbon (per SKU)"]
+        M2["Warehouse Energy & Emissions"]
+        M3["Packaging Waste Metrics"]
+        M4["Site-Level Dashboards"]
+      end
+      subgraph S3Col2 [ ]
+        M5["Anomaly Detection"]
+        M6["Sustainability Score (per product)"]
+        M7["Supplier ESG Ratings"]
+        M8["Inventory Waste Tracking"]
+      end
+    end
+    subgraph Stage4 ["4) Compliance & Regulatory Mgmt"]
+      direction LR
+      subgraph S4Col1 [ ]
+        C1["Hazardous Material Permits"]
+        C2["Threshold Alerts"]
+        C3["Corrective Action Tracking"]
+      end
+      subgraph S4Col2 [ ]
+        C4["Automated Reports"]
+        C5["Audit Trail"]
+        C6["Framework Gap Analysis"]
+      end
+    end
+    subgraph Stage5 ["5) B2B / B2G & Public Reporting"]
+      direction LR
+      subgraph S5Col1 [ ]
+        P1["Distributor ESG Dashboards"]
+        P2["B2G Government Portal"]
+        P3["Third-Party Auditor API"]
+      end
+      subgraph S5Col2 [ ]
+        P4["Public Sustainability Page"]
+        P5["SDG Contribution Dashboard"]
+        P6["ESG Data Export"]
+      end
+    end
+    subgraph Stage6 ["6) Optimisation, Carbon & Insights"]
+      direction LR
+      subgraph S6Col1 [ ]
+        O1["AI Packaging/Logistics Optimisation"]
+        O2["Carbon Footprint (Scope 1, 2, 3)"]
+        O3["Carbon Offset Mgmt"]
+      end
+      subgraph S6Col2 [ ]
+        O4["Goal Progress Tracking"]
+        O5["ESG-Linked Incentives"]
+        O6["Supplier & Product Benchmarking"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  const flows = {
+    "Vehicle Wash": vehicleWash,
+    "Detailing Studios": detailing,
+    "Wash on the Go": mobile,
+    "Product Sales": productSales
+  };
+
+  const tabContainer = document.getElementById('tabs');
+  const diagramDiv = document.getElementById('diagram');
+  let currentKey = "Vehicle Wash";
+
+  Object.keys(flows).forEach(key => {
+    const tab = document.createElement('div');
+    tab.className = 'tab';
+    tab.textContent = key;
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentKey = key;
+      diagramDiv.innerHTML = flows[key];
+      diagramDiv.removeAttribute('data-processed');
+      mermaid.run({ nodes: [diagramDiv] });
+    });
+    tabContainer.appendChild(tab);
+  });
+
+  document.querySelector('.tab').classList.add('active');
+  diagramDiv.innerHTML = flows[currentKey];
+  mermaid.run({ nodes: [diagramDiv] });
+});
+</script>
+</body>
+</html>
