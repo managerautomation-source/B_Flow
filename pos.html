@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master POS FRD – 6‑Flow Business‑Specific Module Coverage</title>
+<title>Master POS FRD – 6‑Flow Balanced Layout</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>💳 Business‑Specific POS Module Coverage (6 Flows)</h1>
+<h1>💳 Business‑Specific POS Module Coverage (6 Balanced Flows)</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -26,7 +26,7 @@
 window.addEventListener('DOMContentLoaded', function () {
   mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-  // ─────────── VEHICLE WASH ───────────
+  // ─────────── 1) VEHICLE WASH ───────────
   const vehicleWash = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -38,17 +38,22 @@ window.addEventListener('DOMContentLoaded', function () {
       M4["Discounts & Promotions"]
     end
     subgraph Sales ["3) Sales & Payments"]
-      M3["Transaction Processing"]
-      M5["Membership & Subscription"]
-      M6["Service Books"]
-      M8["B2B Contract Management"]
-      M10["Loyalty Programme"]
-      M11["Gift Cards & Vouchers"]
-      M12["Cash Management"]
-      M_comm["Commission Mgmt"]
-      M_aff["Affiliate Management"]
-      M_ref["Refer & Earn"]
-      M14["POS Analytics"]
+      direction LR
+      subgraph SalesCol1 [ ]
+        M3["Transaction Processing"]
+        M5["Membership & Subscription"]
+        M6["Service Books"]
+        M8["B2B Contract Management"]
+        M10["Loyalty Programme"]
+        M11["Gift Cards & Vouchers"]
+      end
+      subgraph SalesCol2 [ ]
+        M12["Cash Management"]
+        M_comm["Commission Mgmt"]
+        M_aff["Affiliate Management"]
+        M_ref["Refer & Earn"]
+        M14["POS Analytics"]
+      end
     end
     subgraph Integration ["4) Integration & Job Lifecycle"]
       M19["Integrations Hub"]
@@ -61,20 +66,24 @@ window.addEventListener('DOMContentLoaded', function () {
     end
     subgraph Analytics ["6) Analytics & Reports"]
       direction LR
-      A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
-      A2["Payment Mix &<br/>Cash Reconciliation"]
-      A3["Membership/Subscription<br/>Signups, Churn, Usage"]
-      A4["Service Book<br/>Redemption & Expiry"]
-      A5["Contract & Fleet<br/>Usage, Tier Achievement"]
-      A6["Discount & Promotion<br/>Performance"]
-      A7["Loyalty Points<br/>Accrual/Redemption"]
-      A8["Gift Card Sales<br/>& Liability"]
-      A9["Staff Commission<br/>& Performance"]
-      A10["Warranty Claims<br/>& Rework Rate"]
-      A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
-      A12["Machine Logs &<br/>Bank Reconciliation"]
-      A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
-      A14["Consent & Sign-off<br/>Audit Trail"]
+      subgraph AnaCol1 [ ]
+        A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
+        A2["Payment Mix &<br/>Cash Reconciliation"]
+        A3["Membership/Subscription<br/>Signups, Churn, Usage"]
+        A4["Service Book<br/>Redemption & Expiry"]
+        A5["Contract & Fleet<br/>Usage, Tier Achievement"]
+        A6["Discount & Promotion<br/>Performance"]
+        A7["Loyalty Points<br/>Accrual/Redemption"]
+      end
+      subgraph AnaCol2 [ ]
+        A8["Gift Card Sales<br/>& Liability"]
+        A9["Staff Commission<br/>& Performance"]
+        A10["Warranty Claims<br/>& Rework Rate"]
+        A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
+        A12["Machine Logs &<br/>Bank Reconciliation"]
+        A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
+        A14["Consent & Sign-off<br/>Audit Trail"]
+      end
     end
     Core --> Catalogue --> Sales
     Sales --> Integration
@@ -88,9 +97,13 @@ window.addEventListener('DOMContentLoaded', function () {
     style Integration fill:#d4e6f1,stroke:#2980b9
     style AfterSales fill:#fff2cc,stroke:#d6b656
     style Analytics fill:#e1d5e7,stroke:#9673a6
+    style SalesCol1 fill:none,stroke:none
+    style SalesCol2 fill:none,stroke:none
+    style AnaCol1 fill:none,stroke:none
+    style AnaCol2 fill:none,stroke:none
   `;
 
-  // ─────────── DETAILING STUDIOS ───────────
+  // ─────────── 2) DETAILING STUDIOS ───────────
   const detailing = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -102,17 +115,22 @@ window.addEventListener('DOMContentLoaded', function () {
       M4["Discounts & Promotions"]
     end
     subgraph Sales ["3) Sales & Payments"]
-      M3["Transaction Processing"]
-      M5["Membership & Subscription"]
-      M6["Service Books"]
-      M8["B2B Contract Management"]
-      M10["Loyalty Programme"]
-      M11["Gift Cards & Vouchers"]
-      M12["Cash Management"]
-      M_comm["Commission Mgmt"]
-      M_aff["Affiliate Management"]
-      M_ref["Refer & Earn"]
-      M14["POS Analytics"]
+      direction LR
+      subgraph SalesCol1 [ ]
+        M3["Transaction Processing"]
+        M5["Membership & Subscription"]
+        M6["Service Books"]
+        M8["B2B Contract Management"]
+        M10["Loyalty Programme"]
+        M11["Gift Cards & Vouchers"]
+      end
+      subgraph SalesCol2 [ ]
+        M12["Cash Management"]
+        M_comm["Commission Mgmt"]
+        M_aff["Affiliate Management"]
+        M_ref["Refer & Earn"]
+        M14["POS Analytics"]
+      end
     end
     subgraph Integration ["4) Integration & Job Lifecycle"]
       M19["Integrations Hub"]
@@ -125,20 +143,24 @@ window.addEventListener('DOMContentLoaded', function () {
     end
     subgraph Analytics ["6) Analytics & Reports"]
       direction LR
-      A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
-      A2["Payment Mix &<br/>Cash Reconciliation"]
-      A3["Membership/Subscription<br/>Signups, Churn, Usage"]
-      A4["Service Book<br/>Redemption & Expiry"]
-      A5["Contract & Fleet<br/>Usage, Tier Achievement"]
-      A6["Discount & Promotion<br/>Performance"]
-      A7["Loyalty Points<br/>Accrual/Redemption"]
-      A8["Gift Card Sales<br/>& Liability"]
-      A9["Staff Commission<br/>& Performance"]
-      A10["Warranty Claims<br/>& Rework Rate"]
-      A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
-      A12["Machine Logs &<br/>Bank Reconciliation"]
-      A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
-      A14["Consent & Sign-off<br/>Audit Trail"]
+      subgraph AnaCol1 [ ]
+        A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
+        A2["Payment Mix &<br/>Cash Reconciliation"]
+        A3["Membership/Subscription<br/>Signups, Churn, Usage"]
+        A4["Service Book<br/>Redemption & Expiry"]
+        A5["Contract & Fleet<br/>Usage, Tier Achievement"]
+        A6["Discount & Promotion<br/>Performance"]
+        A7["Loyalty Points<br/>Accrual/Redemption"]
+      end
+      subgraph AnaCol2 [ ]
+        A8["Gift Card Sales<br/>& Liability"]
+        A9["Staff Commission<br/>& Performance"]
+        A10["Warranty Claims<br/>& Rework Rate"]
+        A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
+        A12["Machine Logs &<br/>Bank Reconciliation"]
+        A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
+        A14["Consent & Sign-off<br/>Audit Trail"]
+      end
     end
     Core --> Catalogue --> Sales
     Sales --> Integration
@@ -152,9 +174,13 @@ window.addEventListener('DOMContentLoaded', function () {
     style Integration fill:#d4e6f1,stroke:#2980b9
     style AfterSales fill:#fff2cc,stroke:#d6b656
     style Analytics fill:#e1d5e7,stroke:#9673a6
+    style SalesCol1 fill:none,stroke:none
+    style SalesCol2 fill:none,stroke:none
+    style AnaCol1 fill:none,stroke:none
+    style AnaCol2 fill:none,stroke:none
   `;
 
-  // ─────────── WASH ON THE GO ───────────
+  // ─────────── 3) WASH ON THE GO ───────────
   const mobile = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -166,17 +192,22 @@ window.addEventListener('DOMContentLoaded', function () {
       M4["Discounts & Promotions"]
     end
     subgraph Sales ["3) Sales & Payments"]
-      M3["Transaction Processing"]
-      M5["Membership & Subscription"]
-      M6["Service Books"]
-      M8["B2B Contract Management"]
-      M10["Loyalty Programme"]
-      M11["Gift Cards & Vouchers"]
-      M12["Cash Management"]
-      M_comm["Commission Mgmt"]
-      M_aff["Affiliate Management"]
-      M_ref["Refer & Earn"]
-      M14["POS Analytics"]
+      direction LR
+      subgraph SalesCol1 [ ]
+        M3["Transaction Processing"]
+        M5["Membership & Subscription"]
+        M6["Service Books"]
+        M8["B2B Contract Management"]
+        M10["Loyalty Programme"]
+        M11["Gift Cards & Vouchers"]
+      end
+      subgraph SalesCol2 [ ]
+        M12["Cash Management"]
+        M_comm["Commission Mgmt"]
+        M_aff["Affiliate Management"]
+        M_ref["Refer & Earn"]
+        M14["POS Analytics"]
+      end
     end
     subgraph Integration ["4) Integration & Job Lifecycle"]
       M19["Integrations Hub"]
@@ -189,20 +220,24 @@ window.addEventListener('DOMContentLoaded', function () {
     end
     subgraph Analytics ["6) Analytics & Reports"]
       direction LR
-      A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
-      A2["Payment Mix &<br/>Cash Reconciliation"]
-      A3["Membership/Subscription<br/>Signups, Churn, Usage"]
-      A4["Service Book<br/>Redemption & Expiry"]
-      A5["Contract & Fleet<br/>Usage, Tier Achievement"]
-      A6["Discount & Promotion<br/>Performance"]
-      A7["Loyalty Points<br/>Accrual/Redemption"]
-      A8["Gift Card Sales<br/>& Liability"]
-      A9["Staff Commission<br/>& Performance"]
-      A10["Warranty Claims<br/>& Rework Rate"]
-      A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
-      A12["Machine Logs &<br/>Bank Reconciliation"]
-      A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
-      A14["Consent & Sign-off<br/>Audit Trail"]
+      subgraph AnaCol1 [ ]
+        A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
+        A2["Payment Mix &<br/>Cash Reconciliation"]
+        A3["Membership/Subscription<br/>Signups, Churn, Usage"]
+        A4["Service Book<br/>Redemption & Expiry"]
+        A5["Contract & Fleet<br/>Usage, Tier Achievement"]
+        A6["Discount & Promotion<br/>Performance"]
+        A7["Loyalty Points<br/>Accrual/Redemption"]
+      end
+      subgraph AnaCol2 [ ]
+        A8["Gift Card Sales<br/>& Liability"]
+        A9["Staff Commission<br/>& Performance"]
+        A10["Warranty Claims<br/>& Rework Rate"]
+        A11["Job Lifecycle<br/>Avg Duration, Stage Times"]
+        A12["Machine Logs &<br/>Bank Reconciliation"]
+        A13["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
+        A14["Consent & Sign-off<br/>Audit Trail"]
+      end
     end
     Core --> Catalogue --> Sales
     Sales --> Integration
@@ -216,9 +251,13 @@ window.addEventListener('DOMContentLoaded', function () {
     style Integration fill:#d4e6f1,stroke:#2980b9
     style AfterSales fill:#fff2cc,stroke:#d6b656
     style Analytics fill:#e1d5e7,stroke:#9673a6
+    style SalesCol1 fill:none,stroke:none
+    style SalesCol2 fill:none,stroke:none
+    style AnaCol1 fill:none,stroke:none
+    style AnaCol2 fill:none,stroke:none
   `;
 
-  // ─────────── PRODUCT SALES (different modules) ───────────
+  // ─────────── 4) PRODUCT SALES (different modules) ───────────
   const productSales = `flowchart TD
     subgraph Core ["1) Core Setup"]
       M1["Multi-Business Architecture"]
@@ -230,16 +269,21 @@ window.addEventListener('DOMContentLoaded', function () {
       M4["Discounts & Promotions"]
     end
     subgraph Sales ["3) Sales & Payments"]
-      M3["Transaction Processing"]
-      M17["E-commerce / Digital Sales"]
-      M8["B2B Contract Management"]
-      M10["Loyalty Programme"]
-      M11["Gift Cards & Vouchers"]
-      M12["Cash Management"]
-      M_comm["Commission Mgmt"]
-      M_aff["Affiliate Management"]
-      M_ref["Refer & Earn"]
-      M14["POS Analytics"]
+      direction LR
+      subgraph SalesCol1 [ ]
+        M3["Transaction Processing"]
+        M17["E-commerce / Digital Sales"]
+        M8["B2B Contract Management"]
+        M10["Loyalty Programme"]
+        M11["Gift Cards & Vouchers"]
+      end
+      subgraph SalesCol2 [ ]
+        M12["Cash Management"]
+        M_comm["Commission Mgmt"]
+        M_aff["Affiliate Management"]
+        M_ref["Refer & Earn"]
+        M14["POS Analytics"]
+      end
     end
     subgraph Integration ["4) Integration & Job Lifecycle"]
       M19["Integrations Hub"]
@@ -252,20 +296,24 @@ window.addEventListener('DOMContentLoaded', function () {
     end
     subgraph Analytics ["6) Analytics & Reports"]
       direction LR
-      A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
-      A2["Payment Mix &<br/>Cash Reconciliation"]
-      A3["Discount & Promotion<br/>Performance"]
-      A4["Loyalty Points<br/>Accrual/Redemption"]
-      A5["Gift Card Sales<br/>& Liability"]
-      A6["Staff Commission<br/>& Performance"]
-      A7["Warranty Claims<br/>& Returns"]
-      A8["Job Lifecycle<br/>Avg Duration, Stage Times"]
-      A9["Machine Logs &<br/>Bank Reconciliation"]
-      A10["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
-      A11["Consent & Sign-off<br/>Audit Trail"]
-      A12["E‑commerce Analytics<br/>Conversion Rate, Cart Abandonment"]
-      A13["Inventory Turnover<br/>& Stock Health"]
-      A14["B2B Contract<br/>Fulfillment & Usage"]
+      subgraph AnaCol1 [ ]
+        A1["Sales Dashboard<br/>(Revenue, Volume, AOV)"]
+        A2["Payment Mix &<br/>Cash Reconciliation"]
+        A3["Discount & Promotion<br/>Performance"]
+        A4["Loyalty Points<br/>Accrual/Redemption"]
+        A5["Gift Card Sales<br/>& Liability"]
+        A6["Staff Commission<br/>& Performance"]
+        A7["Warranty Claims<br/>& Returns"]
+      end
+      subgraph AnaCol2 [ ]
+        A8["Job Lifecycle<br/>Avg Duration, Stage Times"]
+        A9["Machine Logs &<br/>Bank Reconciliation"]
+        A10["Referral & Affiliate<br/>Clicks, Conversions, CPA"]
+        A11["Consent & Sign-off<br/>Audit Trail"]
+        A12["E‑commerce Analytics<br/>Conversion Rate, Cart Abandon."]
+        A13["Inventory Turnover<br/>& Stock Health"]
+        A14["B2B Contract<br/>Fulfillment & Usage"]
+      end
     end
     Core --> Catalogue --> Sales
     Sales --> Integration
@@ -279,6 +327,10 @@ window.addEventListener('DOMContentLoaded', function () {
     style Integration fill:#d4e6f1,stroke:#2980b9
     style AfterSales fill:#fff2cc,stroke:#d6b656
     style Analytics fill:#e1d5e7,stroke:#9673a6
+    style SalesCol1 fill:none,stroke:none
+    style SalesCol2 fill:none,stroke:none
+    style AnaCol1 fill:none,stroke:none
+    style AnaCol2 fill:none,stroke:none
   `;
 
   const flows = {
