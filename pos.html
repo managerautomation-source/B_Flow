@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master POS FRD – All 20 Modules per Business</title>
+<title>Master POS FRD – Business‑Specific Module Coverage</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>💳 Master POS FRD – All 20 Modules</h1>
+<h1>💳 Business‑Specific POS Module Coverage</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -26,74 +26,195 @@
 window.addEventListener('DOMContentLoaded', function () {
   mermaid.initialize({ startOnLoad: false, theme: 'default' });
 
-  // The common Master POS diagram – same for all businesses
-  const posDiagram = `flowchart TD
-    subgraph Core ["Core Setup"]
-      M1["1) Multi-Business Architecture"]
-      M15["15) Multi-Country & Localisation"]
-      M16["16) Privacy & Security"]
-    end
-    subgraph Catalogue ["Catalogue & Pricing"]
-      M2["2) Service & Product Catalogue"]
-      M4["4) Discounts & Promotions"]
-    end
-    subgraph Sales ["Sales & Payments"]
-      M3["3) Transaction Processing"]
-      M10["10) Loyalty Programme"]
-      M11["11) Gift Cards & Vouchers"]
-      M12["12) Cash Management"]
-      M13["13) Staff Management"]
-      M14["14) POS Analytics"]
-    end
-    subgraph Subscriptions ["Subscriptions & Books"]
-      M5["5) Membership & Subscription"]
-      M6["6) Service Books"]
-    end
-    subgraph Contracts ["Contracts & B2B/B2G"]
-      M8["8) B2B Contract Management"]
-      M9["9) B2G Commercial Handling"]
-    end
-    subgraph AfterSales ["After-Sales & Warranty"]
-      M7["7) Warranty Management"]
-      M18["18) Consent Management"]
-    end
-    subgraph Digital ["Digital Sales"]
-      M17["17) E-commerce / Digital Sales"]
-    end
-    subgraph Integration ["Integrations & Job Lifecycle"]
-      M19["19) Integrations Hub"]
-      M20["20) Job Card Lifecycle"]
-    end
-    Core --> Catalogue --> Sales
-    Sales --> Subscriptions
-    Sales --> Contracts
-    Sales --> AfterSales
-    Sales --> Digital
-    Sales --> Integration
-    style Core fill:#dae8fc,stroke:#6c8ebf
-    style Catalogue fill:#d5e8d4,stroke:#82b366
-    style Sales fill:#ffe6cc,stroke:#d79b00
-    style Subscriptions fill:#e1d5e7,stroke:#9673a6
-    style Contracts fill:#f8cecc,stroke:#b85450
-    style AfterSales fill:#fff2cc,stroke:#d6b656
-    style Digital fill:#cce5ff,stroke:#007acc
-    style Integration fill:#d4e6f1,stroke:#2980b9
-  `;
+  const flows = {
+    "Vehicle Wash": `flowchart TD
+      subgraph Core ["Core Setup"]
+        M1["1) Multi-Business Architecture"]
+        M15["15) Multi-Country & Localisation"]
+        M16["16) Privacy & Security"]
+      end
+      subgraph Catalogue ["Catalogue & Pricing"]
+        M2["2) Service & Product Catalogue"]
+        M4["4) Discounts & Promotions"]
+      end
+      subgraph Sales ["Sales & Payments"]
+        M3["3) Transaction Processing"]
+        M10["10) Loyalty Programme"]
+        M11["11) Gift Cards & Vouchers"]
+        M12["12) Cash Management"]
+        M13["13) Staff Management"]
+        M14["14) POS Analytics"]
+      end
+      subgraph Subscriptions ["Subscriptions & Books"]
+        M5["5) Membership & Subscription"]
+        M6["6) Service Books"]
+      end
+      subgraph Contracts ["Fleet & Dealer Contracts"]
+        M8["8) B2B Contract Management"]
+      end
+      subgraph AfterSales ["After-Sales & Warranty"]
+        M7["7) Warranty Management"]
+        M18["18) Consent & Sign-off"]
+      end
+      subgraph Integration ["Integrations & Job Lifecycle"]
+        M19["19) Integrations Hub"]
+        M20["20) Job Card Lifecycle"]
+      end
+      Core --> Catalogue --> Sales
+      Sales --> Subscriptions
+      Sales --> Contracts
+      Sales --> AfterSales
+      Sales --> Integration
+      style Core fill:#dae8fc,stroke:#6c8ebf
+      style Catalogue fill:#d5e8d4,stroke:#82b366
+      style Sales fill:#ffe6cc,stroke:#d79b00
+      style Subscriptions fill:#e1d5e7,stroke:#9673a6
+      style Contracts fill:#f8cecc,stroke:#b85450
+      style AfterSales fill:#fff2cc,stroke:#d6b656
+      style Integration fill:#d4e6f1,stroke:#2980b9
+    `,
 
-  const businesses = {
-    "Vehicle Wash": posDiagram,
-    "Detailing Studios": posDiagram,
-    "Wash on the Go": posDiagram,
-    "Product Sales": posDiagram,
-    "B2B (Dealer/OEM)": posDiagram,
-    "B2G (Government)": posDiagram
+    "Detailing Studios": `flowchart TD
+      subgraph Core ["Core Setup"]
+        M1["1) Multi-Business Architecture"]
+        M15["15) Multi-Country & Localisation"]
+        M16["16) Privacy & Security"]
+      end
+      subgraph Catalogue ["Catalogue & Pricing"]
+        M2["2) Service & Product Catalogue"]
+        M4["4) Discounts & Promotions"]
+      end
+      subgraph Sales ["Sales & Payments"]
+        M3["3) Transaction Processing"]
+        M10["10) Loyalty Programme"]
+        M11["11) Gift Cards & Vouchers"]
+        M12["12) Cash Management"]
+        M13["13) Staff Management"]
+        M14["14) POS Analytics"]
+      end
+      subgraph Subscriptions ["Subscriptions & Books"]
+        M5["5) Membership & Subscription"]
+        M6["6) Service Books"]
+      end
+      subgraph Contracts ["Dealer & OEM Contracts"]
+        M8["8) B2B Contract Management"]
+      end
+      subgraph AfterSales ["After-Sales & Warranty"]
+        M7["7) Warranty Management"]
+        M18["18) Consent & Sign-off"]
+      end
+      subgraph Integration ["Integrations & Job Lifecycle"]
+        M19["19) Integrations Hub"]
+        M20["20) Job Card Lifecycle"]
+      end
+      Core --> Catalogue --> Sales
+      Sales --> Subscriptions
+      Sales --> Contracts
+      Sales --> AfterSales
+      Sales --> Integration
+      style Core fill:#dae8fc,stroke:#6c8ebf
+      style Catalogue fill:#d5e8d4,stroke:#82b366
+      style Sales fill:#ffe6cc,stroke:#d79b00
+      style Subscriptions fill:#e1d5e7,stroke:#9673a6
+      style Contracts fill:#f8cecc,stroke:#b85450
+      style AfterSales fill:#fff2cc,stroke:#d6b656
+      style Integration fill:#d4e6f1,stroke:#2980b9
+    `,
+
+    "Wash on the Go": `flowchart TD
+      subgraph Core ["Core Setup"]
+        M1["1) Multi-Business Architecture"]
+        M15["15) Multi-Country & Localisation"]
+        M16["16) Privacy & Security"]
+      end
+      subgraph Catalogue ["Catalogue & Pricing"]
+        M2["2) Service & Product Catalogue"]
+        M4["4) Discounts & Promotions"]
+      end
+      subgraph Sales ["Sales & Payments"]
+        M3["3) Transaction Processing"]
+        M10["10) Loyalty Programme"]
+        M11["11) Gift Cards & Vouchers"]
+        M12["12) Cash Management"]
+        M13["13) Staff Management"]
+        M14["14) POS Analytics"]
+      end
+      subgraph Subscriptions ["Subscriptions & Books"]
+        M5["5) Membership & Subscription"]
+        M6["6) Service Books"]
+      end
+      subgraph Contracts ["Corporate Contracts"]
+        M8["8) B2B Contract Management"]
+      end
+      subgraph AfterSales ["After-Sales & Warranty"]
+        M7["7) Warranty Management"]
+        M18["18) Consent & Sign-off"]
+      end
+      subgraph Integration ["Integrations & Job Lifecycle"]
+        M19["19) Integrations Hub"]
+        M20["20) Job Card Lifecycle"]
+      end
+      Core --> Catalogue --> Sales
+      Sales --> Subscriptions
+      Sales --> Contracts
+      Sales --> AfterSales
+      Sales --> Integration
+      style Core fill:#dae8fc,stroke:#6c8ebf
+      style Catalogue fill:#d5e8d4,stroke:#82b366
+      style Sales fill:#ffe6cc,stroke:#d79b00
+      style Subscriptions fill:#e1d5e7,stroke:#9673a6
+      style Contracts fill:#f8cecc,stroke:#b85450
+      style AfterSales fill:#fff2cc,stroke:#d6b656
+      style Integration fill:#d4e6f1,stroke:#2980b9
+    `,
+
+    "Product Sales": `flowchart TD
+      subgraph Core ["Core Setup"]
+        M1["1) Multi-Business Architecture"]
+        M15["15) Multi-Country & Localisation"]
+        M16["16) Privacy & Security"]
+      end
+      subgraph Catalogue ["Product Catalogue"]
+        M2["2) Service & Product Catalogue"]
+        M4["4) Discounts & Promotions"]
+      end
+      subgraph Sales ["Sales & Payments"]
+        M3["3) Transaction Processing"]
+        M10["10) Loyalty Programme"]
+        M11["11) Gift Cards & Vouchers"]
+        M12["12) Cash Management"]
+        M13["13) Staff Management"]
+        M14["14) POS Analytics"]
+      end
+      subgraph eCommerce ["Digital Sales"]
+        M17["17) E-commerce / Digital Sales"]
+      end
+      subgraph AfterSales ["After-Sales & Warranty"]
+        M7["7) Warranty Management"]
+        M18["18) Consent & Sign-off"]
+      end
+      subgraph Integration ["Integrations & Job Lifecycle"]
+        M19["19) Integrations Hub"]
+        M20["20) Job Card Lifecycle"]
+      end
+      Core --> Catalogue --> Sales
+      Sales --> eCommerce
+      Sales --> AfterSales
+      Sales --> Integration
+      style Core fill:#dae8fc,stroke:#6c8ebf
+      style Catalogue fill:#d5e8d4,stroke:#82b366
+      style Sales fill:#ffe6cc,stroke:#d79b00
+      style eCommerce fill:#cce5ff,stroke:#007acc
+      style AfterSales fill:#fff2cc,stroke:#d6b656
+      style Integration fill:#d4e6f1,stroke:#2980b9
+    `
   };
 
   const tabContainer = document.getElementById('tabs');
   const diagramDiv = document.getElementById('diagram');
   let currentKey = "Vehicle Wash";
 
-  Object.keys(businesses).forEach(key => {
+  Object.keys(flows).forEach(key => {
     const tab = document.createElement('div');
     tab.className = 'tab';
     tab.textContent = key;
@@ -101,7 +222,7 @@ window.addEventListener('DOMContentLoaded', function () {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       currentKey = key;
-      diagramDiv.innerHTML = businesses[key];
+      diagramDiv.innerHTML = flows[key];
       diagramDiv.removeAttribute('data-processed');
       mermaid.run({ nodes: [diagramDiv] });
     });
@@ -109,7 +230,7 @@ window.addEventListener('DOMContentLoaded', function () {
   });
 
   document.querySelector('.tab').classList.add('active');
-  diagramDiv.innerHTML = businesses[currentKey];
+  diagramDiv.innerHTML = flows[currentKey];
   mermaid.run({ nodes: [diagramDiv] });
 });
 </script>
