@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master POS FRD – 6‑Flow Balanced Layout</title>
+<title>Master POS FRD – 6‑Flow Balanced Layout (with Sustainability Score)</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>💳 Business‑Specific POS Module Coverage (6 Balanced Flows)</h1>
+<h1>💳 Business‑Specific POS Module Coverage (6 Flows)</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -36,6 +36,7 @@ window.addEventListener('DOMContentLoaded', function () {
     subgraph Catalogue ["2) Catalogue & Pricing"]
       M2["Service & Product Catalogue"]
       M4["Discounts & Promotions"]
+      SUS["🌱 Sustainability Score<br/>(per service / product)"]
     end
     subgraph Sales ["3) Sales & Payments"]
       direction LR
@@ -101,6 +102,7 @@ window.addEventListener('DOMContentLoaded', function () {
     style SalesCol2 fill:none,stroke:none
     style AnaCol1 fill:none,stroke:none
     style AnaCol2 fill:none,stroke:none
+    style SUS fill:#d5e8d4,stroke:#82b366
   `;
 
   // ─────────── 2) DETAILING STUDIOS ───────────
@@ -113,6 +115,7 @@ window.addEventListener('DOMContentLoaded', function () {
     subgraph Catalogue ["2) Catalogue & Pricing"]
       M2["Service & Product Catalogue"]
       M4["Discounts & Promotions"]
+      SUS["🌱 Sustainability Score<br/>(per service / product)"]
     end
     subgraph Sales ["3) Sales & Payments"]
       direction LR
@@ -178,6 +181,7 @@ window.addEventListener('DOMContentLoaded', function () {
     style SalesCol2 fill:none,stroke:none
     style AnaCol1 fill:none,stroke:none
     style AnaCol2 fill:none,stroke:none
+    style SUS fill:#d5e8d4,stroke:#82b366
   `;
 
   // ─────────── 3) WASH ON THE GO ───────────
@@ -190,6 +194,7 @@ window.addEventListener('DOMContentLoaded', function () {
     subgraph Catalogue ["2) Catalogue & Pricing"]
       M2["Service & Product Catalogue"]
       M4["Discounts & Promotions"]
+      SUS["🌱 Sustainability Score<br/>(per service / product)"]
     end
     subgraph Sales ["3) Sales & Payments"]
       direction LR
@@ -255,6 +260,7 @@ window.addEventListener('DOMContentLoaded', function () {
     style SalesCol2 fill:none,stroke:none
     style AnaCol1 fill:none,stroke:none
     style AnaCol2 fill:none,stroke:none
+    style SUS fill:#d5e8d4,stroke:#82b366
   `;
 
   // ─────────── 4) PRODUCT SALES (different modules) ───────────
@@ -267,6 +273,7 @@ window.addEventListener('DOMContentLoaded', function () {
     subgraph Catalogue ["2) Catalogue & Pricing"]
       M2["Service & Product Catalogue"]
       M4["Discounts & Promotions"]
+      SUS["🌱 Sustainability Score<br/>(per product)"]
     end
     subgraph Sales ["3) Sales & Payments"]
       direction LR
@@ -331,6 +338,7 @@ window.addEventListener('DOMContentLoaded', function () {
     style SalesCol2 fill:none,stroke:none
     style AnaCol1 fill:none,stroke:none
     style AnaCol2 fill:none,stroke:none
+    style SUS fill:#d5e8d4,stroke:#82b366
   `;
 
   const flows = {
