@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ESG & Sustainability – 5‑Stage Business Coverage</title>
+<title>ESG & Sustainability – 5‑Stage Business Coverage (with Lab Reports)</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>🌱 ESG & Sustainability – 5‑Stage Module Coverage</h1>
+<h1>🌱 ESG & Sustainability – 5‑Stage Module Coverage (with Lab & ETP)</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -47,11 +47,13 @@ window.addEventListener('DOMContentLoaded', function () {
         D1["Sensor Registry & Configuration"]
         D2["PLC Data Aggregation (BV-PLC)"]
         D3["Edge Gateway Management"]
+        D7["Lab Report Scheduler & Template"]
       end
       subgraph S2Col2 [ ]
         D4["Offline Buffer & Auto-Sync"]
         D5["Telemetry Ingestion (Water, Energy, Chemical, Air)"]
         D6["Waste & Sludge Sensors"]
+        D8["Manual Metric Entry for Lab Results<br/>(pH, TDS, COD, BOD, etc.)"]
       end
     end
     subgraph Stage3 ["3) Monitoring & Real-Time Insights"]
@@ -61,19 +63,21 @@ window.addEventListener('DOMContentLoaded', function () {
         M2["Chemical Usage Per Wash"]
         M3["Equipment-Level Consumption"]
         M4["Site-Level Dashboards"]
+        M9["Water Quality Dashboard<br/>(TDS, pH, COD vs Standards)"]
       end
       subgraph S3Col2 [ ]
         M5["Leakage & Anomaly Detection"]
         M6["Sustainability Score (per service)"]
         M7["Air Quality Monitoring"]
         M8["Waste & ETP Performance"]
+        M10["ETP Performance Score<br/>(% Removal Efficiency)"]
       end
     end
     subgraph Stage4 ["4) Compliance & Regulatory Mgmt"]
       direction LR
       subgraph S4Col1 [ ]
         C1["Permit Condition Monitoring"]
-        C2["Threshold Alerts & Breach Notifications"]
+        C2["Threshold Alerts & Breach Notifications<br/>(Inc. Lab Data)"]
         C3["Corrective Action Tracking"]
       end
       subgraph S4Col2 [ ]
@@ -139,11 +143,13 @@ window.addEventListener('DOMContentLoaded', function () {
         D1["VOC & Indoor Air Quality Sensors"]
         D2["Energy & Extraction Monitors"]
         D3["Edge Gateway"]
+        D7["Lab Report Scheduler & Template"]
       end
       subgraph S2Col2 [ ]
         D4["Offline Buffer & Auto-Sync"]
         D5["Telemetry Ingestion"]
         D6["Waste Stream Tracking"]
+        D8["Manual Metric Entry for Lab Results"]
       end
     end
     subgraph Stage3 ["3) Monitoring & Real-Time Insights"]
@@ -153,19 +159,21 @@ window.addEventListener('DOMContentLoaded', function () {
         M2["VOC & Air Quality Levels"]
         M3["Chemical Usage per Service"]
         M4["Site-Level Dashboards"]
+        M9["Water Quality Dashboard<br/>(if water‑based processes)"]
       end
       subgraph S3Col2 [ ]
         M5["Leakage & Anomaly Detection"]
         M6["Sustainability Score (per service)"]
         M7["Waste Classification"]
         M8["Before/After AI Quality"]
+        M10["ETP/Discharge Score (if applicable)"]
       end
     end
     subgraph Stage4 ["4) Compliance & Regulatory Mgmt"]
       direction LR
       subgraph S4Col1 [ ]
         C1["Permit Monitoring (Air, Chemical Storage)"]
-        C2["Threshold Alerts"]
+        C2["Threshold Alerts (Inc. Lab)"]
         C3["Corrective Actions"]
       end
       subgraph S4Col2 [ ]
@@ -231,11 +239,13 @@ window.addEventListener('DOMContentLoaded', function () {
         D1["Van Fuel/Energy Sensors"]
         D2["Water Tank Level Sensors"]
         D3["Mobile Edge Gateway"]
+        D7["Lab Report Scheduler (if water sources tested)"]
       end
       subgraph S2Col2 [ ]
         D4["Offline Buffer & Auto-Sync"]
         D5["Telemetry (Fuel, Water, GPS)"]
         D6["Chemical Usage Tracking"]
+        D8["Manual Metric Entry (water quality)"]
       end
     end
     subgraph Stage3 ["3) Monitoring & Real-Time Insights"]
@@ -245,18 +255,20 @@ window.addEventListener('DOMContentLoaded', function () {
         M2["Chemical Consumption per Job"]
         M3["Van & Hub Dashboards"]
         M4["Route Efficiency & Emissions"]
+        M9["Water Quality Dashboard (if applicable)"]
       end
       subgraph S3Col2 [ ]
         M5["Leakage & Idle Alerts"]
         M6["Sustainability Score (per service)"]
         M7["Waste Tracking"]
+        M10["Discharge Performance (if any ETP)"]
       end
     end
     subgraph Stage4 ["4) Compliance & Regulatory Mgmt"]
       direction LR
       subgraph S4Col1 [ ]
         C1["Mobile Vendor Permits"]
-        C2["Threshold Alerts"]
+        C2["Threshold Alerts (Inc. Lab)"]
         C3["Corrective Actions"]
       end
       subgraph S4Col2 [ ]
@@ -322,11 +334,13 @@ window.addEventListener('DOMContentLoaded', function () {
         D1["Warehouse Energy/Water Sensors"]
         D2["Product Lifecycle Data"]
         D3["Edge Gateway"]
+        D7["Lab Report Scheduler (if local water testing)"]
       end
       subgraph S2Col2 [ ]
         D4["Offline Buffer & Auto-Sync"]
         D5["Telemetry Ingestion"]
         D6["Waste & Packaging Tracking"]
+        D8["Manual Metric Entry (product quality water)"]
       end
     end
     subgraph Stage3 ["3) Monitoring & Real-Time Insights"]
@@ -336,19 +350,21 @@ window.addEventListener('DOMContentLoaded', function () {
         M2["Warehouse Energy & Emissions"]
         M3["Packaging Waste Metrics"]
         M4["Site-Level Dashboards"]
+        M9["Water Quality Dashboard (if ware‑ house uses ETP)"]
       end
       subgraph S3Col2 [ ]
         M5["Anomaly Detection"]
         M6["Sustainability Score (per product)"]
         M7["Supplier ESG Ratings"]
         M8["Inventory Waste Tracking"]
+        M10["Discharge Compliance Score"]
       end
     end
     subgraph Stage4 ["4) Compliance & Regulatory Mgmt"]
       direction LR
       subgraph S4Col1 [ ]
         C1["Hazardous Material Permits"]
-        C2["Threshold Alerts"]
+        C2["Threshold Alerts (Inc. Lab)"]
         C3["Corrective Actions"]
       end
       subgraph S4Col2 [ ]
