@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customer Journey – 6‑Stage Lifecycle (per Business)</title>
+<title>Customer Journey – 6‑Stage Lifecycle (All Businesses)</title>
 <style>
   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
   h1 { text-align: center; color: #222; }
@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-<h1>🛤️ Customer Journey – 6‑Stage Lifecycle</h1>
+<h1>🛤️ Customer Journey – 6‑Stage Lifecycle (All Businesses)</h1>
 <div class="tabs" id="tabs"></div>
 <div class="diagram-container">
   <div class="mermaid" id="diagram"></div>
@@ -138,7 +138,7 @@ window.addEventListener('DOMContentLoaded', function () {
       direction LR
       subgraph S2Col1 [ ]
         C1["Real‑time Slot Availability<br/>(booking calendar)"]
-        C2["Multi‑Service Booking<br/>(Interior + Exterior)"]
+        C2["Multi‑Service Booking"]
         C3["Dynamic Pricing & Offers"]
       end
       subgraph S2Col2 [ ]
@@ -406,11 +406,203 @@ window.addEventListener('DOMContentLoaded', function () {
     style S6Col2 fill:none,stroke:none
   `;
 
+  // ─────────── 5) SaaS ───────────
+  const saas = `flowchart TD
+    subgraph Stage1 ["1) Discovery – Lead generated"]
+      direction LR
+      subgraph S1Col1 [ ]
+        D1["Franchise Portal / Website"]
+        D2["AI‑Powered Recommendation<br/>(business match)"]
+      end
+      subgraph S1Col2 [ ]
+        D3["Lead Capture & Qualification"]
+        D4["Demo & Discovery Call<br/>Scheduling"]
+      end
+    end
+    subgraph Stage2 ["2) Consideration – Offer configured"]
+      direction LR
+      subgraph S2Col1 [ ]
+        C1["Platform Demo Environment"]
+        C2["Customisation Options<br/>(modules, branding)"]
+        C3["Pricing & Licensing Models"]
+      end
+      subgraph S2Col2 [ ]
+        C4["Proposal & ROI Calculator"]
+        C5["Contract Negotiation"]
+        C6["Service Level Agreement (SLA)"]
+      end
+    end
+    subgraph Stage3 ["3) Conversion – Contract created"]
+      direction LR
+      subgraph S3Col1 [ ]
+        V1["E‑sign Contract"]
+        V2["Tenant Provisioning<br/>(automated)"]
+      end
+      subgraph S3Col2 [ ]
+        V3["Access & Role Setup"]
+        V4["Welcome & Onboarding Kit"]
+      end
+    end
+    subgraph Stage4 ["4) Execution – Platform delivered"]
+      direction LR
+      subgraph S4Col1 [ ]
+        E1["Data Migration & Integration"]
+        E2["Staff Training (e‑learning)"]
+        E3["Go‑Live & Hyper‑care Support"]
+      end
+      subgraph S4Col2 [ ]
+        E4["Feature Adoption Tracking"]
+        E5["Help Desk / Ticketing"]
+        E6["Performance Monitoring"]
+      end
+    end
+    subgraph Stage5 ["5) Closure – Quality + acceptance"]
+      direction LR
+      subgraph S5Col1 [ ]
+        K1["Project Sign‑off"]
+        K2["Satisfaction Survey"]
+      end
+      subgraph S5Col2 [ ]
+        K3["Handover to Support Team"]
+        K4["Issue & Bug Tracking"]
+      end
+    end
+    subgraph Stage6 ["6) Retention – Renewal & growth"]
+      direction LR
+      subgraph S6Col1 [ ]
+        R1["Usage Analytics & Reports"]
+        R2["Quarterly Business Reviews"]
+        R3["Feature Updates & Upgrades"]
+      end
+      subgraph S6Col2 [ ]
+        R4["License Renewal Trigger"]
+        R5["Expansion (new modules/sites)"]
+        R6["Referral & Partner Program"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  // ─────────── 6) Complete Project Management ───────────
+  const projectMgmt = `flowchart TD
+    subgraph Stage1 ["1) Discovery – Lead generated"]
+      direction LR
+      subgraph S1Col1 [ ]
+        D1["Market & Site Scouting"]
+        D2["RFQ / Tender Alerts"]
+      end
+      subgraph S1Col2 [ ]
+        D3["Lead Capture & Qualification"]
+        D4["Initial Feasibility Check"]
+      end
+    end
+    subgraph Stage2 ["2) Consideration – Offer configured"]
+      direction LR
+      subgraph S2Col1 [ ]
+        C1["Detailed Site Survey"]
+        C2["Architecture & Civil Plan"]
+        C3["Equipment & Technology Spec"]
+      end
+      subgraph S2Col2 [ ]
+        C4["Budget & Capex Estimation"]
+        C5["Project Timeline & Milestones"]
+        C6["Proposal & Commercial Offer"]
+      end
+    end
+    subgraph Stage3 ["3) Conversion – Contract created"]
+      direction LR
+      subgraph S3Col1 [ ]
+        V1["Contract Signing & PO"]
+        V2["Project Kick‑off Meeting"]
+      end
+      subgraph S3Col2 [ ]
+        V3["Resource Allocation"]
+        V4["Permits & Statutory Approvals"]
+      end
+    end
+    subgraph Stage4 ["4) Execution – Project delivered"]
+      direction LR
+      subgraph S4Col1 [ ]
+        E1["Civil Works & Construction"]
+        E2["Equipment Procurement & Delivery"]
+        E3["IoT & Network Installation"]
+      end
+      subgraph S4Col2 [ ]
+        E4["Staff Recruitment & Training"]
+        E5["Trial Runs & Commissioning"]
+        E6["Quality Inspections & Snagging"]
+      end
+    end
+    subgraph Stage5 ["5) Closure – Handover & completion"]
+      direction LR
+      subgraph S5Col1 [ ]
+        K1["Final Inspection & Sign‑off"]
+        K2["Customer Acceptance"]
+      end
+      subgraph S5Col2 [ ]
+        K3["Documentation Handover"]
+        K4["As‑Built Drawings & Manuals"]
+      end
+    end
+    subgraph Stage6 ["6) Retention – AMC & future projects"]
+      direction LR
+      subgraph S6Col1 [ ]
+        R1["AMC / Maintenance Contract"]
+        R2["Preventive & Predictive Maintenance"]
+        R3["Performance Review"]
+      end
+      subgraph S6Col2 [ ]
+        R4["Expansion / Upgrade Proposals"]
+        R5["Referral & Testimonial"]
+        R6["Long‑term Partnership"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
   const flows = {
     "Vehicle Wash": vehicleWash,
     "Detailing Studios": detailing,
     "Wash on the Go": mobile,
-    "Product Sales": productSales
+    "Product Sales": productSales,
+    "SaaS": saas,
+    "Complete Project Management": projectMgmt
   };
 
   const tabContainer = document.getElementById('tabs');
