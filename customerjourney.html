@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Journey – 6‑Stage Lifecycle (per Business)</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: #f5f7fa; }
+  h1 { text-align: center; color: #222; }
+  .tabs { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .tab { background: #e0e0e0; padding: 10px 20px; margin: 5px; border-radius: 20px; cursor: pointer; font-weight: 600; color: #333; }
+  .tab.active { background: #1a73e8; color: white; }
+  .diagram-container { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow-x: auto; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<h1>🛤️ Customer Journey – 6‑Stage Lifecycle</h1>
+<div class="tabs" id="tabs"></div>
+<div class="diagram-container">
+  <div class="mermaid" id="diagram"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+  mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+  // ─────────── 1) VEHICLE WASH ───────────
+  const vehicleWash = `flowchart TD
+    subgraph Stage1 ["1) Discovery – Lead generated"]
+      direction LR
+      subgraph S1Col1 [ ]
+        D1["Multi‑channel Discovery<br/>(app, web, kiosk)"]
+        D2["AI‑Powered Service<br/>Recommendations"]
+      end
+      subgraph S1Col2 [ ]
+        D3["Lead Capture & Tracking<br/>(CRM)"]
+        D4["New Customer Onboarding<br/>(registration, vehicle setup)"]
+      end
+    end
+    subgraph Stage2 ["2) Consideration – Offer configured"]
+      direction LR
+      subgraph S2Col1 [ ]
+        C1["Real‑time Slot Availability<br/>(VIP/Normal split)"]
+        C2["Multi‑Vehicle Booking"]
+        C3["Dynamic Pricing &<br/>Auto‑Applied Discounts"]
+      end
+      subgraph S2Col2 [ ]
+        C4["Fleet Bulk Booking (B2B)"]
+        C5["Quote / Proposal Generator<br/>(B2B/B2G)"]
+        C6["Service Book / Membership<br/>Purchase"]
+      end
+    end
+    subgraph Stage3 ["3) Conversion – Order / Contract created"]
+      direction LR
+      subgraph S3Col1 [ ]
+        V1["One‑Click Checkout<br/>(app, web, kiosk)"]
+        V2["Contract Signing & Activation<br/>(B2B/B2G)"]
+      end
+      subgraph S3Col2 [ ]
+        V3["Service Book & Membership<br/>Purchase Completion"]
+        V4["Order Confirmation &<br/>Digital Receipt"]
+      end
+    end
+    subgraph Stage4 ["4) Execution – Service delivered"]
+      direction LR
+      subgraph S4Col1 [ ]
+        E1["Live Job Stage Tracking"]
+        E2["Technician Photos (opt‑in)"]
+        E3["In‑app Customer‑Staff Chat"]
+      end
+      subgraph S4Col2 [ ]
+        E4["Sustainability Score Visibility"]
+        E5["Queue Transparency &<br/>Wait‑time Updates"]
+        E6["In‑Service Upsell / Cross‑sell"]
+      end
+    end
+    subgraph Stage5 ["5) Closure – Quality + completion"]
+      direction LR
+      subgraph S5Col1 [ ]
+        K1["Digital Sign‑off & Consent"]
+        K2["NPS & Feedback Collection"]
+      end
+      subgraph S5Col2 [ ]
+        K3["Digital Receipt with<br/>Sustainability Score"]
+        K4["Quality Dispute / Rewash Request"]
+      end
+    end
+    subgraph Stage6 ["6) Retention – Repeat & growth"]
+      direction LR
+      subgraph S6Col1 [ ]
+        R1["Service History &<br/>Digital Wash Book"]
+        R2["Loyalty & Rewards Redemption"]
+        R3["AI‑Powered Re‑engagement<br/>(win‑back, milestone)"]
+      end
+      subgraph S6Col2 [ ]
+        R4["Referral & Affiliate Tracking"]
+        R5["Annual ESG Impact Summary"]
+        R6["Personalised Offers & Promotions"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  // ─────────── 2) DETAILING STUDIOS ───────────
+  const detailing = `flowchart TD
+    subgraph Stage1 ["1) Discovery – Lead generated"]
+      direction LR
+      subgraph S1Col1 [ ]
+        D1["Multi‑channel Discovery"]
+        D2["AI‑Powered Recommendations<br/>(ceramic, PPF)"]
+      end
+      subgraph S1Col2 [ ]
+        D3["Lead Capture & CRM"]
+        D4["New Customer Onboarding"]
+      end
+    end
+    subgraph Stage2 ["2) Consideration – Offer configured"]
+      direction LR
+      subgraph S2Col1 [ ]
+        C1["Real‑time Slot Availability<br/>(booking calendar)"]
+        C2["Multi‑Service Booking<br/>(Interior + Exterior)"]
+        C3["Dynamic Pricing & Offers"]
+      end
+      subgraph S2Col2 [ ]
+        C4["Fleet / Dealer Bulk Booking"]
+        C5["Quote / Proposal Generator"]
+        C6["Service Book Purchase"]
+      end
+    end
+    subgraph Stage3 ["3) Conversion – Order / Contract created"]
+      direction LR
+      subgraph S3Col1 [ ]
+        V1["Deposit & Full Payment"]
+        V2["Contract Signing (Dealer)"]
+      end
+      subgraph S3Col2 [ ]
+        V3["Warranty Registration"]
+        V4["Order Confirmation & Receipt"]
+      end
+    end
+    subgraph Stage4 ["4) Execution – Service delivered"]
+      direction LR
+      subgraph S4Col1 [ ]
+        E1["Live Stage Tracking"]
+        E2["Photo Evidence (before/after)"]
+        E3["In‑app Chat with Technician"]
+      end
+      subgraph S4Col2 [ ]
+        E4["Sustainability Score"]
+        E5["Wait‑time / Bay Status"]
+        E6["Upsell: Paint Correction, etc."]
+      end
+    end
+    subgraph Stage5 ["5) Closure – Quality + completion"]
+      direction LR
+      subgraph S5Col1 [ ]
+        K1["Digital Sign‑off & Consent"]
+        K2["NPS & Feedback"]
+      end
+      subgraph S5Col2 [ ]
+        K3["Digital Receipt + ESG Score"]
+        K4["Quality Dispute / Rework"]
+      end
+    end
+    subgraph Stage6 ["6) Retention – Repeat & growth"]
+      direction LR
+      subgraph S6Col1 [ ]
+        R1["Service History & Wash Book"]
+        R2["Loyalty & Rewards"]
+        R3["AI Re‑engagement"]
+      end
+      subgraph S6Col2 [ ]
+        R4["Referral & Affiliate"]
+        R5["Annual ESG Summary"]
+        R6["Personalised Maintenance Plans"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  // ─────────── 3) WASH ON THE GO ───────────
+  const mobile = `flowchart TD
+    subgraph Stage1 ["1) Discovery – Lead generated"]
+      direction LR
+      subgraph S1Col1 [ ]
+        D1["App‑based Discovery"]
+        D2["AI‑Powered Recommendations"]
+      end
+      subgraph S1Col2 [ ]
+        D3["Lead Capture (corporate)"]
+        D4["Quick Onboarding (app)"]
+      end
+    end
+    subgraph Stage2 ["2) Consideration – Offer configured"]
+      direction LR
+      subgraph S2Col1 [ ]
+        C1["Real‑time Mobile Slot Availability"]
+        C2["Service Selection & Extras"]
+        C3["Dynamic Pricing (distance/time)"]
+      end
+      subgraph S2Col2 [ ]
+        C4["Corporate Bulk Booking"]
+        C5["Quote / Proposal (B2B)"]
+        C6["Membership Purchase"]
+      end
+    end
+    subgraph Stage3 ["3) Conversion – Order / Contract created"]
+      direction LR
+      subgraph S3Col1 [ ]
+        V1["App Payment (one‑click)"]
+        V2["Contract Signing (B2B)"]
+      end
+      subgraph S3Col2 [ ]
+        V3["Service Book / Membership"]
+        V4["Confirmation & Receipt"]
+      end
+    end
+    subgraph Stage4 ["4) Execution – Service delivered"]
+      direction LR
+      subgraph S4Col1 [ ]
+        E1["Live Technician Tracking"]
+        E2["Photos / Notes"]
+        E3["Chat with Mobile Tech"]
+      end
+      subgraph S4Col2 [ ]
+        E4["Sustainability Score"]
+        E5["ETA & Route Visibility"]
+        E6["Upsell / Add‑on Services"]
+      end
+    end
+    subgraph Stage5 ["5) Closure – Quality + completion"]
+      direction LR
+      subgraph S5Col1 [ ]
+        K1["Digital Sign‑off & Consent"]
+        K2["NPS & Feedback"]
+      end
+      subgraph S5Col2 [ ]
+        K3["Receipt with ESG Score"]
+        K4["Quality Dispute / Re‑do"]
+      end
+    end
+    subgraph Stage6 ["6) Retention – Repeat & growth"]
+      direction LR
+      subgraph S6Col1 [ ]
+        R1["Service History"]
+        R2["Loyalty & Rewards"]
+        R3["AI Re‑engagement"]
+      end
+      subgraph S6Col2 [ ]
+        R4["Referral & Affiliate"]
+        R5["Annual ESG Summary"]
+        R6["Subscription / Plan Renewal"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  // ─────────── 4) PRODUCT SALES ───────────
+  const productSales = `flowchart TD
+    subgraph Stage1 ["1) Discovery – Lead generated"]
+      direction LR
+      subgraph S1Col1 [ ]
+        D1["Online Store / e‑commerce"]
+        D2["AI‑Powered Product<br/>Recommendations"]
+      end
+      subgraph S1Col2 [ ]
+        D3["Lead Capture (B2B distributors)"]
+        D4["Account Creation (wholesale)"]
+      end
+    end
+    subgraph Stage2 ["2) Consideration – Offer configured"]
+      direction LR
+      subgraph S2Col1 [ ]
+        C1["Product Catalogue & Pricing"]
+        C2["Volume / Trade Discounts"]
+        C3["Quote / Bulk Order Builder"]
+      end
+      subgraph S2Col2 [ ]
+        C4["Inventory Check (real‑time)"]
+        C5["Shipping Options & ETA"]
+        C6["Warranty & AMC Add‑ons"]
+      end
+    end
+    subgraph Stage3 ["3) Conversion – Order / Contract created"]
+      direction LR
+      subgraph S3Col1 [ ]
+        V1["Checkout (online/POS)"]
+        V2["Contract Signing (B2B)"]
+      end
+      subgraph S3Col2 [ ]
+        V3["Warranty / Service Plan Purchase"]
+        V4["Order Confirmation & Invoice"]
+      end
+    end
+    subgraph Stage4 ["4) Execution – Service delivered"]
+      direction LR
+      subgraph S4Col1 [ ]
+        E1["Order Tracking (shipment)"]
+        E2["Delivery Confirmation"]
+        E3["Installation / Service Job Card"]
+      end
+      subgraph S4Col2 [ ]
+        E4["Sustainability Score (product)"]
+        E5["Customer Support Chat"]
+        E6["Return / Exchange Initiation"]
+      end
+    end
+    subgraph Stage5 ["5) Closure – Quality + completion"]
+      direction LR
+      subgraph S5Col1 [ ]
+        K1["Digital Sign‑off & Consent"]
+        K2["NPS & Product Review"]
+      end
+      subgraph S5Col2 [ ]
+        K3["Invoice with ESG Score"]
+        K4["Warranty Registration / Claim"]
+      end
+    end
+    subgraph Stage6 ["6) Retention – Repeat & growth"]
+      direction LR
+      subgraph S6Col1 [ ]
+        R1["Purchase History"]
+        R2["Loyalty Points & Rewards"]
+        R3["AI Re‑engagement (restock)"]
+      end
+      subgraph S6Col2 [ ]
+        R4["Referral & Affiliate"]
+        R5["Annual Sustainability Report"]
+        R6["B2B Contract Renewal"]
+      end
+    end
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5 --> Stage6
+    style Stage1 fill:#dae8fc,stroke:#6c8ebf
+    style Stage2 fill:#d5e8d4,stroke:#82b366
+    style Stage3 fill:#ffe6cc,stroke:#d79b00
+    style Stage4 fill:#fff2cc,stroke:#d6b656
+    style Stage5 fill:#e1d5e7,stroke:#9673a6
+    style Stage6 fill:#cce5ff,stroke:#007acc
+    style S1Col1 fill:none,stroke:none
+    style S1Col2 fill:none,stroke:none
+    style S2Col1 fill:none,stroke:none
+    style S2Col2 fill:none,stroke:none
+    style S3Col1 fill:none,stroke:none
+    style S3Col2 fill:none,stroke:none
+    style S4Col1 fill:none,stroke:none
+    style S4Col2 fill:none,stroke:none
+    style S5Col1 fill:none,stroke:none
+    style S5Col2 fill:none,stroke:none
+    style S6Col1 fill:none,stroke:none
+    style S6Col2 fill:none,stroke:none
+  `;
+
+  const flows = {
+    "Vehicle Wash": vehicleWash,
+    "Detailing Studios": detailing,
+    "Wash on the Go": mobile,
+    "Product Sales": productSales
+  };
+
+  const tabContainer = document.getElementById('tabs');
+  const diagramDiv = document.getElementById('diagram');
+  let currentKey = "Vehicle Wash";
+
+  Object.keys(flows).forEach(key => {
+    const tab = document.createElement('div');
+    tab.className = 'tab';
+    tab.textContent = key;
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentKey = key;
+      diagramDiv.innerHTML = flows[key];
+      diagramDiv.removeAttribute('data-processed');
+      mermaid.run({ nodes: [diagramDiv] });
+    });
+    tabContainer.appendChild(tab);
+  });
+
+  document.querySelector('.tab').classList.add('active');
+  diagramDiv.innerHTML = flows[currentKey];
+  mermaid.run({ nodes: [diagramDiv] });
+});
+</script>
+</body>
+</html>
