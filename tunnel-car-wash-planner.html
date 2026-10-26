@@ -31,9 +31,24 @@ a.btn{padding:5px 10px;border:1px solid var(--ac);border-radius:6px;color:var(--
 .screen .grid>div:first-child,.screen .two,.screen .bigoff{display:none}.screen .grid{grid-template-columns:1fr}.screen .k b{font-size:26px}
 svg text{fill:var(--tx);font-family:system-ui,sans-serif}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:860px){.two{grid-template-columns:1fr}}
+[hidden]{display:none!important}
+.tabs{margin:2px 0 12px}.tabs button{padding:7px 16px;font-weight:600}
+.screen .tabs{display:none}
+.res{padding:12px 14px;border-radius:8px;border:1px solid var(--bd)}
+.res b{display:block;font-size:20px;margin-bottom:4px}
+.res.ok{border-color:var(--ok);background:rgba(42,157,92,.12)}
+.res.wa{border-color:var(--wa);background:rgba(224,161,0,.14)}
+.res.er{border-color:var(--er);background:rgba(214,69,69,.14)}
+.neg{color:var(--er);font-weight:700}.pos{color:var(--ok);font-weight:700}
+.miss{margin:0;padding-left:18px;display:grid;gap:6px}
+.sinp{grid-template-columns:1fr 120px}
+.ed input{min-width:0}.ed td{vertical-align:middle}
+body.mrect .bf,body.mblocks .rf,body.mrect #c_blocks{display:none}
 </style></head><body>
 <h1>Tunnel Car Wash Planner</h1>
 <div class="sub">Pre-filled: 120 ft tunnel, 20 vacuum bays (10 min per car, so 6 cars per bay per hour), 100 cars/hr. Change any input and the layout, area, queues and capacity update.</div>
+<div class="bar tabs"><button id="tPlan" class="p">Planner</button><button id="tSurvey">Site survey</button></div>
+<div id="vPlan">
 <div class="grid">
 <div>
  <div class="card"><h2>Presets</h2><div class="bar"><button id="p120" class="p">120 ft / 20 bays</button><button id="p60">60 ft / 10 bays</button></div>
@@ -59,6 +74,30 @@ svg text{fill:var(--tx);font-family:system-ui,sans-serif}
  <div class="card"><h2>Burst scenario: all cars arrive together</h2><div class="scroll" id="burst"></div><div class="sub" style="margin:6px 0 0">Pick Burst only in the mode list, then press Reset to start with all cars at the gate at once. Or press Drop burst at any time to add the cars to the running flow.</div></div>
  <div class="card bigoff"><h2>Time study per car (nominal)</h2><div class="scroll" id="time"></div></div>
 </div></div>
+</div>
+<div id="vSurvey" hidden>
+<div class="grid">
+<div>
+ <div class="card"><h2>Site details</h2><div class="inp sinp">
+  <label for="s_site">Site name</label><input id="s_site" type="text" value="Tulsibaug Rd">
+  <label for="s_mode">Site input</label><select id="s_mode"><option value="blocks">Several blocks</option><option value="rect">Single plot</option></select>
+  <label for="s_len" class="rf">Plot length (ft)</label><input id="s_len" class="rf" type="number" min="0" step="1" value="160">
+  <label for="s_wid" class="rf">Plot width (ft)</label><input id="s_wid" class="rf" type="number" min="0" step="1" value="120">
+  <label for="s_run" class="bf">Longest straight run (ft)</label><input id="s_run" class="bf" type="number" min="0" step="1" value="220">
+  <label for="s_un">Unusable area (sq ft)</label><input id="s_un" type="number" min="0" step="10" value="0">
+  <label for="s_plat">Platform to check</label><select id="s_plat"><option value="p120">120 ft / 20 bays</option><option value="p60">60 ft / 10 bays</option><option value="cur">Current planner setup</option></select>
+ </div><div class="sub" style="margin:10px 0 0">For several blocks, enter each usable block on the right. The longest straight run is the longest line the guide-on and tunnel can follow across the blocks. Unusable area covers setbacks, structures and right-of-way.</div></div>
+</div>
+<div>
+ <div class="card"><div id="s_res"></div></div>
+ <div class="card" id="c_blocks"><h2>Site blocks</h2><div class="scroll" id="s_bl"></div><div class="bar" style="margin:8px 0 0"><button id="s_addb">Add block</button></div></div>
+ <div class="card"><h2>Additional space needed outside the platform</h2><div class="scroll" id="s_xl"></div><div class="bar" style="margin:8px 0 0"><button id="s_addx">Add requirement</button></div></div>
+ <div class="card"><h2>Platform comparison</h2><div class="scroll" id="s_cmp"></div></div>
+ <div class="two">
+  <div class="card"><h2>Required space by zone</h2><div class="scroll" id="s_brk"></div></div>
+  <div class="card"><h2>What is lost if space is short</h2><div id="s_miss"></div></div>
+ </div>
+</div></div></div>
 <script>
 const F=[['tunnelFt','Tunnel length (ft)',5],['bays','Vacuum bays',1],['target','Target cars/hr',5],['speed','Conveyor speed (m/s)',0.01],['pitch','Car pitch on conveyor (m)',0.1],
 ['stackCars','Stacking capacity (cars)',1],['stackLanes','Stacking lanes',1],['billLanes','Billing lanes',1],['billTime','Billing time (s)',1],
@@ -201,7 +240,7 @@ const ZERO=new Set(['change','bays','finishers','prepPos','billLanes','stackCars
 let OV={},MODE='snake',DRAG=null,VB=[0,0,300,150];
 const capS=v=>isFinite(v)?f0(v):'removed';
 function bounds(){const Z=L.Z;L.minX=Math.min(...Z.map(z=>z.x));L.minY=Math.min(...Z.map(z=>z.y));L.W=Math.max(...Z.map(z=>z.x+z.w))-L.minX;L.H=Math.max(...Z.map(z=>z.y+z.h))-L.minY}
-function setVB(){VB=[L.minX-4,L.minY-10,L.W+8,L.H+14]}
+function setVB(){VB=[L.minX-4,L.minY-15,L.W+8,L.H+19]}
 function calc(){
  const p=P,m=p.tunnelFt*0.3048,release=Math.max(p.pitch/p.speed,p.guide),tunSec=m/p.speed,I=Infinity;
  const cap={gate:450,billing:p.billLanes>0?p.billLanes*3600/p.billTime:I,prep:p.prepPos>0?p.prepPos*3600/p.prepTime:I,guide:p.guide>0?3600/p.guide:I,tunnel:3600*p.speed/p.pitch,finish:p.finishers>0?p.finishers*3600/p.finishTime:I,vacuum:p.bays>0?p.bays*3600/((p.vacMin+p.change)*60):I,exit:3600/p.exitTime};
@@ -210,7 +249,7 @@ function calc(){
  const tech=[['Compressor (2 screw, duty/standby)',120,22],['Vacuum plant ('+turb+' turbines incl. 1 standby)',49*turb,11*turb],['Water recycling, RO, tanks room',240*wf,25],['Pump room (HP, booster, reclaim)',120*tf,45*tf],['Chemical store and dosing',80,3],['Electrical / PLC / MCC',140,0],['Tunnel drives and blowers',0,90*tf]];
  const techA=tech.reduce((a,r)=>a+r[1],0)*1.25,kw=tech.reduce((a,r)=>a+r[2],0);
  Object.assign(st,{tech,techA,kw,turb});
- const sh=12*Math.max(1,p.stackLanes),G=14;
+ const sh=12*Math.max(1,p.stackLanes),G=20;
  const D=[['entry','1 Entry/ANPR',30,sh,'gate'],['stack','2 Stacking',Math.ceil(p.stackCars/p.stackLanes)*20,sh,'billing',p.stackCars>0],['bill','3 Billing',40,16*p.billLanes,'billing',p.billLanes>0],['prep','4 Prep + staging',20*(p.prepPos+3),20,'prep',p.prepPos>0],['guide','5 Guide-on',30,16,'guide',p.guide>0],['tun','6 Tunnel '+p.tunnelFt+' ft',p.tunnelFt+10,24,'tunnel'],['fin','7 Hand finish',Math.ceil(p.finishers/2)*25,24,'finish',p.finishers>0],['vac','8 Vacuum yard ('+p.bays+' bays)',Math.ceil(p.bays/2)*10,64,'vacuum',p.bays>0],['exit','9 Exit',60,12,'exit'],['tech','10 Tech room',Math.max(20,techA/25),25,null]];
  const Z=D.filter(d=>d[5]!==false).map(d=>({id:d[0],n:d[1],w:d[2],h:d[3],k:d[4],x:0,y:0}));
  const rows=MODE==='line'?[Z]:[['entry','stack','bill','prep'],['guide','tun','fin'],['vac','exit','tech']].map(r=>r.map(id=>Z.find(z=>z.id===id)).filter(Boolean));
@@ -230,7 +269,7 @@ function drawBase(){
   if(z.id==='bill')for(let i=1;i<P.billLanes;i++)x+=`<line x1="${z.x}" x2="${z.x+z.w}" y1="${z.y+i*16}" y2="${z.y+i*16}" stroke="var(--mu)" stroke-dasharray="2 2" opacity=".5"/>`;
   if(z.id==='tun')for(let i=0;i<=P.tunnelFt;i+=10)x+=`<line x1="${z.x+5+i}" x2="${z.x+5+i}" y1="${z.y+20}" y2="${z.y+24}" stroke="var(--mu)" opacity=".6"/>`;
   if(z.id==='vac'){const top=Math.ceil(P.bays/2);for(let i=0;i<P.bays;i++){const r=i<top?0:1,cc=r?i-top:i,bx=z.x+cc*10,by=r?z.y+44:z.y;L.bay.push([bx,by]);x+=`<rect x="${bx+.5}" y="${by+.5}" width="9" height="19" fill="none" stroke="var(--mu)" stroke-width=".5"/><text x="${bx+5}" y="${by+(r?17:6)}" font-size="3" text-anchor="middle" opacity=".6">${i+1}</text>`}}
-  s+=`<g class="zn" data-id="${z.id}" style="cursor:grab;touch-action:none"><rect x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" fill="var(--zf)" stroke="${c}" stroke-width="1.2" rx="1.5"/>${x}<text x="${z.x}" y="${z.y-2.5}" font-size="4.6" font-weight="600">${z.n}</text><text x="${z.x+z.w}" y="${z.y-2.5}" font-size="3.6" text-anchor="end" opacity=".7">${f0(z.w)}×${f0(z.h)} ft</text></g>`});
+  s+=`<g class="zn" data-id="${z.id}" style="cursor:grab;touch-action:none"><rect x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" fill="var(--zf)" stroke="${c}" stroke-width="1.2" rx="1.5"/>${x}<text x="${z.x}" y="${z.y-7.5}" font-size="4.6" font-weight="600">${z.n}</text><text x="${z.x}" y="${z.y-2.2}" font-size="3.6" opacity=".7">${f0(z.w)}×${f0(z.h)} ft</text></g>`});
  const seq=['entry','stack','bill','prep','guide','tun','fin','vac','exit'].map(L.z).filter(Boolean);
  for(let i=0;i<seq.length-1;i++)s+=`<path d="${route(seq[i],seq[i+1])}" fill="none" stroke="var(--ac)" stroke-width="1" marker-end="url(#ar)" style="pointer-events:none"/>`;
  return s;
@@ -366,5 +405,72 @@ function vsz(){const p=P,cyc=p.vacMin+p.change,avg=p.target*cyc/60,minB=Math.cei
  const R=[['Bay occupancy per car',f1(cyc)+' min ('+p.vacMin+' vacuum + '+p.change+' changeover)'],['Output of '+p.bays+' bays when full',f0(capNow)+' cars/hr'],['Cars per bay per hour',f1(60/cyc)],['Bays busy on average at '+p.target+'/hr',f1(avg)],['Required bays ('+p.target+' ÷ '+f1(60/cyc)+')',minB],['Recommended bays (85% busy)',rec],['Robust bays (covers 95% of peaks)',rob],['Status of current setup',stt]];
  $('vsz').innerHTML='<table>'+R.map(r=>`<tr><th>${r[0]}</th><td><b>${r[1]}</b></td></tr>`).join('')+'</table>'}
 $('setBays').onclick=()=>{P.bays=RECB;fill();update()};
+const PLAT={p120:'120 ft / 20 bays',p60:'60 ft / 10 bays',cur:'Current planner setup'};
+let SB=[
+ {n:'Customer parking (Space A + first 10 ft of parking area)',w:45,l:30,u:'5 customer parking bays (9 × 18 ft) with a 12-ft aisle off the lane'},
+ {n:'Parking area (balance)',w:45,l:70,u:'20-ft exit turn towards the common gate; POS area 25 × 60 ft as tunnel entry with 2 cars queuing; first 50 ft of the tunnel'},
+ {n:'Tile cutting area (removed)',w:45,l:10,u:'POS area and tunnel continue'},
+ {n:'Space B + labour camp (camp removed)',w:80,l:60,u:'Queue space for 3 lanes × 2 cars; 4 vacuum bays; 60 ft of the tunnel'},
+ {n:'Space C',w:90,l:80,u:'Tech room 12 × 80 ft on west wall; 14 vacuum bays in an L; one-way circulation, 22-ft aisle; last 5 ft of tunnel; stacking lane for 3 cars'}];
+let SX=[{n:'Detailing',a:5000,ok:false,u:'Row area south of the existing shed (red-marked)'}];
+const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const bA=b=>(+b.w||0)*(+b.l||0);
+function edB(){$('s_bl').innerHTML='<table class="ed"><tr><th>Block</th><th>Width (ft)</th><th>Length (ft)</th><th>sq ft</th><th>Proposed use</th><th></th></tr>'+SB.map((b,i)=>`<tr><td><input id="sb_n${i}" data-i="${i}" data-f="n" value="${esc(b.n)}" style="width:230px"></td><td><input id="sb_w${i}" type="number" min="0" data-i="${i}" data-f="w" value="${b.w}" style="width:70px"></td><td><input id="sb_l${i}" type="number" min="0" data-i="${i}" data-f="l" value="${b.l}" style="width:70px"></td><td id="ba${i}" style="font-variant-numeric:tabular-nums">${f0(bA(b))}</td><td><input id="sb_u${i}" data-i="${i}" data-f="u" value="${esc(b.u)}" style="width:340px"></td><td><button data-del="${i}">Remove</button></td></tr>`).join('')+`<tr><th>Total on site</th><th></th><th></th><th id="btot">${f0(SB.reduce((a,b)=>a+bA(b),0))}</th><th colspan="2"></th></tr></table>`}
+function edX(){$('s_xl').innerHTML='<table class="ed"><tr><th>Requirement</th><th>sq ft</th><th>Space secured</th><th>Location / note</th><th></th></tr>'+SX.map((x,i)=>`<tr><td><input id="sx_n${i}" data-i="${i}" data-f="n" value="${esc(x.n)}" style="width:160px"></td><td><input id="sx_a${i}" type="number" min="0" step="100" data-i="${i}" data-f="a" value="${x.a}" style="width:80px"></td><td><input id="sx_k${i}" type="checkbox" data-i="${i}" data-f="ok" ${x.ok?'checked':''} style="width:auto"></td><td><input id="sx_u${i}" data-i="${i}" data-f="u" value="${esc(x.u)}" style="width:300px"></td><td><button data-del="${i}">Remove</button></td></tr>`).join('')+'</table>'}
+function wire(box,arr,redo,after){
+ box.addEventListener('input',e=>{const t=e.target,i=+t.dataset.i,f=t.dataset.f;if(f===undefined)return;arr()[i][f]=t.type==='checkbox'?t.checked:t.type==='number'?(+t.value||0):t.value;after&&after(i);survey()});
+ box.addEventListener('click',e=>{const t=e.target.closest('[data-del]');if(!t)return;arr().splice(+t.dataset.del,1);redo();survey()})}
+wire($('s_bl'),()=>SB,edB,i=>{$('ba'+i).textContent=f0(bA(SB[i]));$('btot').textContent=f0(SB.reduce((a,b)=>a+bA(b),0))});
+wire($('s_xl'),()=>SX,edX);
+$('s_addb').onclick=()=>{SB.push({n:'New block',w:0,l:0,u:''});edB();survey()};
+$('s_addx').onclick=()=>{SX.push({n:'New requirement',a:0,ok:false,u:''});edX();survey()};
+function need(p,mode){const kP=P,kO=OV,kM=MODE;P={...p};OV={};MODE=mode||'snake';calc();
+ const gz=L.z('guide'),r={run:L.z('tun').w+(gz?gz.w+8:0),sub:st.sub,plot:st.plot,cap:Math.min(...Object.values(st.cap)),area:st.area.slice()};
+ P=kP;OV=kO;MODE=kM;calc();redraw();return r}
+const sqm=v=>f0(v*0.0929)+' m²';
+function survey(){
+ const mode=$('s_mode').value;document.body.classList.toggle('mrect',mode==='rect');document.body.classList.toggle('mblocks',mode==='blocks');
+ const len=Math.max(0,+$('s_len').value||0),wid=Math.max(0,+$('s_wid').value||0),un=Math.max(0,+$('s_un').value||0),sel=$('s_plat').value;
+ const gross=mode==='rect'?len*wid:SB.reduce((a,b)=>a+bA(b),0),av=Math.max(0,gross-un),side=mode==='rect'?Math.max(len,wid):Math.max(0,+$('s_run').value||0);
+ const where=mode==='rect'?`${f0(len)} × ${f0(wid)} ft plot`:`${SB.length} blocks`;
+ try{localStorage.setItem('cws3',JSON.stringify({site:$('s_site').value,mode,len,wid,run:$('s_run').value,un,sel,SB,SX}))}catch(e){}
+ const pf=k=>k==='p120'?P120:k==='p60'?P60:P;
+ const R={};Object.keys(PLAT).forEach(k=>{const p=pf(k),sn=need(p,'snake');R[k]={p,sn,ok:av>=sn.plot,shape:sn.run<=side}});
+ const stat=r=>!r.ok?'<span class="dot r"></span>Lacking space':!r.shape?'<span class="dot a"></span>Area enough, run too short':'<span class="dot g"></span>Suitable';
+ $('s_cmp').innerHTML='<table><tr><th>Platform</th><th>Plot needed</th><th>Available</th><th>Difference</th><th>Straight run needed</th><th>Max capacity</th><th>Result</th></tr>'+Object.keys(PLAT).map(k=>{const r=R[k],d=av-r.sn.plot;return`<tr${k===sel?' style="background:var(--zf)"':''}><td><b>${PLAT[k]}</b></td><td>${f0(r.sn.plot)} sq ft</td><td>${f0(av)} sq ft</td><td class="${d<0?'neg':'pos'}">${d<0?'short '+f0(-d):'spare '+f0(d)} sq ft</td><td class="${r.shape?'':'neg'}">${f0(r.sn.run)} ft (have ${f0(side)})</td><td>${f0(r.sn.cap)} cars/hr</td><td>${stat(r)}</td></tr>`}).join('')+'</table>';
+ const r=R[sel],p=r.p,d=av-r.sn.plot,site=$('s_site').value||'This site';
+ const xo=SX.filter(x=>!x.ok&&x.a>0),xs=xo.reduce((a,x)=>a+x.a,0);
+ const xl=SX.filter(x=>x.a>0).length?`<div style="margin-top:8px">Additional space outside the platform: ${SX.filter(x=>x.a>0).map(x=>`${esc(x.n)} ~${f0(x.a)} sq ft <span class="${x.ok?'pos':'neg'}">${x.ok?'secured':'to be arranged'}</span>`).join('; ')}.</div>`:'';
+ let h;
+ if(r.ok&&r.shape)h=`<div class="res ${xs?'wa':'ok'}"><b>Platform suitable: ${f0(d)} sq ft spare${xs?', additional space pending':''}</b>${esc(site)} has ${f0(av)} sq ft (${sqm(av)}) usable across ${where} against ${f0(r.sn.plot)} sq ft (${sqm(r.sn.plot)}) required for ${PLAT[sel]}.${xl}</div>`;
+ else if(r.ok)h=`<div class="res wa"><b>Area is enough, but the straight run is too short</b>The ${f0(av)} sq ft covers the ${f0(r.sn.plot)} sq ft needed, but the guide-on and tunnel need a ${f0(r.sn.run)} ft straight run and the site allows ${f0(side)} ft.${xl}</div>`;
+ else h=`<div class="res er"><b>Lacking space: short by ${f0(-d)} sq ft (${sqm(-d)})</b>Required <b style="display:inline;font-size:inherit">${f0(r.sn.plot)} sq ft</b> for ${PLAT[sel]}; ${esc(site)} has ${f0(av)} sq ft usable across ${where}${un?' after '+f0(un)+' sq ft unusable':''}.${xl}</div>`;
+ $('s_res').innerHTML=h;
+ $('s_brk').innerHTML='<table><tr><th>Zone</th><th>sq ft</th></tr>'+r.sn.area.map(a=>`<tr><td>${a[0]}</td><td>${f0(a[3])}</td></tr>`).join('')+`<tr><th>Built zones total</th><th>${f0(r.sn.sub)}</th></tr><tr><td>Circulation, offices, landscape (25%)</td><td>${f0(r.sn.plot-r.sn.sub)}</td></tr><tr><th>Plot needed</th><th>${f0(r.sn.plot)}</th></tr></table>`;
+ const M=[];
+ if(r.ok&&r.shape)M.push('Platform: nothing is lost. All zones, the full '+p.bays+' vacuum bays and the 25% allowance for circulation, offices and landscape fit.');
+ else{
+  if(!r.ok){
+   if(av>=r.sn.sub)M.push(`All working zones fit (${f0(r.sn.sub)} sq ft), but the allowance for circulation, offices and landscape drops from 25% to ${f0((av-r.sn.sub)/r.sn.sub*100)}%. Expect tight driveways, fewer staff and customer facilities, and little landscaping.`);
+   else{let b=-1,nb=null;for(let i=p.bays-1;i>=1;i--){const n=need({...p,bays:i});if(n.plot<=av){b=i;nb=n;break}}
+    const cyc=p.vacMin+p.change;
+    if(b>0){const out=Math.floor(nb.cap),lost=Math.max(0,Math.round(p.target-out));
+     M.push(`Vacuum bays drop from ${p.bays} to ${b}. That frees ${f0(r.sn.plot-nb.plot)} sq ft of plot.`);
+     M.push(`Vacuum capacity falls to ${f0(b*60/cyc)} cars/hr, so site output becomes about <b>${out} cars/hr</b> instead of ${p.target}${lost?`: a loss of <span class="neg">${lost} cars/hr</span> (about ${f0(lost*10)} cars over a 10-hour day)`:''}.`);
+     if(lost)M.push('Cars will queue for a free bay at busy times, and the queue backs up into the tunnel exit.')}
+    else{const n0=need({...p,bays:0});M.push(n0.plot<=av?`Even 1 vacuum bay does not fit. Without a vacuum yard the plot needed is ${f0(n0.plot)} sq ft, so the site could run as wash-only, losing the vacuum service.`:`Even with no vacuum yard the site needs ${f0(n0.plot)} sq ft, so ${PLAT[sel]} cannot be built here.`)}}
+  }
+  if(!r.shape)M.push(`The tunnel line cannot run straight: it needs ${f0(r.sn.run)} ft and the site allows ${f0(side)} ft, short by <span class="neg">${f0(r.sn.run-side)} ft</span>.`);
+  const alt=Object.keys(PLAT).filter(k=>k!==sel&&R[k].ok&&R[k].shape);
+  if(alt.length)M.push('Fits instead: '+alt.map(k=>`<b>${PLAT[k]}</b> (needs ${f0(R[k].sn.plot)} sq ft and a ${f0(R[k].sn.run)} ft run, up to ${f0(R[k].sn.cap)} cars/hr)`).join(', ')+'.');
+ }
+ xo.forEach(x=>M.push(`<b>${esc(x.n)}</b> needs about ${f0(x.a)} sq ft that is not yet secured${x.u?' ('+esc(x.u)+')':''}. Until it is arranged, the site cannot offer this service.`));
+ $('s_miss').innerHTML='<ul class="miss">'+M.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+}
+function tab(t){$('vPlan').hidden=t!=='plan';$('vSurvey').hidden=t!=='survey';$('tPlan').classList.toggle('p',t==='plan');$('tSurvey').classList.toggle('p',t==='survey');if(t==='survey')survey()}
+$('tPlan').onclick=()=>tab('plan');$('tSurvey').onclick=()=>tab('survey');
+['s_site','s_mode','s_len','s_wid','s_run','s_un','s_plat'].forEach(id=>$(id).addEventListener('input',survey));
+try{const d=JSON.parse(localStorage.getItem('cws3'));if(d){$('s_site').value=d.site??'';$('s_mode').value=d.mode||'blocks';$('s_len').value=d.len;$('s_wid').value=d.wid;$('s_run').value=d.run;$('s_un').value=d.un;$('s_plat').value=d.sel||'p120';if(Array.isArray(d.SB))SB=d.SB;if(Array.isArray(d.SX))SX=d.SX}}catch(e){}
+edB();edX();document.body.classList.add('m'+$('s_mode').value);
 fill();update();requestAnimationFrame(frame);
 </script></body></html>
