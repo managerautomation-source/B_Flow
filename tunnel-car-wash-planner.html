@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tunnel Car Wash Planner</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b2430;--mu:#667085;--bd:#d9dee5;--ac:#1f6feb;--ok:#2a9d5c;--wa:#e0a100;--er:#d64545;--zf:rgba(31,111,235,.10);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161c;--card:#1b222b;--tx:#e8edf3;--mu:#97a3b3;--bd:#2f3946;--ac:#5a9bff;--zf:rgba(90,155,255,.14)}}
+*{box-sizing:border-box}html{color-scheme:light dark}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;padding:12px}
+h1{font-size:19px;margin:0 0 2px}h2{font-size:14px;margin:0 0 8px}
+.sub{color:var(--mu);margin-bottom:10px}
+.grid{display:grid;grid-template-columns:260px 1fr;gap:12px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:12px;min-width:0}
+.inp{display:grid;grid-template-columns:1fr 78px;gap:5px 8px;align-items:center}
+.inp label{font-size:12px;color:var(--mu)}
+input,select{width:100%;padding:4px 6px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx);font:inherit}
+button{padding:5px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--card);color:var(--tx);cursor:pointer;font:inherit}
+button.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.bar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.k{border:1px solid var(--bd);border-radius:8px;padding:8px}.k b{display:block;font-size:19px}.k span{font-size:11px;color:var(--mu)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mu);font-weight:600}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+.g{background:var(--ok)}.a{background:var(--wa)}.r{background:var(--er)}
+.alert{padding:6px 10px;border-radius:6px;margin-bottom:6px;font-size:12.5px;background:rgba(214,69,69,.14);border:1px solid var(--er)}
+svg{width:100%;height:auto;display:block}
+a.btn{padding:5px 10px;border:1px solid var(--ac);border-radius:6px;color:var(--ac);text-decoration:none}
+.screen .grid>div:first-child,.screen .two,.screen .bigoff{display:none}.screen .grid{grid-template-columns:1fr}.screen .k b{font-size:26px}
+svg text{fill:var(--tx);font-family:system-ui,sans-serif}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:860px){.two{grid-template-columns:1fr}}
+</style></head><body>
+<h1>Tunnel Car Wash Planner</h1>
+<div class="sub">Pre-filled: 120 ft tunnel, 20 vacuum bays (10 min per car, so 6 cars per bay per hour), 100 cars/hr. Change any input and the layout, area, queues and capacity update.</div>
+<div class="grid">
+<div>
+ <div class="card"><h2>Presets</h2><div class="bar"><button id="p120" class="p">120 ft / 20 bays</button><button id="p60">60 ft / 10 bays</button></div>
+ <h2>Inputs <span class="sub">(0 removes: stacking, billing, prep, guide-on, finish, bays)</span></h2><div class="inp" id="inputs"></div></div>
+</div>
+<div>
+ <div class="card"><div class="kpi" id="kpi"></div></div>
+ <div class="card"><div class="bar"><h2 style="margin:0">Layout and live queue simulation</h2><span style="flex:1"></span>
+  <button id="mSnake">Snake layout</button><button id="mLine">Single line</button><button id="mReset">Reset moves</button><button id="play" class="p">Pause</button><button id="rst">Reset</button>
+  <a class="btn" target="_blank" rel="noopener" href="https://claude.ai/artifact/65sGAzxKRgeEUusox4eAwS#screen">Open big-screen tab</a><input id="burstN" type="number" value="12" min="1" style="width:58px" title="Cars in burst"><button id="bBtn">Drop burst</button><select id="mode" style="width:auto"><option value="exact">Exact timing</option><option value="rand">Random</option><option value="burst">Burst only</option></select><select id="spd" style="width:auto"><option value="1">1x</option><option value="10" selected>10x</option><option value="30">30x</option><option value="60">60x</option><option value="120">120x</option><option value="300">300x</option></select></div>
+  <div class="kpi" id="clk" style="margin-bottom:8px"></div><div class="sub" id="hr1" style="margin-bottom:8px"></div><div id="alerts"></div><div class="scroll"><svg id="svg"></svg></div>
+  <div class="sub" style="margin:6px 0 0">Drag any block to move it; flow arrows follow. Set a stage to 0 to remove it. Cars: green = in service, amber = waiting. Zone outline: green under 75% load, amber 75–90%, red over 90%. Cars are random arrivals at the target rate.</div></div>
+ <div class="two">
+  <div class="card"><h2>Stage capacity at target rate</h2><div class="scroll" id="cap"></div></div>
+  <div class="card"><h2>Live simulation</h2><div class="scroll" id="live"></div></div>
+ </div>
+ <div class="two">
+  <div class="card"><h2>Space requirement</h2><div class="scroll" id="space"></div></div>
+  <div class="card"><h2>Technical room</h2><div class="scroll" id="tech"></div></div>
+ </div>
+ <div class="card bigoff"><h2>Vacuum sizing for target output</h2><div class="scroll" id="vsz"></div><div class="bar" style="margin-top:6px"><button id="setBays" class="p">Set bays to required</button></div></div>
+ <div class="card"><h2>Self-test: full flow run at this setup</h2><div class="scroll" id="test"></div><div class="bar" style="margin-top:6px"><button id="rt">Re-run test</button></div></div>
+ <div class="card"><h2>Burst scenario: all cars arrive together</h2><div class="scroll" id="burst"></div><div class="sub" style="margin:6px 0 0">Pick Burst only in the mode list, then press Reset to start with all cars at the gate at once. Or press Drop burst at any time to add the cars to the running flow.</div></div>
+ <div class="card bigoff"><h2>Time study per car (nominal)</h2><div class="scroll" id="time"></div></div>
+</div></div>
+<script>
+const F=[['tunnelFt','Tunnel length (ft)',5],['bays','Vacuum bays',1],['target','Target cars/hr',5],['speed','Conveyor speed (m/s)',0.01],['pitch','Car pitch on conveyor (m)',0.1],
+['stackCars','Stacking capacity (cars)',1],['stackLanes','Stacking lanes',1],['billLanes','Billing lanes',1],['billTime','Billing time (s)',1],
+['guide','Guide-on time (s)',1],
+['vacMin','Vacuum time per car (min)',0.5],['change','Bay changeover (min)',0.1],['exitTime','Exit time (s)',1]];
+const P120={tunnelFt:120,bays:20,target:100,speed:0.2,pitch:6,stackCars:12,stackLanes:2,billLanes:2,billTime:45,prepPos:0,prepTime:50,guide:28,finishers:0,finishTime:98,vacMin:10,change:0,exitTime:20};
+const P60={...P120,tunnelFt:60,bays:10,target:50,stackCars:6,billLanes:1,prepPos:0,prepTime:30,finishers:0};
+let P={...P120};
+const $=id=>document.getElementById(id),f0=n=>Math.round(n).toLocaleString(),f1=n=>(Math.round(n*10)/10).toLocaleString();
+$('inputs').innerHTML=F.map(([k,l,s])=>`<label>${l}</label><input type="number" id="i_${k}" step="${s}" min="0">`).join('');
+function fill(){F.forEach(([k])=>$('i_'+k).value=P[k])}
+F.forEach(([k])=>$('i_'+k).addEventListener('change',e=>{const v=parseFloat(e.target.value);P[k]=(v>0||(v===0&&ZERO.has(k)))?v:P[k];fill();update()}));
+const pick=id=>['p120','p60'].forEach(b=>$(b).classList.toggle('p',b===id));
+$('p120').onclick=()=>{P={...P120};pick('p120');fill();update()};$('p60').onclick=()=>{P={...P60};pick('p60');fill();update()};
+
+let L={},st={},S=null;
+function calc(){
+ const p=P,m=p.tunnelFt*0.3048,release=Math.max(p.pitch/p.speed,p.guide),tunSec=m/p.speed;
+ const cap={gate:3600/8,billing:p.billLanes*3600/p.billTime,prep:p.prepPos*3600/p.prepTime,guide:3600/p.guide,tunnel:3600*p.speed/p.pitch,finish:p.finishers*3600/p.finishTime,vacuum:p.bays*3600/((p.vacMin+p.change)*60),exit:3600/p.exitTime};
+ st={cap,release,tunSec,m};
+ const turb=Math.ceil(p.bays/6)+1,tf=Math.max(.5,p.tunnelFt/120),wf=p.target/100;
+ const tech=[['Compressor (2 screw, duty/standby)',120,22],['Vacuum plant ('+turb+' turbines incl. 1 standby)',49*turb,11*turb],['Water recycling, RO, tanks room',240*wf,25],['Pump room (HP, booster, reclaim)',120*tf,45*tf],['Chemical store and dosing',80,3],['Electrical / PLC / MCC',140,0],['Tunnel drives and blowers',0,90*tf]];
+ const base=tech.reduce((a,r)=>a+r[1],0),techA=base*1.25,kw=tech.reduce((a,r)=>a+r[2],0);
+ st.tech=tech;st.techA=techA;st.kw=kw;st.turb=turb;
+ // zones
+ const G=14,Z=[];let y=0,x;const add=(id,n,x,y,w,h,k)=>{const z={id,n,x,y,w,h,k};Z.push(z);return z};
+ const sh=12*p.stackLanes,vw=Math.ceil(p.bays/2)*10;
+ x=0;let a=[['entry','1 Entry/ANPR',30,sh,'gate'],['stack','2 Stacking',Math.ceil(p.stackCars/p.stackLanes)*20,sh,'billing'],['bill','3 Billing',40,16*p.billLanes,'billing'],['prep','4 Prep + staging',20*(p.prepPos+3),20,'prep']];
+ let hA=Math.max(...a.map(r=>r[3]));a.forEach(r=>{add(r[0],r[1],x,0,r[2],r[3],r[4]);x+=r[2]+6});
+ y=hA+G;x=0;add('guide','5 Guide-on',x,y,30,16,'guide');x+=36;add('tun','6 Tunnel '+p.tunnelFt+' ft',x,y,p.tunnelFt+10,24,'tunnel');x+=p.tunnelFt+16;
+ add('fin','7 Hand finish',x,y,Math.ceil(p.finishers/2)*25,24,'finish');
+ y+=24+G;x=0;add('vac','8 Vacuum yard ('+p.bays+' bays)',x,y,vw,64,'vacuum');x+=vw+6;add('exit','9 Exit',x,y,60,12,'exit');x+=66;
+ add('tech','10 Tech room',x,y,Math.max(20,techA/25),25,null);
+ L={Z,W:Math.max(...Z.map(z=>z.x+z.w))+4,H:y+64+4};
+ L.z=id=>Z.find(q=>q.id===id);
+ st.util={};for(const k in cap)st.util[k]=p.target/cap[k];
+ st.area=Z.map(z=>[z.n,z.w,z.h,z.w*z.h]);st.sub=st.area.reduce((a,r)=>a+r[3],0);st.plot=st.sub*1.25;
+}
+const col=u=>u>.9?'var(--er)':u>.75?'var(--wa)':'var(--ok)',cls=u=>u>.9?'r':u>.75?'a':'g';
+
+function drawBase(){
+ let s='';const Z=L.Z;
+ Z.forEach(z=>{const u=z.k?st.util[z.k]:0,c=z.k?col(u):'var(--mu)';
+  s+=`<rect x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" fill="var(--zf)" stroke="${c}" stroke-width="1.2" rx="1.5"/>`;
+  s+=`<text x="${z.x}" y="${z.y-2.5}" font-size="4.6" font-weight="600">${z.n}</text>`;
+  s+=`<text x="${z.x+z.w}" y="${z.y-2.5}" font-size="3.6" text-anchor="end" opacity=".7">${f0(z.w)}×${f0(z.h)} ft</text>`});
+ // stack lanes
+ const sk=L.z('stack');for(let i=1;i<P.stackLanes;i++)s+=`<line x1="${sk.x}" x2="${sk.x+sk.w}" y1="${sk.y+i*12}" y2="${sk.y+i*12}" stroke="var(--mu)" stroke-dasharray="2 2" opacity=".5"/>`;
+ const bl=L.z('bill');for(let i=1;i<P.billLanes;i++)s+=`<line x1="${bl.x}" x2="${bl.x+bl.w}" y1="${bl.y+i*16}" y2="${bl.y+i*16}" stroke="var(--mu)" stroke-dasharray="2 2" opacity=".5"/>`;
+ // tunnel zone ticks
+ const tn=L.z('tun');for(let i=0;i<=P.tunnelFt;i+=10)s+=`<line x1="${tn.x+5+i}" x2="${tn.x+5+i}" y1="${tn.y+20}" y2="${tn.y+24}" stroke="var(--mu)" opacity=".6"/>`;
+ // bays
+ const v=L.z('vac'),top=Math.ceil(P.bays/2);L.bay=[];
+ for(let i=0;i<P.bays;i++){const r=i<top?0:1,c=r?i-top:i,bx=v.x+c*10,by=r?v.y+44:v.y;L.bay.push([bx,by]);
+  s+=`<rect x="${bx+.5}" y="${by+.5}" width="9" height="19" fill="none" stroke="var(--mu)" stroke-width=".5"/><text x="${bx+5}" y="${by+(r?17:6)}" font-size="3" text-anchor="middle" opacity=".6">${i+1}</text>`}
+ // flow arrows
+ const seq=['entry','stack','bill','prep','guide','tun','fin','vac','exit','tech'];
+ for(let i=0;i<seq.length-2;i++){const a=L.z(seq[i]),b=L.z(seq[i+1]);let d;
+  if(Math.abs(a.y-b.y)<1)d=`M${a.x+a.w} ${a.y+6}H${b.x}`;
+  else{const ax=a.x+a.w/2,bx=b.x+b.w/2,my=a.y+Math.max(a.h,0)+7;d=`M${ax} ${a.y+a.h}V${my}H${bx}V${b.y}`}
+  s+=`<path d="${d}" fill="none" stroke="var(--ac)" stroke-width="1" marker-end="url(#ar)"/>`}
+ return s;
+}
+function cell(z,i,o){const cols=Math.max(1,Math.floor((z.w-2)/17)),rows=Math.max(1,Math.floor((z.h-1)/8)),n=cols*rows;if(i>=n)i=n-1;return[z.x+2+(i%cols)*17,z.y+2+Math.floor(i/cols)*8+(o||0)]}
+const car=(x,y,c)=>`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="14" height="6" rx="1.8" fill="${c}"/>`;
+function drawCars(){
+ let s='';const G='var(--ok)',A='var(--wa)';
+ const stg=S.st;
+ const lay=(zone,list,col,ofs)=>{const z=L.z(zone);list.forEach((c,i)=>{const[x,y]=cell(z,i+(ofs||0));s+=car(x,y,col)})};
+ // stack = billing queue (2 lanes laid in grid order)
+ lay('stack',stg.bill.q,A);lay('bill',stg.bill.b,G);
+ lay('prep',stg.prep.b,G);lay('prep',stg.prep.q,A,stg.prep.b.length);
+ lay('guide',stg.rel.b,G);lay('guide',stg.rel.q,A,stg.rel.b.length);
+ const tn=L.z('tun');stg.tun.b.forEach(c=>{const f=1-(c.end-S.t)/st.tunSec;s+=car(tn.x+5+f*(P.tunnelFt-14),tn.y+9,G)});
+ lay('fin',stg.fin.b,G);lay('fin',stg.fin.q,A,stg.fin.b.length);
+ stg.vac.b.forEach((c,i)=>{const p=L.bay[i];if(p)s+=`<rect x="${p[0]+2}" y="${p[1]+3}" width="6" height="14" rx="2" fill="${G}"/>`});
+ const v=L.z('vac');stg.vac.q.forEach((c,i)=>{const x=v.x+2+(i%Math.max(1,Math.floor((v.w-2)/17)))*17,y=v.y+23+Math.floor(i/Math.max(1,Math.floor((v.w-2)/17)))*8;if(y<v.y+42)s+=car(x,y,A)});
+ lay('exit',stg.ex.b,G);
+ return s;
+}
+function mk(n,svc){return{n,svc,q:[],b:[]}}
+function resetSim(){
+ const p=P;
+ S={t:0,id:0,done:0,sumT:0,maxQ:0,qs:0,qn:0,peak:0,spill:0,st:{
+  bill:mk(p.billLanes,()=>p.billTime),prep:mk(p.prepPos,()=>p.prepTime),rel:mk(1,()=>st.release),
+  tun:mk(1e9,()=>st.tunSec),fin:mk(p.finishers,()=>p.finishTime),vac:mk(p.bays,()=>(p.vacMin+p.change)*60),ex:mk(1e9,()=>p.exitTime)}};
+ S.order=['bill','prep','rel','tun','fin','vac','ex'];S.next=exp();
+}
+const exp=()=>(S?S.t:0)-Math.log(1-Math.random())*3600/P.target;
+function step(dt){
+ S.t+=dt;
+ while(S.next<=S.t){S.st.bill.q.push({t0:S.next});S.next=S.next+(-Math.log(1-Math.random())*3600/P.target)}
+ S.order.forEach((k,i)=>{const s=S.st[k],nx=S.st[S.order[i+1]];
+  for(let j=s.b.length-1;j>=0;j--){const c=s.b[j];if(c.end<=S.t){s.b.splice(j,1);if(nx)nx.q.push(c);else{S.done++;S.sumT+=S.t-c.t0}}}
+  while(s.b.length<s.n&&s.q.length){const c=s.q.shift();c.end=S.t+s.svc()*(k==='tun'||k==='rel'?1:.85+.3*Math.random());s.b.push(c)}});
+ const q=S.st.bill.q.length;S.maxQ=Math.max(S.maxQ,q);S.qs+=q;S.qn++;S.peak=Math.max(S.peak,S.st.vac.b.length);
+}
+let last=0,run=true;
+function frame(ts){
+ if(run&&last){const dt=Math.min((ts-last)/1000,.1)*parseFloat($('spd').value);for(let t=0;t<dt;t+=.5)step(Math.min(.5,dt-t))}
+ last=ts;render();requestAnimationFrame(frame)
+}
+let tick=0;
+function render(){
+ $('cars').innerHTML=drawCars();
+ if(tick++%6)return;
+ const s=S.st,q=s.bill.q.length,over=q>P.stackCars;
+ let al='';
+ if(over)al+=`<div class="alert">Stacking overflow: ${q-P.stackCars} car(s) are queuing outside the ${P.stackCars}-car stack onto the road.</div>`;
+ if(s.vac.q.length)al+=`<div class="alert">Vacuum yard full: ${s.vac.q.length} car(s) waiting for a bay.</div>`;
+ $('alerts').innerHTML=al;
+ const hrs=S.t/3600;
+ $('live').innerHTML=`<table><tr><th>Sim time</th><td>${f1(S.t/60)} min</td></tr><tr><th>Cars in stack queue</th><td>${q} (max ${S.maxQ})</td></tr><tr><th>Avg stack queue</th><td>${f1(S.qs/Math.max(1,S.qn))}</td></tr>
+ <tr><th>Cars completed</th><td>${S.done}</td></tr><tr><th>Throughput (completed/hr)</th><td>${hrs>.2?f0(S.done/hrs):'warming up'}</td></tr>
+ <tr><th>Avg time in system</th><td>${S.done?f1(S.sumT/S.done/60)+' min':'-'}</td></tr><tr><th>Tunnel cars now</th><td>${s.tun.b.length}</td></tr>
+ <tr><th>Vacuum bays busy / peak</th><td>${s.vac.b.length} / ${S.peak} of ${P.bays}</td></tr></table>`;
+}
+function update(){
+ calc();
+ const p=P,c=st.cap,min=Math.min(...Object.values(c));
+ const bn=Object.keys(c).find(k=>c[k]===min);
+ const avgBays=p.target/60*(p.vacMin+p.change),pk=avgBays+1.65*Math.sqrt(avgBays);
+ $('kpi').innerHTML=[[f0(st.plot)+' sq ft','Plot needed (+25%)'],[f0(st.sub)+' sq ft','Built zones total'],[f0(L.W)+' × '+f0(L.H)+' ft','Layout footprint'],[f0(min)+'/hr','Max system output ('+bn+')'],
+ [f1(avgBays)+' / '+f0(Math.ceil(pk)),'Bays avg / 95% need (have '+p.bays+')'],[f0(st.tunSec)+' s','Tunnel wash time'],[f1(3600/p.target)+' s','Takt time'],[f1(p.target*35/1000)+' m³/hr','Fresh water make-up']]
+ .map(r=>`<div class="k"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('');
+ const nm={gate:'Gate / ANPR',billing:'Billing',prep:'Pre-wash prep',guide:'Guide-on',tunnel:'Tunnel conveyor',finish:'Hand finish',vacuum:'Vacuum bays',exit:'Exit'};
+ $('cap').innerHTML='<table><tr><th>Stage</th><th>Cap/hr</th><th>Load</th></tr>'+Object.keys(c).map(k=>`<tr><td>${nm[k]}</td><td>${f0(c[k])}</td><td><span class="dot ${cls(st.util[k])}"></span>${f0(st.util[k]*100)}%</td></tr>`).join('')+'</table>';
+ $('space').innerHTML='<table><tr><th>Zone</th><th>L × W (ft)</th><th>sq ft</th></tr>'+st.area.map(r=>`<tr><td>${r[0]}</td><td>${f0(r[1])} × ${f0(r[2])}</td><td>${f0(r[3])}</td></tr>`).join('')+`<tr><th>Subtotal</th><th></th><th>${f0(st.sub)}</th></tr><tr><th>+25% circulation, offices, landscape</th><th></th><th>${f0(st.plot)}</th></tr></table>`;
+ $('tech').innerHTML='<table><tr><th>Equipment block</th><th>sq ft</th><th>kW</th></tr>'+st.tech.filter(r=>r[1]>0).map(r=>`<tr><td>${r[0]}</td><td>${f0(r[1])}</td><td>${f0(r[2])}</td></tr>`).join('')+`<tr><th>Total + 25% aisles</th><th>${f0(st.techA)}</th><th>${f0(st.kw)}</th></tr><tr><td colspan="3">Transformer about ${f0(st.kw*.7/.85/25)*25} kVA at 70% demand</td></tr></table>`;
+ const T=[['Gate, ANPR, menu',8],['Billing',p.billTime],['Pre-wash prep',p.prepTime],['Guide-on and release',st.release],['Tunnel wash',st.tunSec],['Exit tunnel',10],['Hand finish',p.finishTime],['Drive to vacuum',35],['Vacuum time',p.vacMin*60],['Bay changeover (park, reload, leave)',p.change*60],['Exit lane',p.exitTime]];
+ const tot=T.reduce((a,r)=>a+r[1],0);let cum=0;
+ $('time').innerHTML='<table><tr><th>Step</th><th>Time (s)</th><th>Cumulative (s)</th></tr>'+T.map(r=>{cum+=r[1];return`<tr><td>${r[0]}</td><td>${f0(r[1])}</td><td>${f0(cum)}</td></tr>`}).join('')+`<tr><th>Total (no queue wait)</th><th></th><th>${f0(tot)} s (${f1(tot/60)} min)</th></tr></table>`;
+ $('svg').setAttribute('viewBox',`-2 -8 ${L.W+4} ${L.H+10}`);
+ $('svg').innerHTML=`<defs><marker id="ar" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5z" fill="var(--ac)"/></marker></defs>`+drawBase()+'<g id="cars"></g>';
+ resetSim();tick=0;
+}
+$('play').onclick=()=>{run=!run;$('play').textContent=run?'Pause':'Play'};
+$('rst').onclick=()=>resetSim();
+const ZERO=new Set(['change','bays','finishers','prepPos','billLanes','stackCars','guide']);
+let OV={},MODE='snake',DRAG=null,VB=[0,0,300,150];
+const capS=v=>isFinite(v)?f0(v):'removed';
+function bounds(){const Z=L.Z;L.minX=Math.min(...Z.map(z=>z.x));L.minY=Math.min(...Z.map(z=>z.y));L.W=Math.max(...Z.map(z=>z.x+z.w))-L.minX;L.H=Math.max(...Z.map(z=>z.y+z.h))-L.minY}
+function setVB(){VB=[L.minX-4,L.minY-10,L.W+8,L.H+14]}
+function calc(){
+ const p=P,m=p.tunnelFt*0.3048,release=Math.max(p.pitch/p.speed,p.guide),tunSec=m/p.speed,I=Infinity;
+ const cap={gate:450,billing:p.billLanes>0?p.billLanes*3600/p.billTime:I,prep:p.prepPos>0?p.prepPos*3600/p.prepTime:I,guide:p.guide>0?3600/p.guide:I,tunnel:3600*p.speed/p.pitch,finish:p.finishers>0?p.finishers*3600/p.finishTime:I,vacuum:p.bays>0?p.bays*3600/((p.vacMin+p.change)*60):I,exit:3600/p.exitTime};
+ st={cap,release,tunSec,m};
+ const turb=p.bays>0?Math.ceil(p.bays/6)+1:0,tf=Math.max(.5,p.tunnelFt/120),wf=p.target/100;
+ const tech=[['Compressor (2 screw, duty/standby)',120,22],['Vacuum plant ('+turb+' turbines incl. 1 standby)',49*turb,11*turb],['Water recycling, RO, tanks room',240*wf,25],['Pump room (HP, booster, reclaim)',120*tf,45*tf],['Chemical store and dosing',80,3],['Electrical / PLC / MCC',140,0],['Tunnel drives and blowers',0,90*tf]];
+ const techA=tech.reduce((a,r)=>a+r[1],0)*1.25,kw=tech.reduce((a,r)=>a+r[2],0);
+ Object.assign(st,{tech,techA,kw,turb});
+ const sh=12*Math.max(1,p.stackLanes),G=14;
+ const D=[['entry','1 Entry/ANPR',30,sh,'gate'],['stack','2 Stacking',Math.ceil(p.stackCars/p.stackLanes)*20,sh,'billing',p.stackCars>0],['bill','3 Billing',40,16*p.billLanes,'billing',p.billLanes>0],['prep','4 Prep + staging',20*(p.prepPos+3),20,'prep',p.prepPos>0],['guide','5 Guide-on',30,16,'guide',p.guide>0],['tun','6 Tunnel '+p.tunnelFt+' ft',p.tunnelFt+10,24,'tunnel'],['fin','7 Hand finish',Math.ceil(p.finishers/2)*25,24,'finish',p.finishers>0],['vac','8 Vacuum yard ('+p.bays+' bays)',Math.ceil(p.bays/2)*10,64,'vacuum',p.bays>0],['exit','9 Exit',60,12,'exit'],['tech','10 Tech room',Math.max(20,techA/25),25,null]];
+ const Z=D.filter(d=>d[5]!==false).map(d=>({id:d[0],n:d[1],w:d[2],h:d[3],k:d[4],x:0,y:0}));
+ const rows=MODE==='line'?[Z]:[['entry','stack','bill','prep'],['guide','tun','fin'],['vac','exit','tech']].map(r=>r.map(id=>Z.find(z=>z.id===id)).filter(Boolean));
+ let y=0;rows.forEach(r=>{if(!r.length)return;let x=0;r.forEach(z=>{z.x=x;z.y=y;x+=z.w+8});y+=Math.max(...r.map(z=>z.h))+G});
+ Z.forEach(z=>{const o=OV[z.id];if(o){z.x=o[0];z.y=o[1]}});
+ L={Z,z:id=>Z.find(q=>q.id===id),bay:[]};bounds();
+ st.util={};for(const k in cap)st.util[k]=p.target/cap[k];
+ st.area=Z.map(z=>[z.n,z.w,z.h,z.w*z.h]);st.sub=st.area.reduce((a,r)=>a+r[3],0);st.plot=st.sub*1.25;
+}
+function route(a,b){const ax=a.x+a.w/2,ay=a.y+a.h/2,bx=b.x+b.w/2,by=b.y+b.h/2;
+ if(b.y>=a.y+a.h-1||b.y+b.h<=a.y+1){const sy=by>ay?a.y+a.h:a.y,ey=by>ay?b.y:b.y+b.h,m=(sy+ey)/2;return`M${ax} ${sy}V${m}H${bx}V${ey}`}
+ const sx=bx>ax?a.x+a.w:a.x,ex=bx>ax?b.x:b.x+b.w,m=(sx+ex)/2;return`M${sx} ${ay}H${m}V${by}H${ex}`}
+function drawBase(){
+ let s='';const Z=L.Z;L.bay=[];
+ Z.forEach(z=>{const u=z.k?st.util[z.k]:0,c=z.k?col(u):'var(--mu)';let x='';
+  if(z.id==='stack')for(let i=1;i<P.stackLanes;i++)x+=`<line x1="${z.x}" x2="${z.x+z.w}" y1="${z.y+i*12}" y2="${z.y+i*12}" stroke="var(--mu)" stroke-dasharray="2 2" opacity=".5"/>`;
+  if(z.id==='bill')for(let i=1;i<P.billLanes;i++)x+=`<line x1="${z.x}" x2="${z.x+z.w}" y1="${z.y+i*16}" y2="${z.y+i*16}" stroke="var(--mu)" stroke-dasharray="2 2" opacity=".5"/>`;
+  if(z.id==='tun')for(let i=0;i<=P.tunnelFt;i+=10)x+=`<line x1="${z.x+5+i}" x2="${z.x+5+i}" y1="${z.y+20}" y2="${z.y+24}" stroke="var(--mu)" opacity=".6"/>`;
+  if(z.id==='vac'){const top=Math.ceil(P.bays/2);for(let i=0;i<P.bays;i++){const r=i<top?0:1,cc=r?i-top:i,bx=z.x+cc*10,by=r?z.y+44:z.y;L.bay.push([bx,by]);x+=`<rect x="${bx+.5}" y="${by+.5}" width="9" height="19" fill="none" stroke="var(--mu)" stroke-width=".5"/><text x="${bx+5}" y="${by+(r?17:6)}" font-size="3" text-anchor="middle" opacity=".6">${i+1}</text>`}}
+  s+=`<g class="zn" data-id="${z.id}" style="cursor:grab;touch-action:none"><rect x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" fill="var(--zf)" stroke="${c}" stroke-width="1.2" rx="1.5"/>${x}<text x="${z.x}" y="${z.y-2.5}" font-size="4.6" font-weight="600">${z.n}</text><text x="${z.x+z.w}" y="${z.y-2.5}" font-size="3.6" text-anchor="end" opacity=".7">${f0(z.w)}×${f0(z.h)} ft</text></g>`});
+ const seq=['entry','stack','bill','prep','guide','tun','fin','vac','exit'].map(L.z).filter(Boolean);
+ for(let i=0;i<seq.length-1;i++)s+=`<path d="${route(seq[i],seq[i+1])}" fill="none" stroke="var(--ac)" stroke-width="1" marker-end="url(#ar)" style="pointer-events:none"/>`;
+ return s;
+}
+function drawCars(){
+ let s='';const G='var(--ok)',A='var(--wa)',stg=S.st;
+ const lay=(zone,list,c,ofs)=>{const z=L.z(zone);if(!z)return;list.forEach((_,i)=>{const[x,y]=cell(z,i+(ofs||0));s+=car(x,y,c)})};
+ lay('stack',stg.bill.q,A);lay('bill',stg.bill.b,G);
+ lay('prep',stg.prep.b,G);lay('prep',stg.prep.q,A,stg.prep.b.length);
+ lay('guide',stg.rel.b,G);lay('guide',stg.rel.q,A,stg.rel.b.length);
+ const tn=L.z('tun');stg.tun.b.forEach(c=>{const f=1-(c.end-S.t)/st.tunSec;s+=car(tn.x+5+f*(P.tunnelFt-14),tn.y+9,G)});
+ lay('fin',stg.fin.b,G);lay('fin',stg.fin.q,A,stg.fin.b.length);
+ if(P.bays>0){stg.vac.b.forEach((c,i)=>{const p=L.bay[i];if(p)s+=`<rect x="${p[0]+2}" y="${p[1]+3}" width="6" height="14" rx="2" fill="${G}"/>`});
+ const v=L.z('vac'),cn=Math.max(1,Math.floor((v.w-2)/17));stg.vac.q.forEach((c,i)=>{const y=v.y+23+Math.floor(i/cn)*8;if(y<v.y+42)s+=car(v.x+2+(i%cn)*17,y,A)})}
+ lay('exit',stg.ex.b,G);
+ return s;
+}
+function resetSim(){
+ const p=P,I=1e9,mk=(n,svc)=>n>0?{n,svc,q:[],b:[]}:{n:I,svc:()=>0,q:[],b:[]},o=(n,svc)=>({n,svc,q:[],b:[]});
+ S={t:0,done:0,sumT:0,maxQ:0,qs:0,qn:0,peak:0,st:{bill:mk(p.billLanes,()=>p.billTime),prep:mk(p.prepPos,()=>p.prepTime),rel:o(1,()=>st.release),tun:o(I,()=>st.tunSec),fin:mk(p.finishers,()=>p.finishTime),vac:mk(p.bays,()=>(p.vacMin+p.change)*60),ex:o(I,()=>p.exitTime)}};
+ S.order=['bill','prep','rel','tun','fin','vac','ex'];S.next=-Math.log(1-Math.random())*3600/p.target;
+}
+function render(){
+ $('cars').innerHTML=drawCars();
+ if(tick++%6)return;
+ const s=S.st,q=s.bill.q.length;let al='';
+ if(P.stackCars>0&&P.billLanes>0&&q>P.stackCars)al+=`<div class="alert">Stacking overflow: ${q-P.stackCars} car(s) are queuing outside the ${P.stackCars}-car stack onto the road.</div>`;
+ if(P.bays>0&&s.vac.q.length)al+=`<div class="alert">Vacuum yard full: ${s.vac.q.length} car(s) waiting for a bay.</div>`;
+ $('alerts').innerHTML=al;const hrs=S.t/3600;
+ $('live').innerHTML=`<table><tr><th>Sim time</th><td>${f1(S.t/60)} min</td></tr><tr><th>Cars in billing queue</th><td>${q} (max ${S.maxQ})</td></tr><tr><th>Avg billing queue</th><td>${f1(S.qs/Math.max(1,S.qn))}</td></tr><tr><th>Cars completed</th><td>${S.done}</td></tr><tr><th>Throughput (completed/hr)</th><td>${hrs>.2?f0(S.done/hrs):'warming up'}</td></tr><tr><th>Avg time in system</th><td>${S.done?f1(S.sumT/S.done/60)+' min':'-'}</td></tr><tr><th>Tunnel cars now</th><td>${s.tun.b.length}</td></tr>${P.bays>0?`<tr><th>Vacuum bays busy / peak</th><td>${s.vac.b.length} / ${S.peak} of ${P.bays}</td></tr>`:''}</table>`;
+}
+function kpi(){
+ const p=P,c=st.cap,min=Math.min(...Object.values(c)),bn=Object.keys(c).find(k=>c[k]===min),av=p.target/60*(p.vacMin+p.change),pk=av+1.65*Math.sqrt(av);
+ $('kpi').innerHTML=[[f0(st.plot)+' sq ft','Plot needed (+25%)'],[f0(st.sub)+' sq ft','Built zones total'],[f0(L.W)+' × '+f0(L.H)+' ft','Layout footprint'],[f0(min)+'/hr','Max system output ('+bn+')'],p.bays>0?[f1(av)+' / '+f0(Math.ceil(pk)),'Bays avg / 95% need (have '+p.bays+')']:['none','Vacuum removed'],[f0(st.tunSec)+' s','Tunnel wash time'],[f1(3600/p.target)+' s','Takt time'],[f1(p.target*35/1000)+' m³/hr','Fresh water make-up']].map(r=>`<div class="k"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('');
+}
+function redraw(){$('svg').setAttribute('viewBox',VB.join(' '));$('svg').innerHTML=`<defs><marker id="ar" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5z" fill="var(--ac)"/></marker></defs>`+drawBase()+'<g id="cars" style="pointer-events:none"></g>'}
+function update(){
+ calc();kpi();const p=P,c=st.cap;
+ const nm={gate:'Gate / ANPR',billing:'Billing',prep:'Pre-wash prep',guide:'Guide-on',tunnel:'Tunnel conveyor',finish:'Hand finish',vacuum:'Vacuum bays',exit:'Exit'};
+ $('cap').innerHTML='<table><tr><th>Stage</th><th>Cap/hr</th><th>Load</th></tr>'+Object.keys(c).filter(k=>isFinite(c[k])).map(k=>`<tr><td>${nm[k]}</td><td>${capS(c[k])}</td><td>${isFinite(c[k])?`<span class="dot ${cls(st.util[k])}"></span>${f0(st.util[k]*100)}%`:'-'}</td></tr>`).join('')+'</table>';
+ $('space').innerHTML='<table><tr><th>Zone</th><th>L × W (ft)</th><th>sq ft</th></tr>'+st.area.map(r=>`<tr><td>${r[0]}</td><td>${f0(r[1])} × ${f0(r[2])}</td><td>${f0(r[3])}</td></tr>`).join('')+`<tr><th>Subtotal</th><th></th><th>${f0(st.sub)}</th></tr><tr><th>+25% circulation, offices, landscape</th><th></th><th>${f0(st.plot)}</th></tr></table>`;
+ $('tech').innerHTML='<table><tr><th>Equipment block</th><th>sq ft</th><th>kW</th></tr>'+st.tech.filter(r=>r[1]>0).map(r=>`<tr><td>${r[0]}</td><td>${f0(r[1])}</td><td>${f0(r[2])}</td></tr>`).join('')+`<tr><th>Total + 25% aisles</th><th>${f0(st.techA)}</th><th>${f0(st.kw)}</th></tr><tr><td colspan="3">Transformer about ${f0(Math.ceil(st.kw*.7/.85/25)*25)} kVA at 70% demand</td></tr></table>`;
+ const T=[['Gate, ANPR, menu',8]];if(p.billLanes>0)T.push(['Billing',p.billTime]);if(p.prepPos>0)T.push(['Pre-wash prep',p.prepTime]);T.push(['Guide-on and release',st.release],['Tunnel wash',st.tunSec],['Exit tunnel',10]);if(p.finishers>0)T.push(['Hand finish',p.finishTime]);if(p.bays>0)T.push(['Drive to vacuum',35],['Vacuum time',p.vacMin*60],['Bay changeover (park, reload, leave)',p.change*60]);T.push(['Exit lane',p.exitTime]);
+ const tot=T.reduce((a,r)=>a+r[1],0);let cum=0;
+ $('time').innerHTML='<table><tr><th>Step</th><th>Time (s)</th><th>Cumulative (s)</th></tr>'+T.map(r=>{cum+=r[1];return`<tr><td>${r[0]}</td><td>${f0(r[1])}</td><td>${f0(cum)}</td></tr>`}).join('')+`<tr><th>Total (no queue wait)</th><th></th><th>${f0(tot)} s (${f1(tot/60)} min)</th></tr></table>`;
+ setVB();redraw();resetSim();tick=0;save();vsz();selfTest();
+}
+function relayout(){calc();kpi();setVB();redraw();save()}
+$('mSnake').onclick=()=>{MODE='snake';OV={};relayout()};
+$('mLine').onclick=()=>{MODE='line';OV={};relayout()};
+$('mReset').onclick=()=>{OV={};relayout()};
+const sv=$('svg');
+function pt(e){const q=sv.createSVGPoint();q.x=e.clientX;q.y=e.clientY;return q.matrixTransform(sv.getScreenCTM().inverse())}
+sv.addEventListener('pointerdown',e=>{const g=e.target.closest('.zn');if(!g)return;const z=L.z(g.dataset.id),q=pt(e);DRAG={z,dx:q.x-z.x,dy:q.y-z.y};sv.setPointerCapture(e.pointerId);e.preventDefault()});
+sv.addEventListener('pointermove',e=>{if(!DRAG)return;const q=pt(e),z=DRAG.z;z.x=Math.round((q.x-DRAG.dx)/2)*2;z.y=Math.round((q.y-DRAG.dy)/2)*2;OV[z.id]=[z.x,z.y];redraw()});
+sv.addEventListener('pointerup',()=>{if(DRAG){DRAG=null;bounds();setVB();redraw();kpi();save()}});
+const tf=s=>{s=Math.max(0,Math.floor(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const hms=s=>{s=Math.floor(s);return Math.floor(s/3600)+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+function ensure(){if(S.arr===undefined){S.arr=0;S.in1h=0;S.exits=[];S.snap=null;S.f100=null;const md=$('mode').value;if(md==='exact')S.next=0;if(md==='burst'){S.next=Infinity;burstIn(0)}}}
+function step(dt){
+ ensure();S.t+=dt;const det=$('mode').value!=='rand';
+ while(S.next<=S.t){S.st.bill.q.push({t0:S.next});S.arr++;if(S.next<3600)S.in1h++;S.next+=det?3600/P.target:-Math.log(1-Math.random())*3600/P.target}
+ S.order.forEach((k,i)=>{const s=S.st[k],nx=S.st[S.order[i+1]];
+  for(let j=s.b.length-1;j>=0;j--){const c=s.b[j];if(c.end<=S.t){s.b.splice(j,1);if(nx)nx.q.push(c);else{S.done++;S.sumT+=c.end-c.t0;S.exits.push(c.end);if(c.b&&S.burst)S.burst.out.push(c.end);if(S.done===Math.round(P.target)&&!S.f100)S.f100={out:c.end,dur:c.end-c.t0,inn:c.t0}}}}
+  while(s.b.length<s.n&&s.q.length){const c=s.q.shift();c.end=S.t+s.svc()*(k==='tun'||k==='rel'||det?1:.85+.3*Math.random());s.b.push(c)}});
+ if(!S.snap&&S.t>=3600)S.snap={inn:S.in1h,out:S.exits.filter(x=>x<=3600).length};
+ const q=S.st.bill.q.length;S.maxQ=Math.max(S.maxQ,q);S.qs+=q;S.qn++;S.peak=Math.max(S.peak,S.st.vac.b.length);
+}
+function clock(){
+ ensure();
+ $('clk').innerHTML=[[hms(S.t),'Site clock'],[S.arr,'Cars IN'],[S.done,'Cars EXITED'],[S.arr-S.done,'Cars on site'],[S.exits.filter(x=>x>S.t-3600).length,'Exits in last 60 min']].map(r=>`<div class="k"><b>${r[0]}</b><span>${r[1]}</span></div>`).join('');
+ const n=Math.round(P.target);let h=S.snap?`At 60:00 the site had taken in <b>${S.snap.inn}</b> cars and released <b>${S.snap.out}</b> (${S.snap.inn-S.snap.out} still inside). `:`Running to the 1-hour mark (${tf(S.t)} of 60:00). `;
+ h+=S.exits.length?`First car out after ${tf(S.exits[0]-0)} on site. `:'';
+ h+=S.f100?`Car #${n} entered at ${hms(S.f100.inn)}, exited at ${hms(S.f100.out)} and spent ${tf(S.f100.dur)} on site. Average time on site ${tf(S.sumT/S.done)}.`:`Car #${n} has not exited yet.`;
+ $('hr1').innerHTML=h;burstPanel();
+}
+function drawCars(){
+ clock();
+ let s='';const G='var(--ok)',A='var(--wa)',stg=S.st;
+ const cr=(x,y,c,o)=>`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="14" height="6" rx="1.8" fill="${c}"/><text x="${(x+7).toFixed(1)}" y="${(y+4.4).toFixed(1)}" font-size="3.6" font-weight="600" text-anchor="middle" style="fill:#fff">${tf(S.t-o.t0)}</text>`;
+ const lay=(zone,list,c,ofs)=>{const z=L.z(zone);if(!z)return;list.forEach((o,i)=>{const[x,y]=cell(z,i+(ofs||0));s+=cr(x,y,c,o)})};
+ lay('stack',stg.bill.q,A);lay('bill',stg.bill.b,G);
+ lay('prep',stg.prep.b,G);lay('prep',stg.prep.q,A,stg.prep.b.length);
+ lay('guide',stg.rel.b,G);lay('guide',stg.rel.q,A,stg.rel.b.length);
+ const tn=L.z('tun');stg.tun.b.forEach(c=>{const f=1-(c.end-S.t)/st.tunSec;s+=cr(tn.x+5+f*(P.tunnelFt-14),tn.y+9,G,c)});
+ lay('fin',stg.fin.b,G);lay('fin',stg.fin.q,A,stg.fin.b.length);
+ if(P.bays>0){const top=Math.ceil(P.bays/2);stg.vac.b.forEach((c,i)=>{const p=L.bay[i];if(!p)return;const ry=p[1]+(i>=top?3:8);s+=`<rect x="${p[0]+1}" y="${ry}" width="8" height="11" rx="2" fill="${G}"/><text x="${p[0]+5}" y="${ry+6.6}" font-size="2.7" font-weight="600" text-anchor="middle" style="fill:#fff">${tf(S.t-c.t0)}</text>`});
+  const v=L.z('vac'),cn=Math.max(1,Math.floor((v.w-2)/17));stg.vac.q.forEach((c,i)=>{const y=v.y+23+Math.floor(i/cn)*8;if(y<v.y+42)s+=cr(v.x+2+(i%cn)*17,y,A,c)})}
+ lay('exit',stg.ex.b,G);
+ return s;
+}
+$('mode').onchange=()=>resetSim();
+function burstIn(t){const n=parseInt($('burstN').value)||12;S.burst={n,t0:t,out:[]};for(let i=0;i<n;i++)S.st.bill.q.push({t0:t,b:true});S.arr+=n;if(t<3600)S.in1h+=n}
+$('bBtn').onclick=()=>{ensure();burstIn(S.t)};
+function burstPanel(){
+ const p=P,n=S.burst?S.burst.n:(parseInt($('burstN').value)||12);
+ const bp=p.billLanes>0?p.billTime/p.billLanes:0,pp=p.prepPos>0?p.prepTime/p.prepPos:0,fp=p.finishers>0?p.finishTime/p.finishers:0,vp=p.bays>0&&n>p.bays?(p.vacMin+p.change)*60/p.bays:0;
+ const upP=Math.max(bp,pp,st.release),pit=Math.max(upP,fp,vp);
+ const upL=(p.billLanes>0?p.billTime:0)+(p.prepPos>0?p.prepTime:0);
+ const lat=upL+st.release+st.tunSec+(p.finishers>0?p.finishTime:0)+(p.bays>0?(p.vacMin+p.change)*60:0)+p.exitTime;
+ const lastBill=p.billLanes>0?Math.ceil(n/p.billLanes)*p.billTime:0,lastRel=upL+(n-1)*upP,ov=Math.max(0,n-p.stackCars);
+ let live='not started';if(S.burst){const b=S.burst;live=`${b.out.length}/${b.n} out`+(b.out.length?`, first at ${tf(b.out[0]-b.t0)}`:'')+(b.out.length===b.n?`, last at ${tf(Math.max(...b.out)-b.t0)} after the burst`:'')}
+ const R=[['Cars arriving together',n],['Stack space',`${p.stackCars} cars: ${ov?ov+' spill outside the stack and wait on the road':'all fit'}`],['Billing',`${p.billLanes} lane(s) x ${p.billTime} s: last car billed at about ${tf(lastBill)}`],['Tunnel feed',`1 car every ${f0(st.release)} s: last car enters tunnel at about ${tf(lastRel)}`],['Slowest stage',`${f1(pit)} s per car, so the burst leaves in a line at this spacing`],['Vacuum bays',p.bays>0?`peak ${Math.min(n,p.bays)} of ${p.bays} busy${n>p.bays?', '+(n-p.bays)+' wait for a bay':''}`:'removed'],['Estimate','first car out at about '+tf(lat)+', last car out at about '+tf(lat+(n-1)*pit)],['Simulation result',live]];
+ $('burst').innerHTML='<table>'+R.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')+'</table>';
+}
+let NOSAVE=false;
+function save(){if(NOSAVE)return;try{localStorage.setItem('cwp2',JSON.stringify({P,OV,MODE}))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem('cwp2'));if(d&&d.P){P={...P120,...d.P,prepPos:0,finishers:0};OV=d.OV||{};MODE=d.MODE||'snake'}}catch(e){}}
+const isScr=()=>location.hash.replace('#','')==='screen';
+function applyScr(){document.body.classList.toggle('screen',isScr());if(isScr()){load();NOSAVE=true;fill();update();NOSAVE=false}}
+window.addEventListener('hashchange',applyScr);
+window.addEventListener('storage',e=>{if(isScr()&&e.key==='cwp2')applyScr()});
+if(isScr()){document.body.classList.add('screen');load()}
+(function(){const a=document.querySelector('a.btn');if(a&&!/claude/.test(location.hostname))a.href=location.href.split('#')[0]+'#screen'})();
+function runSim(mode,T,target,bn){
+ const keep=S,km=$('mode').value,kt=P.target,kb=$('burstN').value;
+ $('mode').value=mode;P.target=target;if(bn)$('burstN').value=bn;
+ resetSim();ensure();for(let t=0;t<T;t+=.5)step(.5);
+ const r=S;S=keep;$('mode').value=km;P.target=kt;$('burstN').value=kb;return r}
+function selfTest(){
+ const n=Math.round(P.target),mc=Math.floor(Math.min(...Object.values(st.cap)));
+ const a=runSim('exact',7200,P.target),h1=a.exits.filter(x=>x<=3600).length,h2=a.exits.filter(x=>x>3600&&x<=7200).length;
+ const s=runSim('exact',7200,mc),sh2=s.exits.filter(x=>x>3600&&x<=7200).length;
+ const bn=parseInt($('burstN').value)||12,b=runSim('burst',3600,P.target,bn),bo=b.burst.out.slice().sort((x,y)=>x-y),gaps=bo.slice(1).map((x,i)=>x-bo[i]);
+ const ok=v=>`<span class="dot ${v?'g':'r'}"></span>${v?'PASS':'CHECK'}`;
+ const R=[['Cars entered in first 60 min',a.in1h,n,ok(a.in1h===n)],['Cars exited by 60:00',h1,'about '+n+' minus cars still on site','-'],['Exits in hour 2 (steady output per hour)',h2,n,ok(Math.abs(h2-n)<=1)],['Average time on site',tf(a.sumT/a.done),'-','-'],['First car out after',tf(a.exits[0]),'-','-'],['Car #'+n+' exited at',a.f100?hms(a.f100.out):'-','-','-'],['Peak billing queue',a.maxQ,'max '+P.stackCars+' (stack)',ok(a.maxQ<=P.stackCars)],['Peak vacuum bays busy',a.peak,'max '+P.bays,ok(a.peak<=P.bays)],['Stress at '+mc+' cars/hr: hour-2 exits',sh2,mc,ok(sh2>=mc-2)],['Burst of '+bn+': cars out',bo.length,bn,ok(bo.length===bn)],['Burst: first / last car out',bo.length?tf(bo[0])+' / '+tf(bo[bo.length-1]):'-','-','-'],['Burst: gap between exits (s)',gaps.length?f0(Math.min(...gaps))+' to '+f0(Math.max(...gaps)):'-','-','-'],['Burst: peak billing queue / bays busy',b.maxQ+' / '+b.peak,'-','-']];
+ $('test').innerHTML='<table><tr><th>Check</th><th>Result</th><th>Expected</th><th></th></tr>'+R.map(r=>`<tr><td>${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')+'</table>';
+}
+$('rt').onclick=selfTest;
+let RECB=0;
+function vsz(){const p=P,cyc=p.vacMin+p.change,avg=p.target*cyc/60,minB=Math.ceil(avg),rec=Math.ceil(avg/.85),rob=Math.ceil(avg+1.65*Math.sqrt(avg)),capNow=p.bays*60/cyc;RECB=minB;
+ const stt=p.bays>=rob?'OK, covers peaks':p.bays>=rec?'OK, thin at peaks':p.bays>=minB?'OK at target: '+f0(capNow)+' cars/hr, '+f0(avg/p.bays*100)+'% busy':'SHORT: only '+f0(capNow)+' cars/hr';
+ const R=[['Bay occupancy per car',f1(cyc)+' min ('+p.vacMin+' vacuum + '+p.change+' changeover)'],['Output of '+p.bays+' bays when full',f0(capNow)+' cars/hr'],['Cars per bay per hour',f1(60/cyc)],['Bays busy on average at '+p.target+'/hr',f1(avg)],['Required bays ('+p.target+' ÷ '+f1(60/cyc)+')',minB],['Recommended bays (85% busy)',rec],['Robust bays (covers 95% of peaks)',rob],['Status of current setup',stt]];
+ $('vsz').innerHTML='<table>'+R.map(r=>`<tr><th>${r[0]}</th><td><b>${r[1]}</b></td></tr>`).join('')+'</table>'}
+$('setBays').onclick=()=>{P.bays=RECB;fill();update()};
+fill();update();requestAnimationFrame(frame);
+</script></body></html>
